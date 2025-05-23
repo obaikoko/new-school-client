@@ -32,7 +32,8 @@ const EntityInfoDialog = <T extends Record<string, unknown>>({
 }: Props<T>) => {
   const keys = Object.keys(data);
 
-  const handleChange = (key: keyof T, value: any) => {
+  
+  const handleChange = (key: keyof T, value: T[keyof T]) => {
     if (setData) {
       setData((prev) => ({
         ...prev,

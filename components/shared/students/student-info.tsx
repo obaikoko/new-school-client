@@ -21,8 +21,7 @@ type Props<T> = {
   editable?: boolean;
   setData?: React.Dispatch<React.SetStateAction<T>>;
 };
-
-const StudentInfoDialog = <T extends Record<string, any>>({
+const StudentInfoDialog = <T extends Record<string, unknown>>({
   open,
   onOpenChange,
   data,
@@ -34,7 +33,7 @@ const StudentInfoDialog = <T extends Record<string, any>>({
   const keys = Object.keys(data);
   const imageSrc = data?.image || data?.photoUrl || '';
 
-  const handleChange = (key: keyof T, value: any) => {
+  const handleChange = (key: keyof T, value: T[keyof T]) => {
     if (setData) {
       setData((prev) => ({
         ...prev,
