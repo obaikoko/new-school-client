@@ -7,6 +7,7 @@ import {
   registerUserSchema,
   updateUserSchema,
 } from '../validators/userValidators';
+import { registerStudentSchema } from '@/validators/studentValidation';
 
 export type User = z.infer<typeof authResponseSchema> & {
   id: string;
@@ -18,7 +19,7 @@ export type AuthUserForm = z.infer<typeof authUserSchema>;
 export type AuthResponse = z.infer<typeof authResponseSchema>;
 export type RegisterUserForm = z.infer<typeof registerUserSchema>;
 
-export type Student = z.infer<typeof insertStudentSchema> & {
+export type Student = z.infer<typeof registerStudentSchema> & {
   studentId: string;
   password: string;
   isStudent: boolean;

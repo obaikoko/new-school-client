@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/navigation';
 import SideNav from '@/components/shared/side-nav';
+import type { RootState } from '@/src/app/store'; 
 
 export default function AdminLayout({
   children,
@@ -11,7 +12,7 @@ export default function AdminLayout({
   children: React.ReactNode;
 }) {
   const router = useRouter();
-  const { user } = useSelector((state) => state.auth);
+  const { user } = useSelector((state: RootState) => state.auth);
   const [hasMounted, setHasMounted] = useState(false);
 
   useEffect(() => {
@@ -28,7 +29,6 @@ export default function AdminLayout({
     }
   }, [hasMounted, user, router]);
 
-  // 💡 Only render after mount to avoid hydration error
   if (!hasMounted || !user || !user.isAdmin) {
     return null;
   }

@@ -28,7 +28,7 @@ interface DeleteUserButtonProps {
 const DeleteUserButton = ({ userId, isAdmin }: DeleteUserButtonProps) => {
   const [open, setOpen] = useState(false);
   const [deleteUser, { isLoading }] = useDeleteUserMutation();
-  const { refetch } = useGetUsersQuery();
+  const { refetch } = useGetUsersQuery({});
 
   const handleConfirmDelete = async () => {
     if (isAdmin) {

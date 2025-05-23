@@ -21,19 +21,26 @@ import { toast } from 'sonner';
 import EditUserDialog from '@/components/shared/users/edit-user-dialog';
 import DeleteUserButton from '@/components/shared/users/delete-user-button';
 import { User } from '@/schemas/userSchema';
-import EntityInfoDialog from '@/components/shared/users/user-info';
 
+type UserFormData = {
+  userId?: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  role: string;
+  status?: string;
+  level: string;
+  subLevel: string;
+};
 
 const UsersPage = () => {
-  const { data: users = [], isLoading, isError } = useGetUsersQuery();
+  const { data: users = [], isLoading, isError } = useGetUsersQuery({});
   const [updateUser, { isLoading: isUpdating }] = useUpdateUserMutation();
 
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
-  const [infoDialogOpen, setInfoDialogOpen] = useState(false);
-  const [selectedInfo, setSelectedInfo] = useState<Partial<User>>({});
 
-  const [formData, setFormData] = useState<FormData>({
+  const [formData, setFormData] = useState<UserFormData>({
     firstName: '',
     lastName: '',
     email: '',
@@ -55,11 +62,6 @@ const UsersPage = () => {
       subLevel: user.subLevel || '',
     });
     setDialogOpen(true);
-  };
-
-  const handleNameClick = (user: User) => {
-    setSelectedInfo(user);
-    setInfoDialogOpen(true);
   };
 
   const handleUpdateSubmit = async (e: FormEvent) => {
@@ -116,10 +118,7 @@ const UsersPage = () => {
                 <TableBody>
                   {users.map((user: User) => (
                     <TableRow key={user.id}>
-                      <TableCell
-                        className='cursor-pointer text-primary underline'
-                        onClick={() => handleNameClick(user)}
-                      >
+                      <TableCell className='cursor-pointer text-primary underline'>
                         {user.firstName} {user.lastName}
                       </TableCell>
                       <TableCell>
@@ -159,17 +158,12 @@ const UsersPage = () => {
                 setFormData={setFormData}
                 onSubmit={handleUpdateSubmit}
                 isLoading={isUpdating}
+                title='User Info'
               />
             </>
           )}
         </CardContent>
       </Card>
-      <EntityInfoDialog
-        open={infoDialogOpen}
-        onOpenChange={setInfoDialogOpen}
-        data={selectedInfo}
-        title='User Info'
-      />
     </div>
   );
 };

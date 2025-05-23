@@ -30,6 +30,7 @@ interface EditUserDialogProps {
   setFormData: React.Dispatch<React.SetStateAction<EditUserFormData>>;
   onSubmit: (e: React.FormEvent) => void;
   isLoading: boolean;
+  title?: string
 }
 
 
@@ -60,7 +61,7 @@ export default function EditUserDialog({
       [name]: value,
     }));
   };
-
+  
   const handleSelectChange = (field: keyof EditUserFormData, value: string) => {
     setFormData((prev) => ({
       ...prev,

@@ -7,22 +7,21 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 
+// utils.ts or similar
+import { ZodError } from 'zod';
 
-type APIClientError = {
-  data?: {
-    message?: string;
-    errors?: Record<string, string>;
-  };
-};
-export const  showZodErrors = (error: APIClientError) => {
-  if (error?.data?.errors && typeof error.data.errors === 'object') {
-    Object.entries(error.data.errors).forEach(([field, message]) => {
-      toast.error(`${field}: ${message}`);
-    });
+export function showZodErrors(error: unknown) {
+  if (error instanceof ZodError) {
+    error.errors.forEach((e) => toast.error(e.message));
+  } else if (typeof error === 'object' && error !== null && 'data' in error) {
+    // Handle RTK Query-style error
+    const err = error as { data?: { message?: string } };
+    toast.error(err.data?.message || 'Something went wrong');
   } else {
-    toast.error(error?.data?.message || 'An Error occured');
+    toast.error('An unknown error occurred');
   }
 }
+
 export type ApiError = {
   message: string;
   stack?: string | null;

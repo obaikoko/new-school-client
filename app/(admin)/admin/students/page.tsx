@@ -20,12 +20,10 @@ import {
 } from '@/components/ui/table';
 import { Input } from '@/components/ui/input';
 import { StudentSchema } from '@/schemas/studentSchema';
-import StudentInfoDialog from '@/components/shared/students/student-info';
 
 const StudentsPage = () => {
   const [search, setSearch] = useState('');
-  const [infoDialogOpen, setInfoDialogOpen] = useState(false);
-  const [selectedInfo, setSelectedInfo] = useState<Partial<StudentSchema>>({});
+
   // const [page, setPage] = useState(1);
 
   const { data, isLoading, isError } = useGetStudentsQuery({ page: 1 });
@@ -45,11 +43,6 @@ const StudentsPage = () => {
   const females = students.filter(
     (s: StudentSchema) => s.gender === 'Female'
   ).length;
-
-  const handleNameClick = (student) => {
-    setSelectedInfo(student);
-    setInfoDialogOpen(true);
-  };
 
   return (
     <div className='p-4 space-y-6'>
@@ -122,10 +115,7 @@ const StudentsPage = () => {
               {filteredStudents.map((student: StudentSchema) => (
                 <TableRow key={student.id}>
                   <TableCell>{student.id}</TableCell>
-                  <TableCell
-                    className='cursor-pointer text-primary underline'
-                    onClick={() => handleNameClick(student)}
-                  >
+                  <TableCell className='cursor-pointer text-primary underline'>
                     {student.firstName}
                   </TableCell>
                   <TableCell>{student.lastName}</TableCell>
@@ -149,12 +139,6 @@ const StudentsPage = () => {
           </Table>
         )}
       </div>
-      <StudentInfoDialog
-        open={infoDialogOpen}
-        onOpenChange={setInfoDialogOpen}
-        data={selectedInfo}
-        title='User Info'
-      />
     </div>
   );
 };
