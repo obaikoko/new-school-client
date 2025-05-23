@@ -35,9 +35,8 @@ export const authResponseSchema = z.object({
   isAdmin: z.boolean(),
   role: z.string(),
   status: z.string(),
-});
-export const updateUserSchema = z.object({
-  userId: z.string().min(3, 'UserId required'),
+});export const updateUserSchema = z.object({
+  userId: z.string().min(3, 'User ID is required'),
   firstName: z
     .string()
     .min(3, 'First name must be at least 3 letters')
@@ -46,10 +45,10 @@ export const updateUserSchema = z.object({
     .string()
     .min(3, 'Last name must be at least 3 letters')
     .optional(),
-  email: z.string().email('Add a valide email address').optional(),
+  email: z.string().email('Enter a valid email address').optional(),
   password: z
     .string()
-    .min(6, 'password must be at least 6 characters')
+    .min(6, 'Password must be at least 6 characters')
     .optional(),
   level: z.string().optional(),
   role: z.string().optional(),
@@ -60,7 +59,6 @@ export const updateUserSchema = z.object({
     .transform((val) => val === 'true')
     .optional(),
 });
-
 export const sendSingleMailSchema = z.object({
   email: z.string().email('Invalid email address'),
   subject: z.string().min(1, 'Subject is required'),

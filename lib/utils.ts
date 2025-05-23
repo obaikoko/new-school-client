@@ -7,7 +7,14 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 
-export const  showZodErrors = (error: any) => {
+
+type APIClientError = {
+  data?: {
+    message?: string;
+    errors?: Record<string, string>;
+  };
+};
+export const  showZodErrors = (error: APIClientError) => {
   if (error?.data?.errors && typeof error.data.errors === 'object') {
     Object.entries(error.data.errors).forEach(([field, message]) => {
       toast.error(`${field}: ${message}`);

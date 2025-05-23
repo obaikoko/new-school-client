@@ -17,5 +17,6 @@ export const apiSlice = createApi({
     'NextTerm',
     'Data',
   ],
+   // eslint-disable-next-line
   endpoints: (builder) => ({}),
 });

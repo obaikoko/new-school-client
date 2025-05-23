@@ -4,4 +4,5 @@ import { authStudentResponseSchema, authStudentSchema, registerStudentSchema } f
 export type AuthStudentForm = z.infer<typeof authStudentSchema>;
 export type RegisterStudentForm = z.infer<typeof registerStudentSchema>
 export type AuthStudentResponseSchema = z.infer<typeof authStudentResponseSchema>;
+export type StudentSchema = z.infer<typeof authStudentResponseSchema>
 
