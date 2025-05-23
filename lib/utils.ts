@@ -23,3 +23,8 @@ export const  showZodErrors = (error: APIClientError) => {
     toast.error(error?.data?.message || 'An Error occured');
   }
 }
+export type ApiError = {
+  message: string;
+  stack?: string | null;
+  errors?: Record<string, string>; // Present only for validation errors
+};

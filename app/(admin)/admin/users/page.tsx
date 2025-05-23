@@ -17,6 +17,7 @@ import {
   useUpdateUserMutation,
 } from '@/src/features/auth/usersApiSlice';
 import { toast } from 'sonner';
+import {ApiError} from '@/lib/utils'
 
 import EditUserDialog from '@/components/shared/users/edit-user-dialog';
 import DeleteUserButton from '@/components/shared/users/delete-user-button';
@@ -82,7 +83,7 @@ const UsersPage = () => {
       toast.success('User updated successfully');
       setDialogOpen(false);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error: any) {
+    } catch (error: ApiError) {
       toast.error(error?.data?.message || 'Failed to update user');
     }
   };
