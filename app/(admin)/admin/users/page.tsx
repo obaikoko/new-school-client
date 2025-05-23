@@ -81,6 +81,7 @@ const UsersPage = () => {
       await updateUser({ id: selectedUser.id, ...formData }).unwrap();
       toast.success('User updated successfully');
       setDialogOpen(false);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       toast.error(error?.data?.message || 'Failed to update user');
     }
