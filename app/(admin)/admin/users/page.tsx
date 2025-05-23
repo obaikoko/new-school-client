@@ -17,23 +17,12 @@ import {
   useUpdateUserMutation,
 } from '@/src/features/auth/usersApiSlice';
 import { toast } from 'sonner';
-import {ApiError} from '@/lib/utils'
 
 import EditUserDialog from '@/components/shared/users/edit-user-dialog';
 import DeleteUserButton from '@/components/shared/users/delete-user-button';
 import { User } from '@/schemas/userSchema';
 import EntityInfoDialog from '@/components/shared/users/user-info';
 
-type FormData = {
-  userId?: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  role: string;
-  status?: string;
-  level: string;
-  subLevel: string;
-};
 
 const UsersPage = () => {
   const { data: users = [], isLoading, isError } = useGetUsersQuery();
@@ -83,7 +72,7 @@ const UsersPage = () => {
       toast.success('User updated successfully');
       setDialogOpen(false);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error: ApiError) {
+    } catch (error: any) {
       toast.error(error?.data?.message || 'Failed to update user');
     }
   };

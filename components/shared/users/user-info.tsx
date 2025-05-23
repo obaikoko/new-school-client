@@ -21,7 +21,7 @@ type Props<T> = {
   setData?: React.Dispatch<React.SetStateAction<T>>;
 };
 
-const EntityInfoDialog = <T extends Record<string, any>>({
+const EntityInfoDialog = <T extends Record<string, unknown>>({
   open,
   onOpenChange,
   data,

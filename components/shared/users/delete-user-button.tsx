@@ -43,6 +43,7 @@ const DeleteUserButton = ({ userId, isAdmin }: DeleteUserButtonProps) => {
       refetch();
       setOpen(false);
     } catch (err) {
+      console.log(err)
       toast.error('Failed to delete user');
     }
   };
