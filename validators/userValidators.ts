@@ -89,3 +89,21 @@ export const resetPasswordSchema = z.object({
     .regex(/[0-9]/, 'Password must include at least one number')
     .regex(/[\W_]/, 'Password must include at least one special character'),
 });
+
+
+// schemas/userFormSchema.ts
+
+export const userFormSchema = z.object({
+  userId: z.string().optional(),
+  firstName: z.string().min(1, 'First name is required'),
+  lastName: z.string().min(1, 'Last name is required'),
+  email: z.string().email('Invalid email'),
+  role: z.string().min(1, 'Role is required'),
+  status: z.string().optional(),
+  level: z.string().min(1, 'Level is required'),
+  subLevel: z.string().min(1, 'Sub-level is required'),
+});
+
+export type UserFormSchema = z.infer<typeof userFormSchema>;
+
+
