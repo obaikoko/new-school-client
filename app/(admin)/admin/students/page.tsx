@@ -19,30 +19,26 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { Input } from '@/components/ui/input';
-import { StudentSchema } from '@/schemas/studentSchema';
+import { Student } from '@/schemas/studentSchema';
+import Link from 'next/link';
+import { formatDateTime } from '@/lib/utils';
 
 const StudentsPage = () => {
   const [search, setSearch] = useState('');
-
-  // const [page, setPage] = useState(1);
 
   const { data, isLoading, isError } = useGetStudentsQuery({ page: 1 });
 
   const students = data?.students ?? [];
   const filteredStudents = students.filter(
-    (s: StudentSchema) =>
+    (s: Student) =>
       s.firstName.toLowerCase().includes(search.toLowerCase()) ||
       s.lastName.toLowerCase().includes(search.toLowerCase()) ||
       s.id.toLowerCase().includes(search.toLowerCase())
   );
 
   const total = students.length;
-  const males = students.filter(
-    (s: StudentSchema) => s.gender === 'Male'
-  ).length;
-  const females = students.filter(
-    (s: StudentSchema) => s.gender === 'Female'
-  ).length;
+  const males = students.filter((s: Student) => s.gender === 'Male').length;
+  const females = students.filter((s: Student) => s.gender === 'Female').length;
 
   return (
     <div className='p-4 space-y-6'>
@@ -107,22 +103,22 @@ const StudentsPage = () => {
                 <TableHead>Last Name</TableHead>
                 <TableHead>Gender</TableHead>
                 <TableHead>Level</TableHead>
-                <TableHead>Year Admitted</TableHead>
-                <TableHead>State</TableHead>
+                <TableHead>Date Of Birth</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {filteredStudents.map((student: StudentSchema) => (
+              {filteredStudents.map((student: Student) => (
                 <TableRow key={student.id}>
-                  <TableCell>{student.id}</TableCell>
+                  <TableCell>{student.studentId}</TableCell>
                   <TableCell className='cursor-pointer text-primary underline'>
-                    {student.firstName}
+                    <Link href={`/admin/students/${student.id}`}>
+                      {student.firstName}
+                    </Link>
                   </TableCell>
                   <TableCell>{student.lastName}</TableCell>
                   <TableCell>{student.gender}</TableCell>
                   <TableCell>{student.level}</TableCell>
-                  <TableCell>{student.yearAdmitted}</TableCell>
-                  <TableCell>{student.stateOfOrigin}</TableCell>
+                  <TableCell>{formatDateTime(student.dateOfBirth)}</TableCell>
                 </TableRow>
               ))}
               {filteredStudents.length === 0 && (

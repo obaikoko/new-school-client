@@ -6,6 +6,9 @@ import {
   authUserSchema,
   registerUserSchema,
   updateUserSchema,
+  userFormSchema,
+  forgetPasswordSchema,
+  resetPasswordSchema,
 } from '../validators/userValidators';
 import { registerStudentSchema } from '@/validators/studentValidation';
 
@@ -33,3 +36,6 @@ export type Student = z.infer<typeof registerStudentSchema> & {
 export type UpdateUserSchema = z.infer<typeof updateUserSchema>;
 export type SendSingleMailProps = z.infer<typeof sendSingleMailSchema>;
 export type SendBulkMailProps = z.infer<typeof sendBulkMailSchema>;
+export type UserFormSchema = z.infer<typeof userFormSchema>;
+export type ForgetPasswordForm = z.infer<typeof forgetPasswordSchema>;
+export type ResetPasswordForm = z.infer<typeof resetPasswordSchema>

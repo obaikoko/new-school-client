@@ -21,6 +21,7 @@ import { toast } from 'sonner';
 import EditUserDialog from '@/components/shared/users/edit-user-dialog';
 import DeleteUserButton from '@/components/shared/users/delete-user-button';
 import { User } from '@/schemas/userSchema';
+import Link from 'next/link';
 
 type UserFormData = {
   userId?: string;
@@ -119,7 +120,9 @@ const UsersPage = () => {
                   {users.map((user: User) => (
                     <TableRow key={user.id}>
                       <TableCell className='cursor-pointer text-primary underline'>
-                        {user.firstName} {user.lastName}
+                        <Link href={`/admin/users/${user.id}`}>
+                          {user.firstName} {user.lastName}
+                        </Link>
                       </TableCell>
                       <TableCell>
                         {user.level ? (

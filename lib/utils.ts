@@ -1,11 +1,19 @@
-import { clsx, type ClassValue } from "clsx"
-import { twMerge } from "tailwind-merge"
-import { toast } from "sonner"
+import { clsx, type ClassValue } from 'clsx';
+import { twMerge } from 'tailwind-merge';
+import { toast } from 'sonner';
 
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
+  return twMerge(clsx(inputs));
 }
 
+export const formatDateTime = (dateString: string | Date) => {
+  const date = new Date(dateString);
+  return date.toLocaleString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+};
 
 // utils.ts or similar
 import { ZodError } from 'zod';
@@ -21,9 +29,3 @@ export function showZodErrors(error: unknown) {
     toast.error('An unknown error occurred');
   }
 }
-
-export type ApiError = {
-  message: string;
-  stack?: string | null;
-  errors?: Record<string, string>; // Present only for validation errors
-};

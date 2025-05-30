@@ -1,5 +1,4 @@
 import { z } from 'zod';
-
 export const registerUserSchema = z.object({
   email: z.string().email('Invalid email address'),
   firstName: z.string().min(3, 'First name must be at least 3 letters'),
@@ -35,7 +34,8 @@ export const authResponseSchema = z.object({
   isAdmin: z.boolean(),
   role: z.string(),
   status: z.string(),
-});export const updateUserSchema = z.object({
+});
+export const updateUserSchema = z.object({
   userId: z.string().min(3, 'User ID is required'),
   firstName: z
     .string()
@@ -80,19 +80,26 @@ export const sendBulkMailSchema = z.object({
 export const forgetPasswordSchema = z.object({
   email: z.string().email('Add a valid email address'),
 });
-export const resetPasswordSchema = z.object({
-  password: z
-    .string()
-    .min(8, 'Password must be at least 8 characters long')
-    .regex(/[A-Z]/, 'Password must include at least one uppercase letter')
-    .regex(/[a-z]/, 'Password must include at least one lowercase letter')
-    .regex(/[0-9]/, 'Password must include at least one number')
-    .regex(/[\W_]/, 'Password must include at least one special character'),
-});
+
+export const resetPasswordSchema = z
+  .object({
+    password: z
+      .string()
+      .min(8, 'Password must be at least 8 characters long')
+      .regex(/[A-Z]/, 'Must include an uppercase letter')
+      .regex(/[a-z]/, 'Must include a lowercase letter')
+      .regex(/[0-9]/, 'Must include a number')
+      .regex(/[\W_]/, 'Must include a special character'),
+    confirmPassword: z.string(),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    path: ['confirmPassword'],
+    message: 'Passwords do not match',
+  });
+
 
 
 // schemas/userFormSchema.ts
-
 export const userFormSchema = z.object({
   userId: z.string().optional(),
   firstName: z.string().min(1, 'First name is required'),
@@ -104,6 +111,5 @@ export const userFormSchema = z.object({
   subLevel: z.string().min(1, 'Sub-level is required'),
 });
 
-export type UserFormSchema = z.infer<typeof userFormSchema>;
 
 
