@@ -15,6 +15,7 @@ import {
 import { Search } from 'lucide-react';
 import { searchSchema } from '@/validators/studentValidation';
 import { SearchForm } from '@/schemas/studentSchema';
+import { useRouter } from 'next/navigation';
 
 const levels = [
   'All',
@@ -36,11 +37,8 @@ const levels = [
   'SSS 3',
 ] as const;
 
-interface StudentsSearchProps {
-  onSubmit: (data: SearchForm) => void;
-}
-
-const StudentsSearch: React.FC<StudentsSearchProps> = ({ onSubmit }) => {
+const StudentsSearch = () => {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -54,9 +52,21 @@ const StudentsSearch: React.FC<StudentsSearchProps> = ({ onSubmit }) => {
     },
   });
 
+  const handleSearch = (data: SearchForm) => {
+    const { name, level } = data;
+    if ((!name || name.trim() === '') && level === 'All') {
+      return;
+    } else {
+      const query = `?keyword=${encodeURIComponent(
+        name ?? ''
+      )}&level=${encodeURIComponent(level)}`;
+      router.push(`/admin/students/search${query}`);
+    }
+  };
+
   return (
     <form
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={handleSubmit(handleSearch)}
       className='bg-background p-6 mt-1 shadow-md flex flex-col sm:flex-row items-center justify-between gap-4 text-foreground max-w-4xl mx-auto rounded-md'
     >
       <div className='flex flex-col sm:flex-row items-center gap-4 w-full'>

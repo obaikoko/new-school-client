@@ -13,11 +13,8 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Student } from '@/schemas/studentSchema';
-import { useRouter } from 'next/navigation';
-import { SearchForm } from '@/schemas/studentSchema';
 
 const StudentsPage = () => {
-  const router = useRouter();
   // const [search, setSearch] = useState('');
   const { data, isLoading, isError } = useGetStudentsQuery({ page: 1 });
 
@@ -31,18 +28,6 @@ const StudentsPage = () => {
   const total = students.length;
   const males = students.filter((s: Student) => s.gender === 'Male').length;
   const females = students.filter((s: Student) => s.gender === 'Female').length;
-
-  const handleSearch = (data: SearchForm) => {
-    const { name, level } = data;
-    if ((!name || name.trim() === '') && level === 'All') {
-      return;
-    } else {
-      const query = `?keyword=${encodeURIComponent(
-        name ?? ''
-      )}&level=${encodeURIComponent(level)}`;
-      router.push(`/admin/students/search${query}`);
-    }
-  };
 
   return (
     <div className='p-4 space-y-6'>
@@ -80,8 +65,7 @@ const StudentsPage = () => {
         </Card>
       </div>
 
-      {/* <StudentsSearch search={search} onSearchChange={setSearch} /> */}
-      <StudentsSearch onSubmit={handleSearch} />
+      <StudentsSearch />
 
       <div className='overflow-x-auto'>
         <StudentsTable
