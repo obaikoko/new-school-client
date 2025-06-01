@@ -12,6 +12,8 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { formatDateTime } from '@/lib/utils';
+import Spinner from '../spinner';
+import { Card, CardContent } from '@/components/ui/card';
 
 interface StudentsTableProps {
   students: Student[];
@@ -25,10 +27,22 @@ const StudentsTable: React.FC<StudentsTableProps> = ({
   isError,
 }) => {
   if (isLoading)
-    return <p className='text-muted-foreground'>Loading students...</p>;
+    return (
+      <Card>
+        <CardContent>
+          <Spinner /> Loading students...
+        </CardContent>
+      </Card>
+    );
   if (isError)
     return (
-      <p className='text-red-500'>Failed to load students. Please try again.</p>
+      <div>
+        <Card>
+          <CardContent>
+            <Spinner /> Failed to load students. Please try again.
+          </CardContent>
+        </Card>
+      </div>
     );
 
   return (

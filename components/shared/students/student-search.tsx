@@ -55,7 +55,7 @@ const StudentsSearch = () => {
   const handleSearch = (data: SearchForm) => {
     const { name, level } = data;
     if ((!name || name.trim() === '') && level === 'All') {
-      return;
+      router.push(`/admin/students`);
     } else {
       const query = `?keyword=${encodeURIComponent(
         name ?? ''
@@ -107,7 +107,7 @@ const StudentsSearch = () => {
 
       <Button
         type='submit'
-        className='flex items-center gap-2 bg-gray-900 dark:bg-gray-100 text-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors'
+        className='flex items-center gap-2 bg-gray-900 dark:bg-gray-100 text-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors cursor-pointer'
       >
         <Search size={16} />
         Search
