@@ -19,6 +19,8 @@ import {
   useGetUsersQuery,
 } from '@/src/features/auth/usersApiSlice';
 import { Loader2 } from 'lucide-react';
+import { showZodErrors } from '@/lib/utils';
+import Spinner from '../spinner';
 
 interface DeleteUserButtonProps {
   userId: string;
@@ -43,17 +45,10 @@ const DeleteUserButton = ({ userId, isAdmin }: DeleteUserButtonProps) => {
       refetch();
       setOpen(false);
     } catch (err) {
-      console.log(err)
-      toast.error('Failed to delete user');
+      showZodErrors(err);
     }
   };
 
-  const Spinner = ({ size = 18 }: { size?: number }) => (
-    <Loader2
-      className='animate-spin text-muted-foreground'
-      style={{ width: size, height: size }}
-    />
-  );
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
@@ -63,7 +58,7 @@ const DeleteUserButton = ({ userId, isAdmin }: DeleteUserButtonProps) => {
           className='cursor-pointer'
           onClick={() => setOpen(true)}
         >
-          {isLoading ? <Spinner size={14} /> : <Trash className='h-4 w-4' />}
+          {isLoading ? <Spinner /> : <Trash className='h-4 w-4' />}
         </Button>
       </DialogTrigger>
       <DialogContent>
@@ -83,7 +78,7 @@ const DeleteUserButton = ({ userId, isAdmin }: DeleteUserButtonProps) => {
             onClick={handleConfirmDelete}
             disabled={isLoading}
           >
-            {isLoading ? <Spinner size={14} /> : 'Delete'}
+            {isLoading ? <Spinner /> : 'Delete'}
           </Button>
         </DialogFooter>
       </DialogContent>

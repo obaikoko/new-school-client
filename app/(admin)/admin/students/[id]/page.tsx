@@ -8,7 +8,6 @@ const StudentProfilePage = async (props: {
   return (
     <>
       <StudentDetails studentId={id} />
-       
     </>
   );
 };
