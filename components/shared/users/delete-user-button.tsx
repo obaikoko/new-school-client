@@ -18,7 +18,6 @@ import {
   useDeleteUserMutation,
   useGetUsersQuery,
 } from '@/src/features/auth/usersApiSlice';
-import { Loader2 } from 'lucide-react';
 import { showZodErrors } from '@/lib/utils';
 import Spinner from '../spinner';
 
