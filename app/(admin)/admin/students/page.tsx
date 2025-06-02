@@ -13,6 +13,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Student } from '@/schemas/studentSchema';
+import DownloadStudentDataButton from '@/components/shared/students/download-student-button';
 
 const StudentsPage = () => {
   // const [search, setSearch] = useState('');
@@ -68,6 +69,7 @@ const StudentsPage = () => {
       <StudentsSearch />
 
       <div className='overflow-x-auto'>
+        <DownloadStudentDataButton />
         <StudentsTable
           students={students}
           isLoading={isLoading}
