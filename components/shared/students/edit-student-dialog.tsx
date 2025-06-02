@@ -215,7 +215,6 @@ export default function EditStudentDialog({
 
           <Input
             name='sponsorPhoneNumber'
-            type='number'
             value={formData.sponsorPhoneNumber}
             onChange={handleInputChange}
             placeholder='Sponsor Phone'
