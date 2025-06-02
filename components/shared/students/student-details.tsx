@@ -191,7 +191,7 @@ const StudentDetails = ({ studentId }: StudentDetailsProps) => {
         </CardContent>
         <CardContent className='flex justify-end gap-2'>
           <DeleteStudentButton studentId={studentId} />
-          <Button variant='outline' onClick={handleEditClick}>
+          <Button variant='outline' className='cursor-pointer' onClick={handleEditClick}>
             Edit
           </Button>
         </CardContent>

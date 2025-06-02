@@ -49,3 +49,6 @@ export const searchSchema = z.object({
   name: z.string().optional().nullable(),
   level: z.string(),
 });
+export const forgetPasswordSchema = z.object({
+  studentId: z.string().min(3, 'StudentId should be at least 3 characters'),
+});

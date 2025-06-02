@@ -12,6 +12,7 @@ import { useState } from 'react';
 
 const DownloadStudentDataButton = () => {
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false); // ✅ loading state
 
   const handleDownloadClick = () => {
     setDialogOpen(true);
@@ -19,8 +20,9 @@ const DownloadStudentDataButton = () => {
 
   const handleDownloadCSV = async () => {
     try {
+      setLoading(true); // ✅ start loading
       const response = await fetch(
-        'https://bew-school-server.onrender.com/api/students/export-cvs',
+        `${process.env.NEXT_PUBLIC_API_URL}/api/students/export-cvs`,
         {
           method: 'GET',
           credentials: 'include',
@@ -42,16 +44,14 @@ const DownloadStudentDataButton = () => {
       setDialogOpen(false);
     } catch (err) {
       showZodErrors(err);
+    } finally {
+      setLoading(false); // ✅ stop loading
     }
   };
 
   return (
     <div>
-      <Button
-        variant='outline'
-        className='cursor-pointer'
-        onClick={handleDownloadClick}
-      >
+      <Button className='cursor-pointer' onClick={handleDownloadClick}>
         Download Students Data
       </Button>
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
@@ -59,11 +59,16 @@ const DownloadStudentDataButton = () => {
           <DialogHeader>
             <DialogTitle>Download Student Data</DialogTitle>
             <DialogDescription>
-              Download all student data as csv file
+              Download all student data as a CSV file
             </DialogDescription>
           </DialogHeader>
           <div className='flex justify-end'>
-            <Button onClick={handleDownloadCSV}>Download CSV</Button>
+            <Button
+              onClick={handleDownloadCSV}
+              disabled={loading} // ✅ disable while loading
+            >
+              {loading ? 'Downloading...' : 'Download CSV'}
+            </Button>
           </div>
         </DialogContent>
       </Dialog>

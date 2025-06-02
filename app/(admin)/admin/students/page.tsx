@@ -1,7 +1,5 @@
-// app/admin/students/page.tsx
 'use client';
 
-// import { useState } from 'react';
 import { useGetStudentsQuery } from '@/src/features/students/studentApiSlice';
 import StudentsSearch from '@/components/shared/students/student-search';
 import StudentsTable from '@/components/shared/students/students-table';
@@ -14,17 +12,15 @@ import {
 } from '@/components/ui/card';
 import { Student } from '@/schemas/studentSchema';
 import DownloadStudentDataButton from '@/components/shared/students/download-student-button';
+import GraduateStudentsButton from '@/components/shared/students/graduate-students-button';
+import Pagination from '@/components/shared/pagination';
+import { useState } from 'react';
 
 const StudentsPage = () => {
-  // const [search, setSearch] = useState('');
-  const { data, isLoading, isError } = useGetStudentsQuery({ page: 1 });
-
+  const [page, setPage] = useState<number>(1);
+  const { data, isLoading, isError } = useGetStudentsQuery(page);
   const students = data?.students ?? [];
-  // const filteredStudents = students.filter((s: Student) =>
-  //   [s.firstName, s.lastName, s.id].some((field) =>
-  //     field.toLowerCase().includes(search.toLowerCase())
-  //   )
-  // );
+  const totalPages = data?.totalPages ?? 1;
 
   const total = students.length;
   const males = students.filter((s: Student) => s.gender === 'Male').length;
@@ -69,13 +65,31 @@ const StudentsPage = () => {
       <StudentsSearch />
 
       <div className='overflow-x-auto'>
-        <DownloadStudentDataButton />
         <StudentsTable
           students={students}
           isLoading={isLoading}
           isError={isError}
         />
+        <Pagination
+          currentPage={page}
+          totalPages={totalPages}
+          onPageChange={(newPage) => setPage(newPage)}
+        />
       </div>
+      <Card>
+        <CardHeader>
+          <CardTitle>Important Buttons</CardTitle>
+          <CardDescription className='text-destructive'>
+            Note that this buttons here are marked as important button.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className='flex flex-col md:flex-row gap-3'>
+            <DownloadStudentDataButton />
+            <GraduateStudentsButton />
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 };

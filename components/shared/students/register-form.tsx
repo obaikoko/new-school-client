@@ -261,7 +261,7 @@ const RegisterStudentsForm = () => {
         </div>
         <div>
           <Label htmlFor='sponsorPhoneNumber'>Phone Number</Label>
-          <Input id='sponsorPhoneNumber' {...register('sponsorPhoneNumber')} />
+          <Input type='number' id='sponsorPhoneNumber' {...register('sponsorPhoneNumber')} />
           {errors.sponsorPhoneNumber && (
             <p className='text-sm text-red-500'>
               {errors.sponsorPhoneNumber.message}
