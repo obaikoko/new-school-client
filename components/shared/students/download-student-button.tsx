@@ -20,7 +20,7 @@ const DownloadStudentDataButton = () => {
   const handleDownloadCSV = async () => {
     try {
       const response = await fetch(
-        'http://localhost:5000/api/students/export-cvs',
+        'https://bew-school-server.onrender.com/api/students/export-cvs',
         {
           method: 'GET',
           credentials: 'include',
