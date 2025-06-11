@@ -1,5 +1,6 @@
 import { RESULTS_URL } from '../constants';
 import { apiSlice } from '../apiSlice';
+import { StudentResult } from '@/schemas/resultSchema';
 
 export const resultsApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -14,6 +15,14 @@ export const resultsApiSlice = apiSlice.injectEndpoints({
     getResult: builder.query({
       query: (resultId) => ({
         url: `${RESULTS_URL}/${resultId}`,
+        credentials: 'include',
+      }),
+      providesTags: ['Results'],
+      keepUnusedDataFor: 5,
+    }),
+    getResultsForStudent: builder.query<StudentResult[], string>({
+      query: (studentId) => ({
+        url: `${RESULTS_URL}/student/${studentId}`,
         credentials: 'include',
       }),
       providesTags: ['Results'],
@@ -50,7 +59,7 @@ export const resultsApiSlice = apiSlice.injectEndpoints({
         method: 'DELETE',
         credentials: 'include',
       }),
-      providesTags: ['Results'],
+      // providesTags: ['Results'],
     }),
     addSubject: builder.mutation({
       query: (data) => ({
@@ -98,6 +107,7 @@ export const resultsApiSlice = apiSlice.injectEndpoints({
 export const {
   useGetResultQuery,
   useGetResultsQuery,
+  useGetResultsForStudentQuery,
   useSearchResultsQuery,
   useUpdateResultMutation,
   useGenerateResultMutation,

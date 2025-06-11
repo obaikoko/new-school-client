@@ -12,12 +12,9 @@ import StudentResults from './student-results';
 import { Button } from '@/components/ui/button';
 import EditStudentDialog from './edit-student-dialog';
 import { toast } from 'sonner';
+import { StudentId } from '@/schemas/studentSchema';
 
 import DeleteStudentButton from './delete-student-button';
-
-type StudentDetailsProps = {
-  studentId: string;
-};
 
 type StudentFormData = {
   studentId?: string;
@@ -40,7 +37,7 @@ type StudentFormData = {
   yearAdmitted: string;
 };
 
-const StudentDetails = ({ studentId }: StudentDetailsProps) => {
+const StudentDetails = ({ studentId }: StudentId) => {
   const { data: student, isLoading, isError } = useGetStudentQuery(studentId);
   const [updateStudent, { isLoading: isUpdating }] = useUpdateStudentMutation();
 
@@ -99,6 +96,8 @@ const StudentDetails = ({ studentId }: StudentDetailsProps) => {
       showZodErrors(error);
     }
   };
+
+  console.log({ student: student });
 
   if (isLoading) {
     return (
@@ -191,13 +190,17 @@ const StudentDetails = ({ studentId }: StudentDetailsProps) => {
         </CardContent>
         <CardContent className='flex justify-end gap-2'>
           <DeleteStudentButton studentId={studentId} />
-          <Button variant='outline' className='cursor-pointer' onClick={handleEditClick}>
+          <Button
+            variant='outline'
+            className='cursor-pointer'
+            onClick={handleEditClick}
+          >
             Edit
           </Button>
         </CardContent>
       </Card>
 
-      <StudentResults />
+      <StudentResults studentId={studentId} />
 
       <Card>
         <CardContent>
