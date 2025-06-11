@@ -15,6 +15,32 @@ export type EditStudentForm = z.infer<typeof editStudentSchema> & {
   studentId: string;
 };
 export type Student = z.infer<typeof studentSchema>;
+export type Students = {
+  students: Student[];
+  page: number;
+  totalPages: number;
+};
 export type SearchForm = z.infer<typeof searchSchema>;
 export type ForgetPassword = z.infer<typeof forgetPasswordSchema>;
 export type StudentId = z.infer<typeof studentIdSchema>;
+
+export type StudentFormData = {
+  studentId?: string;
+  firstName: string;
+  lastName: string;
+  otherName?: string;
+  gender: string;
+  dateOfBirth: string;
+  level: string;
+  subLevel: string;
+  stateOfOrigin: string;
+  localGvt: string;
+  homeTown: string;
+  isPaid: boolean;
+  isStudent: boolean;
+  sponsorName: string;
+  sponsorEmail: string;
+  sponsorPhoneNumber: string;
+  sponsorRelationship: string;
+  yearAdmitted: string;
+};

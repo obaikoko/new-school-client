@@ -1,6 +1,4 @@
-// components/shared/students/StudentsTable.tsx
 'use client';
-
 import Link from 'next/link';
 import { Student } from '@/schemas/studentSchema';
 import {
@@ -15,22 +13,19 @@ import { formatDateTime } from '@/lib/utils';
 import Spinner from '../spinner';
 import { Card, CardContent } from '@/components/ui/card';
 
-interface StudentsTableProps {
-  students: Student[];
-  isLoading: boolean;
-  isError: boolean;
-}
-
-const StudentsTable: React.FC<StudentsTableProps> = ({
+const StudentsTable = ({
   students,
   isLoading,
   isError,
+}: {
+  students: Student[];
+  isLoading: boolean;
+  isError: boolean;
 }) => {
   if (isLoading)
     return (
       <Card>
         <CardContent>
-        
           <Spinner />
           Loading students...
         </CardContent>

@@ -17,7 +17,7 @@ import { showZodErrors } from '@/lib/utils';
 
 const GraduateStudentsButton = () => {
   const [openDialog, setOpenDialog] = useState<boolean>(false);
-  const { refetch } = useGetStudentsQuery({});
+  const { refetch } = useGetStudentsQuery(1);
   const [graduateStudents, { isLoading }] = useGraduateStudentsMutation();
 
   const handleGraduateStudents = async () => {

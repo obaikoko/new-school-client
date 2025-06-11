@@ -1,4 +1,3 @@
-// src/types/result.ts
 
 export interface SubjectResult {
   subject: string;
@@ -37,8 +36,8 @@ export interface StudentResult {
   teacherRemark: string;
   principalRemark: string;
   isPaid: boolean;
-  createdAt: string; // or Date
-  updatedAt: string; // or Date
+  createdAt: string;
+  updatedAt: string;
   subjectResults: SubjectResult[];
   affectiveAssessment: AffectiveAssessment[];
   psychomotor: Psychomotor[];

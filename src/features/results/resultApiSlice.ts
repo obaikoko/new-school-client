@@ -59,7 +59,7 @@ export const resultsApiSlice = apiSlice.injectEndpoints({
         method: 'DELETE',
         credentials: 'include',
       }),
-      // providesTags: ['Results'],
+      invalidatesTags: ['Results'],
     }),
     addSubject: builder.mutation({
       query: (data) => ({

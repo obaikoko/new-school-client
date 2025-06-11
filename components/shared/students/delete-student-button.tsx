@@ -16,7 +16,7 @@ import { useRouter } from 'next/navigation';
 import { showZodErrors } from '@/lib/utils';
 const DeleteStudentButton = ({ studentId }: { studentId: string }) => {
   const router = useRouter();
-  const { refetch } = useGetStudentsQuery({});
+  const { refetch } = useGetStudentsQuery(1);
   const [deleteStudent, { isLoading: isDeleting }] = useDeleteStudentMutation();
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const handleDelete = async () => {

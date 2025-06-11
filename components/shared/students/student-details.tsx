@@ -12,30 +12,9 @@ import StudentResults from './student-results';
 import { Button } from '@/components/ui/button';
 import EditStudentDialog from './edit-student-dialog';
 import { toast } from 'sonner';
-import { StudentId } from '@/schemas/studentSchema';
+import { StudentFormData, StudentId } from '@/schemas/studentSchema';
 
 import DeleteStudentButton from './delete-student-button';
-
-type StudentFormData = {
-  studentId?: string;
-  firstName: string;
-  lastName: string;
-  otherName?: string;
-  gender: string;
-  dateOfBirth: string;
-  level: string;
-  subLevel: string;
-  stateOfOrigin: string;
-  localGvt: string;
-  homeTown: string;
-  isPaid: boolean;
-  isStudent: boolean;
-  sponsorName: string;
-  sponsorEmail: string;
-  sponsorPhoneNumber: string;
-  sponsorRelationship: string;
-  yearAdmitted: string;
-};
 
 const StudentDetails = ({ studentId }: StudentId) => {
   const { data: student, isLoading, isError } = useGetStudentQuery(studentId);
@@ -62,6 +41,26 @@ const StudentDetails = ({ studentId }: StudentId) => {
     sponsorRelationship: '',
     yearAdmitted: '',
   });
+
+  if (isLoading) {
+    return (
+      <div className='p-6'>
+        <Card>
+          <CardContent>Loading Student data...</CardContent>
+        </Card>
+      </div>
+    );
+  }
+
+  if (isError || !student) {
+    return (
+      <div className='p-6'>
+        <Card>
+          <CardContent>Failed to load Student data.</CardContent>
+        </Card>
+      </div>
+    );
+  }
   const handleEditClick = () => {
     setFormData({
       studentId: student.id,
@@ -97,27 +96,7 @@ const StudentDetails = ({ studentId }: StudentId) => {
     }
   };
 
-  console.log({ student: student });
-
-  if (isLoading) {
-    return (
-      <div className='p-6'>
-        <Card>
-          <CardContent>Loading Student data...</CardContent>
-        </Card>
-      </div>
-    );
-  }
-
-  if (isError || !student) {
-    return (
-      <div className='p-6'>
-        <Card>
-          <CardContent>Failed to load Student data.</CardContent>
-        </Card>
-      </div>
-    );
-  }
+  
 
   return (
     <div className='max-w-4xl mx-auto p-6 space-y-6'>
