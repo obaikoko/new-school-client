@@ -1,6 +1,5 @@
 'use client';
 import NaijaStates from 'naija-state-local-government';
-
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'sonner';
@@ -18,10 +17,7 @@ import { levels, subLevel } from '@/lib/utils';
 
 import { showZodErrors } from '@/lib/utils';
 import { RegisterStudentForm } from '@/schemas/studentSchema';
-import {
-  studentSchema,
-  registerStudentSchema,
-} from '@/validators/studentValidation';
+import { registerStudentSchema } from '@/validators/studentValidation';
 import { useRegisterStudentMutation } from '@/src/features/students/studentApiSlice';
 import { useState } from 'react';
 import Spinner from '../spinner';
@@ -37,26 +33,14 @@ const RegisterStudentsForm = () => {
   });
 
   const [registerStudent, { isLoading }] = useRegisterStudentMutation();
-  const [selectedState, setSelectedState] = useState('')
+  const [selectedState, setSelectedState] = useState('');
   const states: string[] = NaijaStates.states();
   const getLgas = (state: string): string[] => NaijaStates.lgas(state).lgas;
-  
 
   const onSubmit = async (data: RegisterStudentForm) => {
     try {
-      const result = studentSchema.safeParse(
-        await registerStudent(data).unwrap()
-      );
-
-      if (!result.success) {
-        toast.error('Invalid response from server');
-        console.error(result.error);
-        return;
-      }
-
-      const res = result.data;
-
-      toast.success(`${res.firstName} ${res.lastName} registered successfully`);
+      await registerStudent(data).unwrap();
+      toast.success(` registered successfully`);
     } catch (err) {
       showZodErrors(err);
     }
@@ -64,7 +48,6 @@ const RegisterStudentsForm = () => {
 
   return (
     <form className='space-y-6' onSubmit={handleSubmit(onSubmit)}>
-      {/* Student Info */}
       <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
         <div>
           <Label htmlFor='firstName'>First Name</Label>

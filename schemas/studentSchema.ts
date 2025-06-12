@@ -14,7 +14,10 @@ export type RegisterStudentForm = z.infer<typeof registerStudentSchema>;
 export type EditStudentForm = z.infer<typeof editStudentSchema> & {
   studentId: string;
 };
-export type Student = z.infer<typeof studentSchema>;
+export type Student = z.infer<typeof studentSchema> & {
+  createdAt: string;
+  updatedAt: string;
+};
 export type Students = {
   students: Student[];
   page: number;

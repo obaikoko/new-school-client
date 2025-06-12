@@ -69,8 +69,7 @@ export const studentSchema = z.object({
   sponsorPhoneNumber: z.string().nullable(),
   sponsorRelationship: z.string().nullable(),
   imageUrl: z.string().nullable(),
-  createdAt: z.coerce.date(),
-  updatedAt: z.coerce.date(),
+  
 });
 
 export const searchSchema = z.object({
