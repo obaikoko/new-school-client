@@ -1,4 +1,6 @@
-
+import { z } from 'zod';
+import { generateResultSchema } from '@/validators/resultValidator';
+export type GenerateResultForm = z.infer<typeof generateResultSchema>;
 export interface SubjectResult {
   subject: string;
   testScore: number;

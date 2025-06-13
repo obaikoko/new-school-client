@@ -61,3 +61,4 @@ export const sessions: string[] = [
   '2028/2029',
   '2029/2030',
 ];
+export const terms: string[] = ['First', 'Second', 'Third'];

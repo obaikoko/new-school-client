@@ -6,6 +6,7 @@ import { useGetResultQuery } from '@/src/features/results/resultApiSlice';
 import ResultTable from './result-table';
 import { BookOpen } from 'lucide-react';
 import ResultHeader from './result-header';
+import DeleteResultButton from './delete-result-button';
 
 const ResultDetails = ({ resultId }: { resultId: string }) => {
   const { data: result, isLoading, isError } = useGetResultQuery(resultId);
@@ -39,6 +40,7 @@ const ResultDetails = ({ resultId }: { resultId: string }) => {
       <ResultHeader result={result} />
 
       <ResultTable results={result.subjectResults} />
+      <DeleteResultButton resultId={resultId} studentId={result.studentId} />
     </>
   );
 };
