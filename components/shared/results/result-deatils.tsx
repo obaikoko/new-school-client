@@ -14,6 +14,8 @@ import { BookOpen } from 'lucide-react';
 import ResultHeader from './result-header';
 import DeleteResultButton from './delete-result-button';
 import UpdateSubjectScore from './update-subject-score';
+import UpdateAffectiveAssessment from './update-affective-assessment';
+import AffectiveAssessment from './affective-assessment';
 
 const ResultDetails = ({ resultId }: { resultId: string }) => {
   const { data: result, isLoading, isError } = useGetResultQuery(resultId);
@@ -62,6 +64,9 @@ const ResultDetails = ({ resultId }: { resultId: string }) => {
         <CardContent>
           <ResultTable results={result.subjectResults} />
         </CardContent>
+        <CardContent>
+          <AffectiveAssessment data={result.affectiveAssessment} />
+        </CardContent>
       </Card>
 
       {/* Action Buttons */}
@@ -75,6 +80,9 @@ const ResultDetails = ({ resultId }: { resultId: string }) => {
             resultId={resultId}
             studentId={result.studentId}
           />
+        </CardContent>
+        <CardContent className='flex flex-col sm:flex-row items-start sm:items-center gap-4'>
+          <UpdateAffectiveAssessment resultId={resultId} />
         </CardContent>
       </Card>
     </div>
