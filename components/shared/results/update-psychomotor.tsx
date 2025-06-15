@@ -14,22 +14,24 @@ import {
   useUpdateResultMutation,
   useGetResultQuery,
 } from '@/src/features/results/resultApiSlice';
-import { categories, grade, showZodErrors } from '@/lib/utils';
+import {
+  psychomotorCategories as categories,
+  grade,
+  showZodErrors,
+} from '@/lib/utils';
 
-const UpdateAffectiveAssessment = ({ resultId }: { resultId: string }) => {
+const UpdatePsychomotor = ({ resultId }: { resultId: string }) => {
   const [openDialog, setOpenDialog] = useState(false);
   const [updateResult, { isLoading }] = useUpdateResultMutation();
   const { refetch } = useGetResultQuery(resultId);
 
   const [formData, setFormData] = useState<Record<string, string>>({
-    Attendance: '',
-    Carefulness: '',
-    Responsibility: '',
-    Honesty: '',
-    Neatness: '',
-    Obedience: '',
-    Politeness: '',
-    Punctuality: '',
+    Handwriting: '',
+    Games: '',
+    Sports: '',
+    Drawing: '',
+    Speaking: '',
+    HandlingTools: '',
   });
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -42,13 +44,16 @@ const UpdateAffectiveAssessment = ({ resultId }: { resultId: string }) => {
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const affectiveAssessments = Object.entries(formData)
+    const psychomotor = Object.entries(formData)
       .filter(([, grade]) => grade)
-      .map(([aCategory, grade]) => ({ aCategory, grade }));
+      .map(([pCategory, grade]) => ({ pCategory, grade }));
 
     try {
-      await updateResult({ resultId, affectiveAssessments }).unwrap();
-      toast.success('Affective assessment updated successfully');
+      await updateResult({
+        resultId,
+        psychomotorAssessments: psychomotor,
+      }).unwrap();
+      toast.success('Psychomotor updated successfully');
       refetch();
       setOpenDialog(false);
     } catch (err) {
@@ -58,15 +63,13 @@ const UpdateAffectiveAssessment = ({ resultId }: { resultId: string }) => {
 
   return (
     <div>
-      <Button onClick={() => setOpenDialog(true)}>
-        Update Affective Assessment
-      </Button>
+      <Button onClick={() => setOpenDialog(true)}>Update Psychomotor</Button>
 
       <Dialog open={openDialog} onOpenChange={setOpenDialog}>
         <DialogContent className='max-w-4xl'>
           <DialogHeader>
             <DialogTitle className='text-2xl font-bold text-gray-900 dark:text-gray-100'>
-              Update Affective Assessment
+              Update Psychomotor
             </DialogTitle>
             <p className='text-sm text-gray-500 dark:text-gray-400 mt-1'>
               Select one grade for each category.
@@ -130,4 +133,4 @@ const UpdateAffectiveAssessment = ({ resultId }: { resultId: string }) => {
   );
 };
 
-export default UpdateAffectiveAssessment;
+export default UpdatePsychomotor;

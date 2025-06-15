@@ -52,6 +52,26 @@ export const levels: string[] = [
 ];
 
 export const subLevel: string[] = ['A', 'B', 'C', 'D', 'E'];
+export const grade: string[] = ['A', 'B', 'C', 'D', 'E', 'F'];
+export const categories: string[] = [
+  'Attendance',
+  'Carefulness',
+  'Honesty',
+  'Neatness',
+  'Obedience',
+  'Politeness',
+  'Punctuality',
+  'Responsibility',
+];
+export const psychomotorCategories = [
+  'Handwriting',
+  'Drawing',
+  'Sport',
+  'Speaking',
+  'Music',
+  'Craft',
+  'ComputerPractice',
+];
 
 export const sessions: string[] = [
   '2024/2025',

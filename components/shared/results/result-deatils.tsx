@@ -16,6 +16,8 @@ import DeleteResultButton from './delete-result-button';
 import UpdateSubjectScore from './update-subject-score';
 import UpdateAffectiveAssessment from './update-affective-assessment';
 import AffectiveAssessment from './affective-assessment';
+import Psychomotor from './psychomotor';
+import UpdatePsychomotor from './update-psychomotor';
 
 const ResultDetails = ({ resultId }: { resultId: string }) => {
   const { data: result, isLoading, isError } = useGetResultQuery(resultId);
@@ -66,6 +68,7 @@ const ResultDetails = ({ resultId }: { resultId: string }) => {
         </CardContent>
         <CardContent>
           <AffectiveAssessment data={result.affectiveAssessment} />
+          <Psychomotor data={result.psychomotor} />
         </CardContent>
       </Card>
 
@@ -83,6 +86,7 @@ const ResultDetails = ({ resultId }: { resultId: string }) => {
         </CardContent>
         <CardContent className='flex flex-col sm:flex-row items-start sm:items-center gap-4'>
           <UpdateAffectiveAssessment resultId={resultId} />
+          <UpdatePsychomotor resultId={resultId} />
         </CardContent>
       </Card>
     </div>
