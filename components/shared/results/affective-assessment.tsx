@@ -38,9 +38,7 @@ const AffectiveAssessment = ({ data }: Props) => {
               {data.map((item) => (
                 <TableRow key={item.aCategory}>
                   <TableCell>{item.aCategory}</TableCell>
-                  <TableCell className='font-bold text-blue-900'>
-                    {item.grade}
-                  </TableCell>
+                  <TableCell>{item.grade}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

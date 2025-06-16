@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { generateResultSchema, updateSubjectScoreSchema } from '@/validators/resultValidator';
+import { addSubjectSchema, generateResultSchema, removeSubjectSchema, updateSubjectScoreSchema } from '@/validators/resultValidator';
 export type GenerateResultForm = z.infer<typeof generateResultSchema>;
 export type UpdateSubjectScoreSchema = z.infer<typeof updateSubjectScoreSchema>;
 export interface SubjectResult {
@@ -45,3 +45,5 @@ export interface StudentResult {
   affectiveAssessment: AffectiveAssessment[];
   psychomotor: Psychomotor[];
 }
+export type AddSubjectForm = z.infer<typeof addSubjectSchema>;
+export type RemoveSubjectForm = z.infer<typeof removeSubjectSchema>;

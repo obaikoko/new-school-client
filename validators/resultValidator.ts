@@ -17,3 +17,17 @@ export const updateSubjectScoreSchema = z.object({
     .max(70, 'Exam score cannot be more than 70'),
   subject: z.string().min(1, 'Please select a subject'),
 });
+
+export const addSubjectSchema = z.object({
+  session: z.string().min(3, 'Session is required'),
+  term: z.string().min(3, 'Term is required'),
+  level: z.string().min(3, 'Level is required'),
+  subjectName: z.string().min(2, 'Subject name is required'),
+});
+export const removeSubjectSchema = z.object({
+  session: z.string().min(3, 'Session is required'),
+  term: z.string().min(3, 'Term is required'),
+  level: z.string().min(3, 'Level is required'),
+  subjectName: z.string().min(2, 'Subject name is required'),
+});
+

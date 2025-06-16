@@ -38,9 +38,7 @@ const Psychomotor = ({ data }: Props) => {
               {data.map((item) => (
                 <TableRow key={item.pCategory}>
                   <TableCell>{item.pCategory}</TableCell>
-                  <TableCell className='font-bold text-blue-900 dark:text-blue-300'>
-                    {item.grade}
-                  </TableCell>
+                  <TableCell>{item.grade}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

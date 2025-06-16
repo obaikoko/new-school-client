@@ -63,12 +63,18 @@ const ResultDetails = ({ resultId }: { resultId: string }) => {
         <CardHeader>
           <CardTitle>Subjects & Scores</CardTitle>
         </CardHeader>
-        <CardContent>
-          <ResultTable results={result.subjectResults} />
-        </CardContent>
-        <CardContent>
-          <AffectiveAssessment data={result.affectiveAssessment} />
-          <Psychomotor data={result.psychomotor} />
+
+        <CardContent className='flex flex-col lg:flex-row gap-6'>
+          {/* Left: Result Table (2/3 width) */}
+          <div className='lg:w-2/3 w-full'>
+            <ResultTable results={result.subjectResults} />
+          </div>
+
+          {/* Right: Assessments (1/3 width) */}
+          <div className='lg:w-1/3 w-full flex flex-col gap-4'>
+            <AffectiveAssessment data={result.affectiveAssessment} />
+            <Psychomotor data={result.psychomotor} />
+          </div>
         </CardContent>
       </Card>
 
