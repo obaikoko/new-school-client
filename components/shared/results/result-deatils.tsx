@@ -19,6 +19,7 @@ import AffectiveAssessment from './affective-assessment';
 import Psychomotor from './psychomotor';
 import UpdatePsychomotor from './update-psychomotor';
 import NextTermDetails from './next-term-details';
+import DownloadResult from './download-result-button';
 
 const ResultDetails = ({ resultId }: { resultId: string }) => {
   const { data: result, isLoading, isError } = useGetResultQuery(resultId);
@@ -90,15 +91,17 @@ const ResultDetails = ({ resultId }: { resultId: string }) => {
           <CardTitle>Actions</CardTitle>
         </CardHeader>
         <CardContent className='flex flex-col sm:flex-row items-start sm:items-center gap-4'>
+          <UpdateAffectiveAssessment resultId={resultId} />
+          <UpdatePsychomotor resultId={resultId} />
+        </CardContent>
+        <CardContent className='flex flex-col sm:flex-row items-start sm:items-center gap-4'>
+          <DownloadResult resultId={resultId} />
+
           <UpdateSubjectScore resultId={resultId} />
           <DeleteResultButton
             resultId={resultId}
             studentId={result.studentId}
           />
-        </CardContent>
-        <CardContent className='flex flex-col sm:flex-row items-start sm:items-center gap-4'>
-          <UpdateAffectiveAssessment resultId={resultId} />
-          <UpdatePsychomotor resultId={resultId} />
         </CardContent>
       </Card>
     </div>

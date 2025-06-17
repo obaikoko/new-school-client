@@ -66,13 +66,13 @@ const NextTermDetails = ({
         </p>
         {data.busFee !== null && (
           <p>
-            <strong>Bus Fee:</strong> ₦{data.busFee.toLocaleString()}
+            <strong>Bus Fee:</strong> ₦{data.busFee?.toLocaleString()}
           </p>
         )}
         {data.otherCharges !== null && (
           <p>
             <strong>Other Charges:</strong> ₦
-            {data.otherCharges.toLocaleString()}
+            {data.otherCharges?.toLocaleString()}
           </p>
         )}
       </CardContent>
