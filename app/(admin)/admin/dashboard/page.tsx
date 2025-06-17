@@ -3,8 +3,17 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Users, School, BookOpenCheck, CreditCard } from 'lucide-react';
 import { useGetStudentsDataQuery } from '@/src/features/data/dataApiSlice';
+import StudentsTable from '@/components/shared/students/students-table';
+import { useGetStudentsQuery } from '@/src/features/students/studentApiSlice';
 const DashboardPage = () => {
+  const {
+    data,
+    isLoading: loadingStudents,
+    isError: studentError,
+  } = useGetStudentsQuery(1);
   const { data: studentsData } = useGetStudentsDataQuery({});
+  const students = data?.students ?? [];
+
   return (
     <div className='p-6 space-y-6'>
       {/* Header */}
@@ -44,8 +53,8 @@ const DashboardPage = () => {
             <BookOpenCheck className='h-5 w-5 text-muted-foreground' />
           </CardHeader>
           <CardContent>
-            <div className='text-2xl font-bold'>36</div>
-            <p className='text-xs text-muted-foreground'>Organized by grade</p>
+            <div className='text-2xl font-bold'>18</div>
+            <p className='text-xs text-muted-foreground'>Creche - SSS 3</p>
           </CardContent>
         </Card>
 
@@ -66,7 +75,7 @@ const DashboardPage = () => {
       {/* Recent enrollments table */}
       <div className='mt-6'>
         <h2 className='text-lg font-semibold mb-2'>Recent Enrollments</h2>
-        <div className='overflow-x-auto rounded-md border'>
+        {/* <div className='overflow-x-auto rounded-md border'>
           <table className='min-w-full divide-y divide-gray-200 dark:divide-gray-800'>
             <thead className='bg-gray-100 dark:bg-gray-800'>
               <tr>
@@ -111,7 +120,12 @@ const DashboardPage = () => {
               </tr>
             </tbody>
           </table>
-        </div>
+        </div> */}
+        <StudentsTable
+          students={students}
+          isLoading={loadingStudents}
+          isError={studentError}
+        />
       </div>
     </div>
   );

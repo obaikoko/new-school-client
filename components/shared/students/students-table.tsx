@@ -54,7 +54,7 @@ const StudentsTable = ({
           </TableRow>
         </TableHeader>
         <TableBody>
-          {students.map((student) => (
+          {students && students.map((student) => (
             <TableRow key={student.id}>
               <TableCell>{student.studentId}</TableCell>
               <TableCell className='cursor-pointer text-primary underline'>

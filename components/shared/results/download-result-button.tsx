@@ -23,20 +23,20 @@ const DownloadResult = ({ resultId }: { resultId: string }) => {
         `${process.env.NEXT_PUBLIC_API_URL}/api/results/pdf/${resultId}`,
         {
           method: 'GET',
+          credentials: 'include',
         }
       );
 
-      if (!res.ok) throw new Error('Failed to fetch PDF');
+      if (!res.ok) throw new Error('Failed to download PDF');
 
       const blob = await res.blob();
       const url = window.URL.createObjectURL(blob);
 
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = `result-${resultId}.pdf`;
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `result-${resultId}.pdf`;
+       a.click();
+      
       window.URL.revokeObjectURL(url);
 
       // Close only after successful download
