@@ -1,6 +1,13 @@
 import { z } from 'zod';
-import { addSubjectSchema, generateResultSchema, removeSubjectSchema, updateSubjectScoreSchema } from '@/validators/resultValidator';
+import {
+  addSubjectSchema,
+  generatePositionSchema,
+  generateResultSchema,
+  removeSubjectSchema,
+  updateSubjectScoreSchema,
+} from '@/validators/resultValidator';
 export type GenerateResultForm = z.infer<typeof generateResultSchema>;
+export type GeneratePositionForm = z.infer<typeof generatePositionSchema>;
 export type UpdateSubjectScoreSchema = z.infer<typeof updateSubjectScoreSchema>;
 export interface SubjectResult {
   subject: string;

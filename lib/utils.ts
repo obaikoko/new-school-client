@@ -51,7 +51,7 @@ export const levels: string[] = [
   'GRADUATED',
 ];
 
-export const subLevel: string[] = ['A', 'B', 'C', 'D', 'E'];
+export const subLevels: string[] = ['A', 'B', 'C', 'D', 'E'];
 export const grade: string[] = ['A', 'B', 'C', 'D', 'E', 'F'];
 export const categories: string[] = [
   'Attendance',

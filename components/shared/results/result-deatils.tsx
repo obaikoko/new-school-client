@@ -18,6 +18,7 @@ import UpdateAffectiveAssessment from './update-affective-assessment';
 import AffectiveAssessment from './affective-assessment';
 import Psychomotor from './psychomotor';
 import UpdatePsychomotor from './update-psychomotor';
+import NextTermDetails from './next-term-details';
 
 const ResultDetails = ({ resultId }: { resultId: string }) => {
   const { data: result, isLoading, isError } = useGetResultQuery(resultId);
@@ -68,6 +69,11 @@ const ResultDetails = ({ resultId }: { resultId: string }) => {
           {/* Left: Result Table (2/3 width) */}
           <div className='lg:w-2/3 w-full'>
             <ResultTable results={result.subjectResults} />
+            <NextTermDetails
+              session={result.session}
+              term={result.term}
+              level={result.level}
+            />
           </div>
 
           {/* Right: Assessments (1/3 width) */}

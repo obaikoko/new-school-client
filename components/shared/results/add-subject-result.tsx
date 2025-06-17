@@ -5,7 +5,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { addSubjectSchema } from '@/validators/resultValidator';
 import { AddSubjectForm } from '@/schemas/resultSchema';
 import { Button } from '@/components/ui/button';
-import { Label } from '@/components/ui/label';
 import { toast } from 'sonner';
 import { levels, sessions, showZodErrors, subjects, terms } from '@/lib/utils';
 import { useAddSubjectMutation } from '@/src/features/results/resultApiSlice';
@@ -41,8 +40,13 @@ const AddSubjectToResult = () => {
     <form onSubmit={handleSubmit(onSubmit)} className='space-y-6'>
       <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
         <div>
-          <Label htmlFor='session'>Session</Label>
-          <select {...register('session')} defaultValue=''>
+          <select
+            className='bg-background text-foreground'
+            {...register('session')}
+            defaultValue=''
+          >
+            <option value=''>Select Session</option>
+
             {sessions.map((session, index) => (
               <option key={index} value={session}>
                 {session}
@@ -58,8 +62,11 @@ const AddSubjectToResult = () => {
         </div>
 
         <div>
-          <Label htmlFor='term'>Term</Label>
-          <select {...register('term')}>
+          <select
+            className='bg-background text-foreground'
+            {...register('term')}
+          >
+            <option value=''>Select Term</option>
             {terms.map((term, index) => (
               <option key={index} value={term}>
                 {term}
@@ -72,8 +79,11 @@ const AddSubjectToResult = () => {
         </div>
 
         <div>
-          <Label htmlFor='level'>Level</Label>
-          <select {...register('level')}>
+          <select
+            className='bg-background text-foreground'
+            {...register('level')}
+          >
+            <option value=''>Select level/class</option>
             {levels.map((level, index) => (
               <option key={index} value={level}>
                 {level}
@@ -86,9 +96,12 @@ const AddSubjectToResult = () => {
         </div>
 
         <div>
-          <Label htmlFor='subjectName'>Subject Name</Label>
+          <select
+            className='bg-background text-foreground'
+            {...register('subjectName')}
+          >
+            <option value=''>Select Subject</option>
 
-          <select {...register('subjectName')}>
             {subjects.map((subjectName, index) => (
               <option key={index} value={subjectName}>
                 {subjectName}

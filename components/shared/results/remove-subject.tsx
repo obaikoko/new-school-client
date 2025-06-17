@@ -39,69 +39,85 @@ const RemoveSubjectFromResult = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className='space-y-6'>
-     <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
-           <div>
-             <Label htmlFor='session'>Session</Label>
-             <select {...register('session')} defaultValue=''>
-               {sessions.map((session, index) => (
-                 <option key={index} value={session}>
-                   {session}
-                 </option>
-               ))}
-             </select>
-   
-             {errors.session && (
-               <p className='text-red-500 text-sm mt-1'>
-                 {errors.session.message}
-               </p>
-             )}
-           </div>
-   
-           <div>
-             <Label htmlFor='term'>Term</Label>
-             <select {...register('term')}>
-               {terms.map((term, index) => (
-                 <option key={index} value={term}>
-                   {term}
-                 </option>
-               ))}
-             </select>
-             {errors.term && (
-               <p className='text-red-500 text-sm mt-1'>{errors.term.message}</p>
-             )}
-           </div>
-   
-           <div>
-             <Label htmlFor='level'>Level</Label>
-             <select {...register('level')}>
-               {levels.map((level, index) => (
-                 <option key={index} value={level}>
-                   {level}
-                 </option>
-               ))}
-             </select>
-             {errors.level && (
-               <p className='text-red-500 text-sm mt-1'>{errors.level.message}</p>
-             )}
-           </div>
-   
-           <div>
-             <Label htmlFor='subjectName'>Subject Name</Label>
-   
-             <select {...register('subjectName')}>
-               {subjects.map((subjectName, index) => (
-                 <option key={index} value={subjectName}>
-                   {subjectName}
-                 </option>
-               ))}
-             </select>
-             {errors.subjectName && (
-               <p className='text-red-500 text-sm mt-1'>
-                 {errors.subjectName.message}
-               </p>
-             )}
-           </div>
-         </div>
+      <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+        <div>
+          <Label htmlFor='session'>Session</Label>
+          <select
+            className='bg-background text-foreground'
+            {...register('session')}
+            defaultValue=''
+          >
+            <option value=''>Select Session</option>
+
+            {sessions.map((session, index) => (
+              <option key={index} value={session}>
+                {session}
+              </option>
+            ))}
+          </select>
+
+          {errors.session && (
+            <p className='text-red-500 text-sm mt-1'>
+              {errors.session.message}
+            </p>
+          )}
+        </div>
+
+        <div>
+          <select
+            className='bg-background text-foreground'
+            {...register('term')}
+          >
+            <option value=''>Select Term</option>
+
+            {terms.map((term, index) => (
+              <option key={index} value={term}>
+                {term}
+              </option>
+            ))}
+          </select>
+          {errors.term && (
+            <p className='text-red-500 text-sm mt-1'>{errors.term.message}</p>
+          )}
+        </div>
+
+        <div>
+          <option value=''>Select Level/Class</option>
+          <select
+            className='bg-background text-foreground'
+            {...register('level')}
+          >
+            {levels.map((level, index) => (
+              <option key={index} value={level}>
+                {level}
+              </option>
+            ))}
+          </select>
+          {errors.level && (
+            <p className='text-red-500 text-sm mt-1'>{errors.level.message}</p>
+          )}
+        </div>
+
+        <div>
+          <select
+            className='bg-background text-foreground'
+            {...register('subjectName')}
+          >
+            <option value=''>Select Subject</option>
+
+            {subjects.map((subjectName, index) => (
+              <option key={index} value={subjectName}>
+                {subjectName}
+              </option>
+            ))}
+          </select>
+          {errors.subjectName && (
+            <p className='text-red-500 text-sm mt-1'>
+              {errors.subjectName.message}
+            </p>
+          )}
+        </div>
+      </div>
 
       <Button type='submit' className='w-full' disabled={isLoading}>
         {isLoading ? 'Processing...' : 'Remove Subject from Results'}

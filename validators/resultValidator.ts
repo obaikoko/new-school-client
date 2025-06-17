@@ -6,6 +6,13 @@ export const generateResultSchema = z.object({
   level: z.string().min(3, 'level must have at least 3 characters'),
 });
 
+export const generatePositionSchema = z.object({
+  session: z.string().min(3, 'session must have at least 3 characters'),
+  term: z.string().min(3, 'term must have at least minimum of 3 characters'),
+  level: z.string().min(3, 'level must have at least 3 characters'),
+  subLevel: z.string().min(1, 'subLevel must have at least 1 character'),
+});
+
 export const updateSubjectScoreSchema = z.object({
   test: z
     .number({ invalid_type_error: 'Test score must be a number' })
@@ -30,4 +37,3 @@ export const removeSubjectSchema = z.object({
   level: z.string().min(3, 'Level is required'),
   subjectName: z.string().min(2, 'Subject name is required'),
 });
-
