@@ -2,7 +2,11 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Users, School, BookOpenCheck, CreditCard } from 'lucide-react';
-import { useGetStudentsDataQuery } from '@/src/features/data/dataApiSlice';
+import {
+  useGetStudentsDataQuery,
+  useGetStaffDataQuery,
+} from '@/src/features/data/dataApiSlice';
+import { useGetAllAdmissionQuery } from '@/src/features/admission/admissionApiSlice';
 import StudentsTable from '@/components/shared/students/students-table';
 import { useGetStudentsQuery } from '@/src/features/students/studentApiSlice';
 const DashboardPage = () => {
@@ -12,6 +16,8 @@ const DashboardPage = () => {
     isError: studentError,
   } = useGetStudentsQuery(1);
   const { data: studentsData } = useGetStudentsDataQuery({});
+  const { data: staffData } = useGetStaffDataQuery({});
+  const { data: admission } = useGetAllAdmissionQuery({});
   const students = data?.students ?? [];
 
   return (
@@ -38,12 +44,24 @@ const DashboardPage = () => {
 
         <Card>
           <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
-            <CardTitle className='text-sm font-medium'>Teachers</CardTitle>
+            <CardTitle className='text-sm font-medium'>Staff</CardTitle>
             <School className='h-5 w-5 text-muted-foreground' />
           </CardHeader>
           <CardContent>
-            <div className='text-2xl font-bold'>85</div>
-            <p className='text-xs text-muted-foreground'>+2 this month</p>
+            <div className='text-2xl font-bold'>{staffData?.totalStaff}</div>
+            <p className='text-xs text-muted-foreground'>Registered</p>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
+            <CardTitle className='text-sm font-medium'>Admissions</CardTitle>
+            <CreditCard className='h-5 w-5 text-muted-foreground' />
+          </CardHeader>
+          <CardContent>
+            <div className='text-2xl font-bold'>
+              {admission?.totalAdmission}
+            </div>
+            <p className='text-xs text-muted-foreground'>Registered</p>
           </CardContent>
         </Card>
 
@@ -55,19 +73,6 @@ const DashboardPage = () => {
           <CardContent>
             <div className='text-2xl font-bold'>18</div>
             <p className='text-xs text-muted-foreground'>Creche - SSS 3</p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
-            <CardTitle className='text-sm font-medium'>
-              Fees Collected
-            </CardTitle>
-            <CreditCard className='h-5 w-5 text-muted-foreground' />
-          </CardHeader>
-          <CardContent>
-            <div className='text-2xl font-bold'>₦5,400,000</div>
-            <p className='text-xs text-muted-foreground'>This term</p>
           </CardContent>
         </Card>
       </div>
