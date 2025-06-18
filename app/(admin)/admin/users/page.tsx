@@ -16,6 +16,7 @@ import {
   useGetUsersQuery,
   useUpdateUserMutation,
 } from '@/src/features/auth/usersApiSlice';
+import { useGetUsersDataQuery } from '@/src/features/data/dataApiSlice';
 import { toast } from 'sonner';
 
 import EditUserDialog from '@/components/shared/users/edit-user-dialog';
@@ -37,6 +38,11 @@ type UserFormData = {
 const UsersPage = () => {
   const { data: users = [], isLoading, isError } = useGetUsersQuery({});
   const [updateUser, { isLoading: isUpdating }] = useUpdateUserMutation();
+  const {
+    data: usersData,
+    isLoading: loadingUsersData,
+    isError: usersDataError,
+  } = useGetUsersDataQuery({});
 
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
@@ -104,7 +110,20 @@ const UsersPage = () => {
             <BookOpenCheck className='h-5 w-5 text-muted-foreground' />
           </CardHeader>
           <CardContent>
-            <div className='text-2xl font-bold'>20</div>
+            <div className='text-2xl font-bold'>
+              {' '}
+              {loadingUsersData ? (
+                <>
+                  <p>Loading...</p>
+                </>
+              ) : usersDataError ? (
+                <>
+                  <p>An Error occurred</p>
+                </>
+              ) : (
+                <> {usersData.totalUsers}</>
+              )}
+            </div>
             <p className='text-xs text-muted-foreground'>In Total</p>
           </CardContent>
         </Card>
@@ -114,7 +133,20 @@ const UsersPage = () => {
             <BookOpenCheck className='h-5 w-5 text-muted-foreground' />
           </CardHeader>
           <CardContent>
-            <div className='text-2xl font-bold'>2</div>
+            <div className='text-2xl font-bold'>
+              {' '}
+              {loadingUsersData ? (
+                <>
+                  <p>Loading...</p>
+                </>
+              ) : usersDataError ? (
+                <>
+                  <p>An Error occurred</p>
+                </>
+              ) : (
+                <> {usersData.adminUsers}</>
+              )}
+            </div>
             <p className='text-xs text-muted-foreground'>Administrators</p>
           </CardContent>
         </Card>
@@ -124,7 +156,20 @@ const UsersPage = () => {
             <BookOpenCheck className='h-5 w-5 text-muted-foreground' />
           </CardHeader>
           <CardContent>
-            <div className='text-2xl font-bold'>2</div>
+            <div className='text-2xl font-bold'>
+              {' '}
+              {loadingUsersData ? (
+                <>
+                  <p>Loading...</p>
+                </>
+              ) : usersDataError ? (
+                <>
+                  <p>An Error occurred</p>
+                </>
+              ) : (
+                <> {usersData.activeUsers}</>
+              )}
+            </div>
             <p className='text-xs text-muted-foreground'>Active</p>
           </CardContent>
         </Card>
@@ -134,8 +179,21 @@ const UsersPage = () => {
             <BookOpenCheck className='h-5 w-5 text-muted-foreground' />
           </CardHeader>
           <CardContent>
-            <div className='text-2xl font-bold'>0</div>
-            <p className='text-xs text-muted-foreground'>Suspended</p>
+            <div className='text-2xl font-bold'>
+              {' '}
+              {loadingUsersData ? (
+                <>
+                  <p>Loading...</p>
+                </>
+              ) : usersDataError ? (
+                <>
+                  <p>An Error occurred</p>
+                </>
+              ) : (
+                <> {usersData.suspendedUsers}</>
+              )}
+            </div>
+            <p className='text-xs  text-red-600'>Suspended</p>
           </CardContent>
         </Card>
       </div>
@@ -178,7 +236,7 @@ const UsersPage = () => {
                         )}
                       </TableCell>
                       <TableCell>{user.role}</TableCell>
-                      <TableCell>{user.status}</TableCell>
+                      <TableCell className={`${user.status === 'suspended' ? 'text-red-600' : 'text-green-600'}`} >{user.status}</TableCell>
                       <TableCell className='text-right space-x-2'>
                         <Button
                           size='sm'

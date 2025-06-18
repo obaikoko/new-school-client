@@ -46,6 +46,7 @@ export interface StudentResult {
   teacherRemark: string;
   principalRemark: string;
   isPaid: boolean;
+  isPublished: boolean;
   createdAt: string;
   updatedAt: string;
   subjectResults: SubjectResult[];

@@ -13,7 +13,7 @@ import { useAppSelector } from '@/src/app/hooks';
 const ResultList = ({ results }: { results: StudentResult[] }) => {
   const { user } = useAppSelector((state) => state.auth);
 
-  console.log(user)
+  console.log(user);
   return (
     <div className='overflow-x-auto'>
       <Table>
@@ -60,8 +60,12 @@ const ResultList = ({ results }: { results: StudentResult[] }) => {
               </TableCell>
               <TableCell>{r.term}</TableCell>
               <TableCell>{r.session}</TableCell>
-              <TableCell className={'text-green-600 font-medium'}>
-                Published
+              <TableCell
+                className={`${
+                  r.isPublished ? 'text-green-600 ' : 'text-red-600 '
+                }font-medium`}
+              >
+                {r.isPublished ? 'Published' : 'Not published'}
               </TableCell>
             </TableRow>
           ))}

@@ -10,16 +10,27 @@ import {
 } from '@/components/ui/card';
 
 import ResultList from '@/components/shared/results/results-list';
+import Spinner from '@/components/shared/spinner';
 
 const AdminResultsPage = () => {
   const { data: results, isLoading, isError } = useGetResultsDataQuery({});
 
   if (isLoading) {
-    return <> Loading...</>;
+    return (
+      <Card>
+        <CardHeader>
+          <Spinner /> Loading...
+        </CardHeader>
+      </Card>
+    );
   }
 
   if (isError || !results) {
-    return <>Error fetching data</>;
+    return (
+      <Card>
+        <CardHeader>Error fetching data</CardHeader>
+      </Card>
+    );
   }
 
   return (
@@ -44,7 +55,7 @@ const AdminResultsPage = () => {
             <CardDescription>Visible to students</CardDescription>
           </CardHeader>
           <CardContent className='text-3xl font-bold text-green-600'>
-            {results.resultsWithPosition}
+            {results.publishedResults}
           </CardContent>
         </Card>
 
@@ -54,7 +65,7 @@ const AdminResultsPage = () => {
             <CardDescription>Pending publication</CardDescription>
           </CardHeader>
           <CardContent className='text-3xl font-bold text-red-600'>
-            {results.resultWithoutPosition}
+            {results.unpublishedResults}
           </CardContent>
         </Card>
       </div>

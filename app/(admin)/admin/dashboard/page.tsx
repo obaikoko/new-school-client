@@ -5,6 +5,7 @@ import { Users, School, BookOpenCheck, CreditCard } from 'lucide-react';
 import {
   useGetStudentsDataQuery,
   useGetStaffDataQuery,
+  useGetUsersDataQuery,
 } from '@/src/features/data/dataApiSlice';
 import { useGetAllAdmissionQuery } from '@/src/features/admission/admissionApiSlice';
 import StudentsTable from '@/components/shared/students/students-table';
@@ -20,6 +21,11 @@ const DashboardPage = () => {
     isLoading: loadingStudentsData,
     isError: studentsDataError,
   } = useGetStudentsDataQuery({});
+  const {
+    data: usersData,
+    isLoading: loadingUsersData,
+    isError: usersDataError,
+  } = useGetUsersDataQuery({});
   const {
     data: staffData,
     isLoading: loadingStaffData,
@@ -41,6 +47,28 @@ const DashboardPage = () => {
 
       {/* Overview cards */}
       <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4'>
+        <Card>
+          <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
+            <CardTitle className='text-sm font-medium'>Users</CardTitle>
+            <BookOpenCheck className='h-5 w-5 text-muted-foreground' />
+          </CardHeader>
+          <CardContent>
+            <div className='text-2xl font-bold'>
+              {loadingUsersData ? (
+                <>
+                  <p>Loading...</p>
+                </>
+              ) : usersDataError ? (
+                <>
+                  <p>An Error occurred</p>
+                </>
+              ) : (
+                <> {usersData.totalUsers}</>
+              )}
+            </div>
+            <p className='text-xs text-muted-foreground'>Registered</p>
+          </CardContent>
+        </Card>
         <Card>
           <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
             <CardTitle className='text-sm font-medium'>Students</CardTitle>
@@ -109,23 +137,12 @@ const DashboardPage = () => {
             <p className='text-xs text-muted-foreground'>Registered</p>
           </CardContent>
         </Card>
-
-        <Card>
-          <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
-            <CardTitle className='text-sm font-medium'>Classes</CardTitle>
-            <BookOpenCheck className='h-5 w-5 text-muted-foreground' />
-          </CardHeader>
-          <CardContent>
-            <div className='text-2xl font-bold'>18</div>
-            <p className='text-xs text-muted-foreground'>Creche - SSS 3</p>
-          </CardContent>
-        </Card>
       </div>
 
       {/* Recent enrollments table */}
       <div className='mt-6'>
         <h2 className='text-lg font-semibold mb-2'>Recent Enrollments</h2>
-       
+
         <StudentsTable
           students={students}
           isLoading={loadingStudents}
