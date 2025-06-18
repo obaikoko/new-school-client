@@ -1,3 +1,4 @@
+'use client';
 import {
   Card,
   CardContent,
@@ -9,8 +10,11 @@ import { useGetResultsForStudentQuery } from '@/src/features/results/resultApiSl
 import Spinner from '../spinner';
 import Link from 'next/link';
 import GenerateResultButton from '../results/generate-result-button';
+import { useAppSelector } from '@/src/app/hooks';
+// import { User } from '@/schemas/userSchema';
 
 const StudentResults = ({ studentId }: { studentId: string }) => {
+  const { user } = useAppSelector((state) => state.auth);
   const {
     data: results,
     isLoading,
@@ -56,7 +60,11 @@ const StudentResults = ({ studentId }: { studentId: string }) => {
           {results &&
             results.map((result, index) => (
               <Link
-                href={`/admin/results/${result.id}`}
+                href={
+                  user.isAdmin
+                    ? `/admin/results/${result.id}`
+                    : `/user/results/${result.id}`
+                }
                 key={index}
                 className='w-full sm:w-[48%] md:w-[30%] lg:w-[22%] p-3 border rounded-lg hover:bg-muted transition text-sm'
               >

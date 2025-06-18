@@ -19,11 +19,11 @@ import ModeToggle from '../header/mode-toggle';
 import SignOutButton from '../sign-out';
 
 const teacherNavItems = [
-  { label: 'Dashboard', href: '/users/dashboard', icon: Home },
-  { label: 'My Classes', href: '/users/students', icon: ClipboardList },
-  { label: 'Upload Results', href: '/users/results', icon: BookOpen },
-  { label: 'Timetable', href: '/users/timetable', icon: CalendarDays },
-  { label: 'Settings', href: '/users/settings', icon: Settings },
+  { label: 'Dashboard', href: '/user/dashboard', icon: Home },
+  { label: 'My Classes', href: '/user/students', icon: ClipboardList },
+  { label: 'Results', href: '/user/results', icon: BookOpen },
+  { label: 'Timetable', href: '/user/timetable', icon: CalendarDays },
+  { label: 'Settings', href: '/user/settings', icon: Settings },
 ];
 
 const UserSideNav = () => {

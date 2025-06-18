@@ -1,5 +1,5 @@
 'use client';
-import { useGetResultsDataQuery } from '@/src/features/results/resultApiSlice';
+import { useGetResultsQuery } from '@/src/features/results/resultApiSlice';
 
 import {
   Card,
@@ -10,16 +10,32 @@ import {
 } from '@/components/ui/card';
 
 import ResultList from '@/components/shared/results/results-list';
+import Spinner from '@/components/shared/spinner';
 
-const AdminResultsPage = () => {
-  const { data: results, isLoading, isError } = useGetResultsDataQuery({});
+const UserResultsPage = () => {
+  const { data: results, isLoading, isError } = useGetResultsQuery(1);
 
   if (isLoading) {
-    return <> Loading...</>;
+    return (
+      <div className='p-6'>
+        <Card>
+          <CardHeader >
+            <Spinner />
+            Loading...
+          </CardHeader>
+        </Card>
+      </div>
+    );
   }
 
   if (isError || !results) {
-    return <>Error fetching data</>;
+    return (
+      <div className='p-6'>
+        <Card>
+          <CardHeader className='text-destructive'>Error fetching results</CardHeader>
+        </Card>
+      </div>
+    );
   }
 
   return (
@@ -34,7 +50,7 @@ const AdminResultsPage = () => {
             <CardDescription>All uploaded results</CardDescription>
           </CardHeader>
           <CardContent className='text-3xl font-bold'>
-            {results.totalResults}
+            {/* {data.totalResults} */}
           </CardContent>
         </Card>
 
@@ -44,7 +60,7 @@ const AdminResultsPage = () => {
             <CardDescription>Visible to students</CardDescription>
           </CardHeader>
           <CardContent className='text-3xl font-bold text-green-600'>
-            {results.resultsWithPosition}
+            {/* {data.resultsWithPosition} */}
           </CardContent>
         </Card>
 
@@ -54,7 +70,7 @@ const AdminResultsPage = () => {
             <CardDescription>Pending publication</CardDescription>
           </CardHeader>
           <CardContent className='text-3xl font-bold text-red-600'>
-            {results.resultWithoutPosition}
+            {/* {data.resultWithoutPosition} */}
           </CardContent>
         </Card>
       </div>
@@ -65,4 +81,4 @@ const AdminResultsPage = () => {
   );
 };
 
-export default AdminResultsPage;
+export default UserResultsPage;

@@ -15,9 +15,21 @@ const DashboardPage = () => {
     isLoading: loadingStudents,
     isError: studentError,
   } = useGetStudentsQuery(1);
-  const { data: studentsData } = useGetStudentsDataQuery({});
-  const { data: staffData } = useGetStaffDataQuery({});
-  const { data: admission } = useGetAllAdmissionQuery({});
+  const {
+    data: studentsData,
+    isLoading: loadingStudentsData,
+    isError: studentsDataError,
+  } = useGetStudentsDataQuery({});
+  const {
+    data: staffData,
+    isLoading: loadingStaffData,
+    isError: staffDataError,
+  } = useGetStaffDataQuery({});
+  const {
+    data: admission,
+    isLoading: loadingAdmission,
+    isError: admissionError,
+  } = useGetAllAdmissionQuery({});
   const students = data?.students ?? [];
 
   return (
@@ -36,7 +48,17 @@ const DashboardPage = () => {
           </CardHeader>
           <CardContent>
             <div className='text-2xl font-bold'>
-              {studentsData?.totalStudents}
+              {loadingStudentsData ? (
+                <>
+                  <p>Loading...</p>
+                </>
+              ) : studentsDataError ? (
+                <>
+                  <p>An Error occurred</p>
+                </>
+              ) : (
+                <>{studentsData?.totalStudents}</>
+              )}
             </div>
             <p className='text-xs text-muted-foreground'>Registered</p>
           </CardContent>
@@ -48,7 +70,20 @@ const DashboardPage = () => {
             <School className='h-5 w-5 text-muted-foreground' />
           </CardHeader>
           <CardContent>
-            <div className='text-2xl font-bold'>{staffData?.totalStaff}</div>
+            <div className='text-2xl font-bold'>
+              {loadingStaffData ? (
+                <>
+                  <p>Loading...</p>
+                </>
+              ) : staffDataError ? (
+                <>
+                  <p>An Error occurred</p>
+                </>
+              ) : (
+                <>{staffData?.totalStaff}</>
+              )}
+            </div>
+
             <p className='text-xs text-muted-foreground'>Registered</p>
           </CardContent>
         </Card>
@@ -59,7 +94,17 @@ const DashboardPage = () => {
           </CardHeader>
           <CardContent>
             <div className='text-2xl font-bold'>
-              {admission?.totalAdmission}
+              {loadingAdmission ? (
+                <>
+                  <p>Loading...</p>
+                </>
+              ) : admissionError ? (
+                <>
+                  <p>An Error occurred</p>
+                </>
+              ) : (
+                <> {admission?.totalAdmission}</>
+              )}
             </div>
             <p className='text-xs text-muted-foreground'>Registered</p>
           </CardContent>
@@ -80,52 +125,7 @@ const DashboardPage = () => {
       {/* Recent enrollments table */}
       <div className='mt-6'>
         <h2 className='text-lg font-semibold mb-2'>Recent Enrollments</h2>
-        {/* <div className='overflow-x-auto rounded-md border'>
-          <table className='min-w-full divide-y divide-gray-200 dark:divide-gray-800'>
-            <thead className='bg-gray-100 dark:bg-gray-800'>
-              <tr>
-                <th className='px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider'>
-                  Student
-                </th>
-                <th className='px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider'>
-                  Grade
-                </th>
-                <th className='px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider'>
-                  Status
-                </th>
-                <th className='px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider'>
-                  Date
-                </th>
-              </tr>
-            </thead>
-            <tbody className='bg-white divide-y divide-gray-200 dark:divide-gray-800 dark:bg-gray-900'>
-              <tr>
-                <td className='px-6 py-4 whitespace-nowrap'>Blessing Okafor</td>
-                <td className='px-6 py-4 whitespace-nowrap'>JSS 2</td>
-                <td className='px-6 py-4 whitespace-nowrap text-green-600'>
-                  Active
-                </td>
-                <td className='px-6 py-4 whitespace-nowrap'>2025-05-01</td>
-              </tr>
-              <tr>
-                <td className='px-6 py-4 whitespace-nowrap'>Samuel Adeniyi</td>
-                <td className='px-6 py-4 whitespace-nowrap'>SSS 1</td>
-                <td className='px-6 py-4 whitespace-nowrap text-green-600'>
-                  Active
-                </td>
-                <td className='px-6 py-4 whitespace-nowrap'>2025-04-29</td>
-              </tr>
-              <tr>
-                <td className='px-6 py-4 whitespace-nowrap'>Chisom Eze</td>
-                <td className='px-6 py-4 whitespace-nowrap'>JSS 3</td>
-                <td className='px-6 py-4 whitespace-nowrap text-yellow-600'>
-                  Pending
-                </td>
-                <td className='px-6 py-4 whitespace-nowrap'>2025-04-28</td>
-              </tr>
-            </tbody>
-          </table>
-        </div> */}
+       
         <StudentsTable
           students={students}
           isLoading={loadingStudents}

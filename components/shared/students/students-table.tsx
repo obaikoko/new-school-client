@@ -12,7 +12,7 @@ import {
 import { formatDateTime } from '@/lib/utils';
 import Spinner from '../spinner';
 import { Card, CardContent } from '@/components/ui/card';
-
+import { useAppSelector } from '@/src/app/hooks';
 const StudentsTable = ({
   students,
   isLoading,
@@ -22,6 +22,7 @@ const StudentsTable = ({
   isLoading: boolean;
   isError: boolean;
 }) => {
+  const { user } = useAppSelector((state) => state.auth);
   if (isLoading)
     return (
       <Card>
@@ -54,20 +55,27 @@ const StudentsTable = ({
           </TableRow>
         </TableHeader>
         <TableBody>
-          {students && students.map((student) => (
-            <TableRow key={student.id}>
-              <TableCell>{student.studentId}</TableCell>
-              <TableCell className='cursor-pointer text-primary underline'>
-                <Link href={`/admin/students/${student.id}`}>
-                  {student.firstName}
-                </Link>
-              </TableCell>
-              <TableCell>{student.lastName}</TableCell>
-              <TableCell>{student.gender}</TableCell>
-              <TableCell>{student.level}</TableCell>
-              <TableCell>{formatDateTime(student.dateOfBirth)}</TableCell>
-            </TableRow>
-          ))}
+          {students &&
+            students.map((student) => (
+              <TableRow key={student.id}>
+                <TableCell>{student.studentId}</TableCell>
+                <TableCell className='cursor-pointer text-primary underline'>
+                  <Link
+                    href={
+                      user.isAdmin
+                        ? `/admin/students/${student.id}`
+                        : `/user/students/${student.id}`
+                    }
+                  >
+                    {student.firstName}
+                  </Link>
+                </TableCell>
+                <TableCell>{student.lastName}</TableCell>
+                <TableCell>{student.gender}</TableCell>
+                <TableCell>{student.level}</TableCell>
+                <TableCell>{formatDateTime(student.dateOfBirth)}</TableCell>
+              </TableRow>
+            ))}
           {students.length === 0 && (
             <TableRow>
               <TableCell
