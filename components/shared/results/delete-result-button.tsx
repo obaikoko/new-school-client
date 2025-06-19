@@ -45,7 +45,7 @@ const DeleteResultButton = ({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant='destructive' size='sm'>
+        <Button className='cursor-pointer' variant='destructive' size='sm'>
           Delete
         </Button>
       </DialogTrigger>
@@ -60,6 +60,7 @@ const DeleteResultButton = ({
 
         <DialogFooter>
           <Button
+            className='cursor-pointer'
             variant='ghost'
             onClick={() => setOpen(false)}
             disabled={isLoading}
@@ -67,6 +68,7 @@ const DeleteResultButton = ({
             Cancel
           </Button>
           <Button
+            className='cursor-pointer'
             variant='destructive'
             onClick={handleDelete}
             disabled={isLoading}

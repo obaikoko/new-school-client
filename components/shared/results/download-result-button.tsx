@@ -11,6 +11,8 @@ import {
   DialogDescription,
 } from '@/components/ui/dialog';
 import { Download } from 'lucide-react';
+import { toast } from 'sonner';
+import { showZodErrors } from '@/lib/utils';
 
 const DownloadResult = ({ resultId }: { resultId: string }) => {
   const [open, setOpen] = useState(false);
@@ -27,7 +29,11 @@ const DownloadResult = ({ resultId }: { resultId: string }) => {
         }
       );
 
-      if (!res.ok) throw new Error('Failed to download PDF');
+      if (!res.ok) {
+        toast.error('Failed to download PDF');
+
+        return;
+      }
 
       const blob = await res.blob();
       const url = window.URL.createObjectURL(blob);
@@ -35,14 +41,14 @@ const DownloadResult = ({ resultId }: { resultId: string }) => {
       const a = document.createElement('a');
       a.href = url;
       a.download = `result-${resultId}.pdf`;
-       a.click();
-      
+      a.click();
+
       window.URL.revokeObjectURL(url);
 
       // Close only after successful download
       setOpen(false);
     } catch (error) {
-      console.error('Download error:', error);
+      showZodErrors(error);
     } finally {
       setLoading(false);
     }
@@ -50,7 +56,11 @@ const DownloadResult = ({ resultId }: { resultId: string }) => {
 
   return (
     <>
-      <Button variant='outline' onClick={() => setOpen(true)}>
+      <Button
+        className='cursor-pointer'
+        variant='outline'
+        onClick={() => setOpen(true)}
+      >
         <Download className='mr-2 h-4 w-4' />
         Download Result
       </Button>
@@ -66,13 +76,18 @@ const DownloadResult = ({ resultId }: { resultId: string }) => {
 
           <DialogFooter className='flex justify-end gap-2'>
             <Button
+              className='cursor-pointer'
               variant='outline'
               onClick={() => setOpen(false)}
               disabled={loading}
             >
               Cancel
             </Button>
-            <Button onClick={handleDownload} disabled={loading}>
+            <Button
+              className='cursor-pointer'
+              onClick={handleDownload}
+              disabled={loading}
+            >
               {loading ? 'Downloading...' : 'Confirm'}
             </Button>
           </DialogFooter>

@@ -1,5 +1,6 @@
 'use client';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { Student } from '@/schemas/studentSchema';
 import {
   Table,
@@ -22,6 +23,7 @@ const StudentsTable = ({
   isLoading: boolean;
   isError: boolean;
 }) => {
+  const pathName = usePathname();
   const { user } = useAppSelector((state) => state.auth);
   if (isLoading)
     return (
@@ -51,7 +53,11 @@ const StudentsTable = ({
             <TableHead>Last Name</TableHead>
             <TableHead>Gender</TableHead>
             <TableHead>Level</TableHead>
-            <TableHead>Date Of Birth</TableHead>
+            <TableHead>
+              {pathName === '/admin/dashboard'
+                ? 'Date Registered'
+                : 'Date Of Birth'}
+            </TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -72,8 +78,15 @@ const StudentsTable = ({
                 </TableCell>
                 <TableCell>{student.lastName}</TableCell>
                 <TableCell>{student.gender}</TableCell>
-                <TableCell>{student.level}</TableCell>
-                <TableCell>{formatDateTime(student.dateOfBirth)}</TableCell>
+                <TableCell>
+                  {student.level}
+                  {student.subLevel}
+                </TableCell>
+                <TableCell>
+                  {pathName === '/admin/dashboard'
+                    ? formatDateTime(student.createdAt)
+                    : formatDateTime(student.dateOfBirth)}
+                </TableCell>
               </TableRow>
             ))}
           {students.length === 0 && (

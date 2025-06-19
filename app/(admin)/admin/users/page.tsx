@@ -23,6 +23,7 @@ import EditUserDialog from '@/components/shared/users/edit-user-dialog';
 import DeleteUserButton from '@/components/shared/users/delete-user-button';
 import { User } from '@/schemas/userSchema';
 import Link from 'next/link';
+import { showZodErrors } from '@/lib/utils';
 
 type UserFormData = {
   userId?: string;
@@ -42,6 +43,7 @@ const UsersPage = () => {
     data: usersData,
     isLoading: loadingUsersData,
     isError: usersDataError,
+    refetch,
   } = useGetUsersDataQuery({});
 
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
@@ -78,11 +80,11 @@ const UsersPage = () => {
 
     try {
       await updateUser({ id: selectedUser.id, ...formData }).unwrap();
+      refetch();
       toast.success('User updated successfully');
       setDialogOpen(false);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error: any) {
-      toast.error(error?.data?.message || 'Failed to update user');
+    } catch (error) {
+      showZodErrors(error);
     }
   };
 
@@ -236,7 +238,15 @@ const UsersPage = () => {
                         )}
                       </TableCell>
                       <TableCell>{user.role}</TableCell>
-                      <TableCell className={`${user.status === 'suspended' ? 'text-red-600' : 'text-green-600'}`} >{user.status}</TableCell>
+                      <TableCell
+                        className={`${
+                          user.status === 'suspended'
+                            ? 'text-red-600'
+                            : 'text-green-600'
+                        }`}
+                      >
+                        {user.status}
+                      </TableCell>
                       <TableCell className='text-right space-x-2'>
                         <Button
                           size='sm'

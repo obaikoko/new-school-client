@@ -60,7 +60,7 @@ const UpdateSubjectScore = ({ resultId }: { resultId: string }) => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button size='sm' variant='outline'>
+        <Button className='cursor-pointer' size='sm' variant='outline'>
           Update Scores
         </Button>
       </DialogTrigger>
@@ -123,7 +123,7 @@ const UpdateSubjectScore = ({ resultId }: { resultId: string }) => {
             )}
           </div>
 
-          <Button type='submit' className='w-full' disabled={isSubmitting}>
+          <Button type='submit' className='w-full cursor-pointer' disabled={isSubmitting}>
             {isSubmitting && <Loader2 className='w-4 h-4 mr-2 animate-spin' />}
             Save Scores
           </Button>

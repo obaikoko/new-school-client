@@ -58,12 +58,12 @@ const UpdateAffectiveAssessment = ({ resultId }: { resultId: string }) => {
 
   return (
     <div>
-      <Button onClick={() => setOpenDialog(true)}>
+      <Button className='cursor-pointer' onClick={() => setOpenDialog(true)}>
         Update Affective Assessment
       </Button>
 
       <Dialog open={openDialog} onOpenChange={setOpenDialog}>
-        <DialogContent className='max-w-4xl'>
+        <DialogContent className='max-w-4xl max-h-[90vh] overflow-y-auto'>
           <DialogHeader>
             <DialogTitle className='text-2xl font-bold text-gray-900 dark:text-gray-100'>
               Update Affective Assessment
@@ -112,8 +112,11 @@ const UpdateAffectiveAssessment = ({ resultId }: { resultId: string }) => {
                 <Spinner />
               ) : (
                 <>
-                  <Button type='submit'>Upload</Button>
+                  <Button className='cursor-pointer' type='submit'>
+                    Upload
+                  </Button>
                   <Button
+                    className='cursor-pointer'
                     type='button'
                     variant='destructive'
                     onClick={() => setOpenDialog(false)}
