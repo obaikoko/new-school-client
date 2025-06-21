@@ -19,7 +19,7 @@ const UserResultsPage = () => {
     return (
       <div className='p-6'>
         <Card>
-          <CardHeader >
+          <CardHeader>
             <Spinner />
             Loading...
           </CardHeader>
@@ -32,7 +32,9 @@ const UserResultsPage = () => {
     return (
       <div className='p-6'>
         <Card>
-          <CardHeader className='text-destructive'>Error fetching results</CardHeader>
+          <CardHeader className='text-destructive'>
+            Error fetching results
+          </CardHeader>
         </Card>
       </div>
     );
@@ -76,7 +78,11 @@ const UserResultsPage = () => {
       </div>
 
       {/* Table */}
-      <ResultList results={results.results} />
+      <ResultList
+        results={results.results}
+        loading={isLoading}
+        error={isError}
+      />
     </div>
   );
 };
