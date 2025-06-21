@@ -9,11 +9,36 @@ import {
 import { StudentResult } from '@/schemas/resultSchema';
 import Link from 'next/link';
 import { useAppSelector } from '@/src/app/hooks';
+import Spinner from '../spinner';
+import { Card, CardHeader } from '@/components/ui/card';
 
-const ResultList = ({ results }: { results: StudentResult[] }) => {
+const ResultList = ({
+  results,
+  loading,
+  error,
+}: {
+  results: StudentResult[];
+  loading: boolean;
+  error: boolean;
+}) => {
   const { user } = useAppSelector((state) => state.auth);
-
-  console.log(user);
+  if (loading) {
+    return (
+      <Card>
+        <CardHeader>
+          <Spinner />
+          Loading...
+        </CardHeader>
+      </Card>
+    );
+  }
+  if (error) {
+    return (
+      <Card>
+        <CardHeader>Error fetching results</CardHeader>
+      </Card>
+    );
+  }
   return (
     <div className='overflow-x-auto'>
       <Table>

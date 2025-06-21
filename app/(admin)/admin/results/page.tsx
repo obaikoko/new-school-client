@@ -1,5 +1,8 @@
 'use client';
-import { useGetResultsDataQuery } from '@/src/features/results/resultApiSlice';
+import {
+  useGetResultsDataQuery,
+  useGetResultsQuery,
+} from '@/src/features/results/resultApiSlice';
 
 import {
   Card,
@@ -11,9 +14,19 @@ import {
 
 import ResultList from '@/components/shared/results/results-list';
 import Spinner from '@/components/shared/spinner';
+import Pagination from '@/components/shared/pagination';
+import { useState } from 'react';
 
 const AdminResultsPage = () => {
-  const { data: results, isLoading, isError } = useGetResultsDataQuery({});
+  const [page, setPage] = useState<number>(1);
+
+  const { data: resultsData, isLoading, isError } = useGetResultsDataQuery({});
+  const {
+    data: results,
+    isLoading: loadingResults,
+    isError: resultsError,
+  } = useGetResultsQuery(page);
+  const totalPages = results?.totalPages ?? 1;
 
   if (isLoading) {
     return (
@@ -45,7 +58,7 @@ const AdminResultsPage = () => {
             <CardDescription>All uploaded results</CardDescription>
           </CardHeader>
           <CardContent className='text-3xl font-bold'>
-            {results.totalResults}
+            {resultsData.totalResults}
           </CardContent>
         </Card>
 
@@ -55,7 +68,7 @@ const AdminResultsPage = () => {
             <CardDescription>Visible to students</CardDescription>
           </CardHeader>
           <CardContent className='text-3xl font-bold text-green-600'>
-            {results.publishedResults}
+            {resultsData.publishedResults}
           </CardContent>
         </Card>
 
@@ -65,13 +78,22 @@ const AdminResultsPage = () => {
             <CardDescription>Pending publication</CardDescription>
           </CardHeader>
           <CardContent className='text-3xl font-bold text-red-600'>
-            {results.unpublishedResults}
+            {resultsData.unpublishedResults}
           </CardContent>
         </Card>
       </div>
 
       {/* Table */}
-      <ResultList results={results.results} />
+      <ResultList
+        results={results.results}
+        loading={loadingResults}
+        error={resultsError}
+      />
+      <Pagination
+        currentPage={page}
+        totalPages={totalPages}
+        onPageChange={(newPage) => setPage(newPage)}
+      />
     </div>
   );
 };
