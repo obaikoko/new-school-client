@@ -40,7 +40,7 @@ const ResultList = ({
     );
   }
   return (
-    <div className='overflow-x-auto'>
+    <div className='overflow-x-auto max-h-[300px] overflow-y-auto border rounded-md'>
       <Table>
         <TableHeader>
           <TableRow>

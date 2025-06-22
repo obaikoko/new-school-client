@@ -16,6 +16,7 @@ import ResultList from '@/components/shared/results/results-list';
 import Spinner from '@/components/shared/spinner';
 import Pagination from '@/components/shared/pagination';
 import { useState } from 'react';
+import DownloadResults from '@/components/shared/results/download-results-button';
 
 const AdminResultsPage = () => {
   const [page, setPage] = useState<number>(1);
@@ -82,6 +83,8 @@ const AdminResultsPage = () => {
           </CardContent>
         </Card>
       </div>
+
+      <DownloadResults />
 
       {/* Table */}
       <ResultList

@@ -44,7 +44,7 @@ const StudentsTable = ({
     );
 
   return (
-    <div className='max-h-[500px] overflow-y-auto border rounded-md'>
+    <div className='max-h-[400px] overflow-y-auto border rounded-md'>
       <Table>
         <TableHeader>
           <TableRow>
