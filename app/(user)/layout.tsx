@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import UserSideNav from '@/components/shared/users/user-side-nav';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
@@ -9,15 +9,15 @@ export default function UserLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-    const [sidebarOpen, setSidebarOpen] = useState(false);
-  
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
   return (
     <div className='flex min-h-screen flex-col md:flex-row'>
       <UserSideNav isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
       <div className='flex-1 flex flex-col'>
         <header className='flex justify-between items-center px-4 py-2 border-b'>
           <div></div>
-          {/* Top-right toggler */}
+
           <div className='md:hidden'>
             <Button
               variant='outline'

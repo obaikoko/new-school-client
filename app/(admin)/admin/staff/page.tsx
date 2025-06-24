@@ -1,18 +1,39 @@
 'use client';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+
 import { Users, UserPlus, UserCheck } from 'lucide-react';
+import { useGetStaffDataQuery } from '@/src/features/data/dataApiSlice';
+import { useGetAllStaffQuery } from '@/src/features/staff/staffApiSlice';
+import Spinner from '@/components/shared/spinner';
+import StaffTable from '@/components/shared/staff/staff-table';
 
 const StaffPage = () => {
+  const { data, isLoading, isError } = useGetStaffDataQuery({});
+
+  const {
+    data: staff,
+    isLoading: loadingStaff,
+    isError: staffError,
+  } = useGetAllStaffQuery(1);
+
+  if (isLoading) {
+    return (
+      <Card>
+        <CardHeader>
+          <Spinner /> Loading...
+        </CardHeader>
+      </Card>
+    );
+  }
+
+  if (isError || !data) {
+    return (
+      <Card>
+        <CardHeader>Error fetching data</CardHeader>
+      </Card>
+    );
+  }
   return (
     <div className='space-y-6 p-4'>
       <h1 className='text-2xl font-semibold'>Staff Overview</h1>
@@ -26,59 +47,47 @@ const StaffPage = () => {
               Total Staff
             </CardTitle>
           </CardHeader>
-          <CardContent className='text-3xl font-bold'>35</CardContent>
+          <CardContent className='text-3xl font-bold'>
+            {data.totalStaff}
+          </CardContent>
         </Card>
 
         <Card>
           <CardHeader>
             <CardTitle className='flex items-center gap-2 text-base'>
               <UserPlus className='h-5 w-5 text-primary' />
-              New Hires (This Term)
+              Males
             </CardTitle>
           </CardHeader>
-          <CardContent className='text-3xl font-bold'>4</CardContent>
+          <CardContent className='text-3xl font-bold'>{data.Males}</CardContent>
         </Card>
 
         <Card>
           <CardHeader>
             <CardTitle className='flex items-center gap-2 text-base'>
               <UserCheck className='h-5 w-5 text-primary' />
-              Active Staff
+              Femal
             </CardTitle>
           </CardHeader>
-          <CardContent className='text-3xl font-bold'>31</CardContent>
+          <CardContent className='text-3xl font-bold'>
+            {data.Females}
+          </CardContent>
         </Card>
-      </div>
-
-      {/* Search and Filter */}
-      <div className='flex flex-col md:flex-row gap-4 items-center'>
-        <Input
-          placeholder='Search staff by name...'
-          className='w-full md:w-1/2'
-        />
-        <Select>
-          <SelectTrigger className='w-full md:w-1/3'>
-            <SelectValue placeholder='Filter by department' />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value='teaching'>Teaching</SelectItem>
-            <SelectItem value='non-teaching'>Non-Teaching</SelectItem>
-            <SelectItem value='admin'>Admin</SelectItem>
-          </SelectContent>
-        </Select>
-        <Button>Search</Button>
       </div>
 
       {/* Recent Staff Table Placeholder */}
       <div className='mt-6'>
         <Card>
           <CardHeader>
-            <CardTitle className='text-base'>Recent Staff Members</CardTitle>
+            <CardTitle className='text-base'> Staff Members</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className='text-muted-foreground text-sm'>
-              Table coming soon...
-            </div>
+            
+            <StaffTable
+              staff={staff?.staff}
+              isLoading={loadingStaff}
+              isError={staffError}
+            />
           </CardContent>
         </Card>
       </div>

@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/navigation';
 import SideNav from '@/components/shared/side-nav';
-import type { RootState } from '@/src/app/store'; 
+import { RootState } from '@/src/app/store';
 import { Button } from '@/components/ui/button';
 import { Menu } from 'lucide-react';
 

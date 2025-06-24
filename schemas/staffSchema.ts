@@ -1,0 +1,23 @@
+export type StaffSchema = {
+  id?: string;
+  firstName?: string;
+  lastName?: string;
+  otherName?: string | null;
+  dateOfBirth: Date ;
+  qualification?: string;
+  category?: string;
+  role?: string;
+  gender?: string;
+  maritalStatus?: string;
+  yearAdmitted?: Date;
+  stateOfOrigin?: string;
+  localGvt?: string;
+  homeTown?: string;
+  residence?: string;
+  phone?: string;
+  email: string;
+  imageUrl?: string | null;
+  imagePublicId?: string | null;
+  createdAt: Date;
+  updatedAt: Date;
+};
