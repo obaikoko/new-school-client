@@ -98,7 +98,11 @@ const StudentCredentialsSignInForm = () => {
           </div>
         </div>
 
-        <Button disabled={isLoading} className='w-full' variant='default'>
+        <Button
+          disabled={isLoading}
+          className='w-full cursor-pointer'
+          variant='default'
+        >
           {isLoading ? 'Signing in...' : 'Sign In'}
         </Button>
 

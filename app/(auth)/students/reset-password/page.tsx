@@ -40,7 +40,7 @@ const ResetStudentPasswordPage = () => {
         <CardHeader className='space-y-4'>
           <Link href='/' className='flex justify-center'>
             <Image
-              src='/images/logo.jpg'
+              src='/images/logo.png'
               width={100}
               height={100}
               alt='new school'

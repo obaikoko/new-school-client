@@ -35,6 +35,20 @@ export const authResponseSchema = z.object({
   role: z.string(),
   status: z.string(),
 });
+
+
+
+// interface EditUserFormData {
+//   userId?: string;
+//   firstName: string;
+//   lastName: string;
+//   email: string;
+//   role: string;
+//   status?: string;
+//   level: string;
+//   subLevel: string;
+//   isAdmin?: string;
+// }
 export const updateUserSchema = z.object({
   userId: z.string().min(3, 'User ID is required'),
   firstName: z

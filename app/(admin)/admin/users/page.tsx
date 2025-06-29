@@ -209,62 +209,65 @@ const UsersPage = () => {
             <Loader2 className='h-5 w-5 animate-spin text-muted-foreground' />
           ) : (
             <>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Name</TableHead>
-                    <TableHead>Class</TableHead>
-                    <TableHead>Role</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead className='text-right'>Actions</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {users.map((user: User) => (
-                    <TableRow key={user.id}>
-                      <TableCell className='cursor-pointer text-primary underline'>
-                        <Link href={`/admin/users/${user.id}`}>
-                          {user.firstName} {user.lastName}
-                        </Link>
-                      </TableCell>
-                      <TableCell>
-                        {user.level ? (
-                          <>
-                            {user.level}
-                            {user.subLevel}
-                          </>
-                        ) : (
-                          'Not Assigned'
-                        )}
-                      </TableCell>
-                      <TableCell>{user.role}</TableCell>
-                      <TableCell
-                        className={`${
-                          user.status === 'suspended'
-                            ? 'text-red-600'
-                            : 'text-green-600'
-                        }`}
-                      >
-                        {user.status}
-                      </TableCell>
-                      <TableCell className='text-right space-x-2'>
-                        <Button
-                          size='sm'
-                          variant='outline'
-                          onClick={() => handleEditClick(user)}
-                          className='cursor-pointer'
-                        >
-                          <Pencil className='h-4 w-4' />
-                        </Button>
-                        <DeleteUserButton
-                          userId={user.id}
-                          isAdmin={user.role === 'Admin'}
-                        />
-                      </TableCell>
+              <div className='max-h-[60vh] overflow-y-auto'>
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Name</TableHead>
+                      <TableHead>Class</TableHead>
+                      <TableHead>Role</TableHead>
+                      <TableHead>Status</TableHead>
+                      <TableHead className='text-right'>Actions</TableHead>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
+                  </TableHeader>
+                  <TableBody>
+                    {users.map((user: User) => (
+                      <TableRow key={user.id}>
+                        <TableCell className='cursor-pointer text-primary underline'>
+                          <Link href={`/admin/users/${user.id}`}>
+                            {user.firstName} {user.lastName}
+                          </Link>
+                        </TableCell>
+                        <TableCell>
+                          {user.level ? (
+                            <>
+                              {user.level}
+                              {user.subLevel}
+                            </>
+                          ) : (
+                            'Not Assigned'
+                          )}
+                        </TableCell>
+                        <TableCell>{user.role}</TableCell>
+                        <TableCell
+                          className={
+                            user.status === 'suspended'
+                              ? 'text-red-600'
+                              : 'text-green-600'
+                          }
+                        >
+                          {user.status}
+                        </TableCell>
+                        <TableCell className='text-right space-x-2'>
+                          <Button
+                            size='sm'
+                            variant='outline'
+                            onClick={() => handleEditClick(user)}
+                            className='cursor-pointer'
+                          >
+                            <Pencil className='h-4 w-4' />
+                          </Button>
+                          <DeleteUserButton
+                            userId={user.id}
+                            isAdmin={user.role === 'Admin'}
+                          />
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
+
               <EditUserDialog
                 open={dialogOpen}
                 onOpenChange={setDialogOpen}
@@ -272,7 +275,6 @@ const UsersPage = () => {
                 setFormData={setFormData}
                 onSubmit={handleUpdateSubmit}
                 isLoading={isUpdating}
-                title='User Info'
               />
             </>
           )}

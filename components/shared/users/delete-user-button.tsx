@@ -18,6 +18,7 @@ import {
   useDeleteUserMutation,
   useGetUsersQuery,
 } from '@/src/features/auth/usersApiSlice';
+import { useGetUsersDataQuery } from '@/src/features/data/dataApiSlice';
 import { showZodErrors } from '@/lib/utils';
 import Spinner from '../spinner';
 
@@ -29,6 +30,7 @@ interface DeleteUserButtonProps {
 const DeleteUserButton = ({ userId, isAdmin }: DeleteUserButtonProps) => {
   const [open, setOpen] = useState(false);
   const [deleteUser, { isLoading }] = useDeleteUserMutation();
+  const { refetch: refetchUserData } = useGetUsersDataQuery({});
   const { refetch } = useGetUsersQuery({});
 
   const handleConfirmDelete = async () => {
@@ -42,6 +44,7 @@ const DeleteUserButton = ({ userId, isAdmin }: DeleteUserButtonProps) => {
       await deleteUser(userId).unwrap();
       toast.success('User deleted successfully');
       refetch();
+      refetchUserData();
       setOpen(false);
     } catch (err) {
       showZodErrors(err);

@@ -113,3 +113,13 @@ export const subjects: string[] = [
   'Vocational Aptitude',
   'Yoruba Language',
 ];
+
+export const roles: string[] = [
+  'Admin',
+  'Principal',
+  'HM',
+  'Head Of Department',
+  'Teacher',
+];
+
+export const statuses: string[] = ['active', 'suspended'];

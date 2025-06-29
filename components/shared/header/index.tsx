@@ -10,7 +10,7 @@ const Header = () => {
         <div className='flex items-center'>
           <Link href='/' className='flex items-center space-x-2'>
             <Image
-              src='/images/logo.jpg'
+              src='/images/logo.png'
               alt={`${APP_NAME} logo`}
               width={48}
               height={48}

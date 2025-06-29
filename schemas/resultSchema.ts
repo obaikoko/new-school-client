@@ -55,3 +55,17 @@ export interface StudentResult {
 }
 export type AddSubjectForm = z.infer<typeof addSubjectSchema>;
 export type RemoveSubjectForm = z.infer<typeof removeSubjectSchema>;
+type BroadsheetSubjectResult = {
+  subject: string;
+  testScore: number;
+  examScore: number;
+};
+
+export type Broadsheet = {
+  studentId: string;
+  firstName: string;
+  lastName: string;
+  position: string;
+  subjectResults: BroadsheetSubjectResult[];
+};
+
