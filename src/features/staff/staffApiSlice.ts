@@ -1,7 +1,8 @@
 import { STAFF_URL } from '../constants';
 import { apiSlice } from '../apiSlice';
+import { StaffSchema } from '@/schemas/staffSchema';
 
-export const studentsApiSlice = apiSlice.injectEndpoints({
+export const staffApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     registerStaff: builder.mutation({
       query: (data) => ({
@@ -27,7 +28,7 @@ export const studentsApiSlice = apiSlice.injectEndpoints({
       providesTags: ['Staff'],
       keepUnusedDataFor: 5,
     }),
-    getStaff: builder.query({
+    getStaff: builder.query<StaffSchema, string>({
       query: (staffId) => ({
         url: `${STAFF_URL}/${staffId}`,
         credentials: 'include',
@@ -50,7 +51,7 @@ export const studentsApiSlice = apiSlice.injectEndpoints({
         method: 'DELETE',
         credentials: 'include',
       }),
-      providesTags: ['Staff'],
+      invalidatesTags: ['Staff'],
     }),
     staffData: builder.query({
       query: () => ({
@@ -70,4 +71,4 @@ export const {
   useSearchStaffQuery,
   useStaffDataQuery,
   useUpdateStaffMutation,
-} = studentsApiSlice;
+} = staffApiSlice;

@@ -18,11 +18,9 @@ import {
 } from '@/components/ui/select';
 import { Loader2 } from 'lucide-react';
 import { Label } from '@/components/ui/label';
-
-const LEVELS = ['JSS 1', 'JSS 2', 'JSS 3', 'SSS 1', 'SSS 2', 'SSS 3'];
-const SUB_LEVELS = ['A', 'B', 'C', 'D', 'E'];
-const GENDERS = ['Male', 'Female'];
-const RELATIONSHIPS = ['Father', 'Mother', 'Uncle', 'Aunty', 'Guardian'];
+import { levels, subLevels, relationships, genders } from '@/lib/utils';
+import { useEffect, useState } from 'react';
+import NaijaStates from 'naija-state-local-government';
 
 interface EditStudentFormData {
   studentId?: string;
@@ -62,6 +60,17 @@ export default function EditStudentDialog({
   onSubmit,
   isLoading,
 }: EditStudentDialogProps) {
+  const [lgas, setLgas] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (formData.stateOfOrigin) {
+      const newLgas = NaijaStates.lgas(formData.stateOfOrigin)?.lgas || [];
+      setLgas(newLgas);
+    } else {
+      setLgas([]);
+    }
+  }, [formData.stateOfOrigin]);
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -113,7 +122,8 @@ export default function EditStudentDialog({
             onChange={handleInputChange}
             type='date'
           />
-          <Label htmlFor='gender'>Gender</Label>
+
+          <Label>Gender</Label>
           <Select
             value={formData.gender}
             onValueChange={(value) => handleSelectChange('gender', value)}
@@ -122,39 +132,41 @@ export default function EditStudentDialog({
               <SelectValue placeholder='Select Gender' />
             </SelectTrigger>
             <SelectContent>
-              {GENDERS.map((g) => (
+              {genders.map((g) => (
                 <SelectItem key={g} value={g}>
                   {g}
                 </SelectItem>
               ))}
             </SelectContent>
           </Select>
-          <Label htmlFor='level'>Class</Label>
+
+          <Label>Class</Label>
           <Select
             value={formData.level}
             onValueChange={(value) => handleSelectChange('level', value)}
           >
-            <SelectTrigger id='level'>
+            <SelectTrigger>
               <SelectValue placeholder='Select Level' />
             </SelectTrigger>
             <SelectContent>
-              {LEVELS.map((l) => (
+              {levels.map((l) => (
                 <SelectItem key={l} value={l}>
                   {l}
                 </SelectItem>
               ))}
             </SelectContent>
           </Select>
-          <Label htmlFor='subLevel'>Sub Class</Label>
+
+          <Label>Sub Class</Label>
           <Select
             value={formData.subLevel}
             onValueChange={(value) => handleSelectChange('subLevel', value)}
           >
-            <SelectTrigger id='subLevel'>
+            <SelectTrigger>
               <SelectValue placeholder='Select Sub-Level' />
             </SelectTrigger>
             <SelectContent>
-              {SUB_LEVELS.map((s) => (
+              {subLevels.map((s) => (
                 <SelectItem key={s} value={s}>
                   {s}
                 </SelectItem>
@@ -169,43 +181,70 @@ export default function EditStudentDialog({
             placeholder='Year Admitted'
             type='number'
           />
-          <Input
-            name='stateOfOrigin'
+
+          <Label>State of Origin</Label>
+          <Select
             value={formData.stateOfOrigin}
-            onChange={handleInputChange}
-            placeholder='State of Origin'
-          />
-          <Input
-            name='localGvt'
+            onValueChange={(value) =>
+              handleSelectChange('stateOfOrigin', value)
+            }
+          >
+            <SelectTrigger>
+              <SelectValue placeholder='Select State' />
+            </SelectTrigger>
+            <SelectContent>
+              {NaijaStates.states().map((state) => (
+                <SelectItem key={state} value={state}>
+                  {state}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+
+          <Label>Local Government</Label>
+          <Select
             value={formData.localGvt}
-            onChange={handleInputChange}
-            placeholder='Local Government'
-          />
+            onValueChange={(value) => handleSelectChange('localGvt', value)}
+            disabled={!lgas.length}
+          >
+            <SelectTrigger>
+              <SelectValue placeholder='Select LGA' />
+            </SelectTrigger>
+            <SelectContent>
+              {lgas.map((lga) => (
+                <SelectItem key={lga} value={lga}>
+                  {lga}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+
           <Input
             name='homeTown'
             value={formData.homeTown}
             onChange={handleInputChange}
             placeholder='Home Town'
           />
+
           <Input
             name='sponsorName'
             value={formData.sponsorName}
             onChange={handleInputChange}
             placeholder='Sponsor Name'
           />
-          <Label htmlFor='sponsorRelationship'>Sponsor Relationship</Label>
+
+          <Label>Sponsor Relationship</Label>
           <Select
             value={formData.sponsorRelationship}
             onValueChange={(value) =>
               handleSelectChange('sponsorRelationship', value)
             }
           >
-            <SelectTrigger id='sponsorRelationship'>
+            <SelectTrigger>
               <SelectValue placeholder='Sponsor Relationship' />
             </SelectTrigger>
-
             <SelectContent>
-              {RELATIONSHIPS.map((r) => (
+              {relationships.map((r) => (
                 <SelectItem key={r} value={r}>
                   {r}
                 </SelectItem>

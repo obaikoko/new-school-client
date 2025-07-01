@@ -18,7 +18,12 @@ import DeleteStudentButton from './delete-student-button';
 import Image from 'next/image';
 
 const StudentDetails = ({ studentId }: StudentId) => {
-  const { data: student, isLoading, isError } = useGetStudentQuery(studentId);
+  const {
+    data: student,
+    refetch,
+    isLoading,
+    isError,
+  } = useGetStudentQuery(studentId);
   const [updateStudent, { isLoading: isUpdating }] = useUpdateStudentMutation();
 
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -90,6 +95,7 @@ const StudentDetails = ({ studentId }: StudentId) => {
     e.preventDefault();
     try {
       await updateStudent({ id: student.id, ...formData }).unwrap();
+      refetch();
       toast.success('Student updated successfully');
       setDialogOpen(false);
     } catch (error) {
@@ -159,7 +165,7 @@ const StudentDetails = ({ studentId }: StudentId) => {
               <strong>Fees Paid:</strong> {student.isPaid ? 'Yes' : 'No'}
             </p>
             <p>
-              <strong>Is Student:</strong> {student.isStudent ? 'Yes' : 'No'}
+              <strong> Student:</strong> {student.isStudent ? 'Yes' : 'No'}
             </p>
           </div>
           <div className='space-y-2'>

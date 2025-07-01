@@ -54,7 +54,7 @@ const SideNav = ({ isOpen, onClose }: SideNavProps) => {
         className={cn(
           'fixed top-0 left-0 z-50 flex flex-col w-64 h-full border-r bg-white dark:bg-gray-900 px-4 py-6 transition-transform transform',
           isOpen ? 'translate-x-0' : '-translate-x-full',
-          'md:translate-x-0 md:static md:flex'
+          'md:translate-x-0 md:flex md:h-screen md:sticky md:top-0'
         )}
       >
         <div className='mb-8 flex justify-between items-center'>
