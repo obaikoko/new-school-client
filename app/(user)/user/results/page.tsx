@@ -1,5 +1,8 @@
 'use client';
-import { useGetResultsQuery } from '@/src/features/results/resultApiSlice';
+import {
+  useGetResultsQuery,
+  useGetResultsDataQuery,
+} from '@/src/features/results/resultApiSlice';
 
 import {
   Card,
@@ -14,6 +17,9 @@ import Spinner from '@/components/shared/spinner';
 
 const UserResultsPage = () => {
   const { data: results, isLoading, isError } = useGetResultsQuery(1);
+    const { data: resultsData } = useGetResultsDataQuery({});
+
+  
 
   if (isLoading) {
     return (
@@ -52,7 +58,7 @@ const UserResultsPage = () => {
             <CardDescription>All uploaded results</CardDescription>
           </CardHeader>
           <CardContent className='text-3xl font-bold'>
-            {/* {data.totalResults} */}
+            {resultsData?.totalResults}
           </CardContent>
         </Card>
 
@@ -62,7 +68,7 @@ const UserResultsPage = () => {
             <CardDescription>Visible to students</CardDescription>
           </CardHeader>
           <CardContent className='text-3xl font-bold text-green-600'>
-            {/* {data.resultsWithPosition} */}
+            {resultsData?.publishedResults}
           </CardContent>
         </Card>
 
@@ -72,7 +78,7 @@ const UserResultsPage = () => {
             <CardDescription>Pending publication</CardDescription>
           </CardHeader>
           <CardContent className='text-3xl font-bold text-red-600'>
-            {/* {data.resultWithoutPosition} */}
+            {resultsData?.unpublishedResults}
           </CardContent>
         </Card>
       </div>

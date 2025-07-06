@@ -1,5 +1,6 @@
 import { USERS_URL } from '../constants';
 import { apiSlice } from '../apiSlice';
+import { User } from '@/schemas/userSchema';
 
 export const usersApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -51,6 +52,14 @@ export const usersApiSlice = apiSlice.injectEndpoints({
       }),
     }),
 
+    getUserProfile: builder.query<User, string>({
+      query: (userId) => ({
+        url: `${USERS_URL}/profile/${userId}`,
+        credentials: 'include',
+      }),
+      providesTags: ['User'],
+      keepUnusedDataFor: 5,
+    }),
     profile: builder.mutation({
       query: (data) => ({
         url: `${USERS_URL}/profile`,
@@ -105,4 +114,5 @@ export const {
   useUpdateUserMutation,
   useSendMailMutation,
   useGetUserDetailsQuery,
+  useGetUserProfileQuery,
 } = usersApiSlice;

@@ -1,7 +1,7 @@
 'use client';
-import ResultSearch from '@/components/shared/results/result-search';
-import ResultList from '@/components/shared/results/results-list';
 import Spinner from '@/components/shared/spinner';
+import StudentsSearch from '@/components/shared/students/student-search';
+import StudentsTable from '@/components/shared/students/students-table';
 import {
   Card,
   CardContent,
@@ -9,26 +9,26 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { useSearchResultsQuery } from '@/src/features/results/resultApiSlice';
+import { useSearchStudentsQuery } from '@/src/features/students/studentApiSlice';
 import { useSearchParams } from 'next/navigation';
 import { Suspense } from 'react';
 
-const ResultsSearchPage = () => {
+const UserStudentSearchPage = () => {
   const searchParams = useSearchParams();
   const keyword = searchParams.get('keyword');
   const level = searchParams.get('level');
 
-  const { data, isLoading, isError } = useSearchResultsQuery({
+  const { data, isLoading, isError } = useSearchStudentsQuery({
     keyword,
     level,
     page: 1,
   });
-  const results = data?.results ?? [];
+  const students = data?.students ?? [];
 
   return (
     <>
       <div className='mb-10'>
-        <ResultSearch />
+        <StudentsSearch />
       </div>
       <Card>
         <CardHeader>
@@ -39,16 +39,21 @@ const ResultsSearchPage = () => {
             Search Results for all {keyword} in {level}
           </CardDescription>
         </CardContent>
-        <ResultList results={results} loading={isLoading} error={isError} />
+        <StudentsTable
+          students={students}
+          isLoading={isLoading}
+          isError={isError}
+        />
       </Card>
     </>
   );
 };
 
+
 const Search = () => {
   return (
     <Suspense fallback={<Spinner />}>
-      <ResultsSearchPage />
+      <UserStudentSearchPage />
     </Suspense>
   );
 };

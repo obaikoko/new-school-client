@@ -19,7 +19,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { GenerateResultForm } from '@/schemas/resultSchema';
 import { generateResultSchema } from '@/validators/resultValidator';
-import { levels, sessions, terms } from '@/lib/utils';
+import { levels, sessions, showZodErrors, terms } from '@/lib/utils';
 
 import {
   Select,
@@ -58,7 +58,7 @@ const GenerateResultButton = ({ studentId }: { studentId: string }) => {
       reset();
       setOpen(false);
     } catch (err) {
-      console.error('Error generating result:', err);
+      showZodErrors(err);
     }
   };
 

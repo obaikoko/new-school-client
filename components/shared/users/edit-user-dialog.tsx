@@ -26,7 +26,7 @@ interface EditUserFormData {
   status?: string;
   level: string;
   subLevel: string;
-  isAdmin?: string; 
+  isAdmin?: string;
 }
 
 interface EditUserDialogProps {
@@ -66,7 +66,10 @@ export default function EditUserDialog({
             <DialogDescription>Update user information.</DialogDescription>
           </DialogHeader>
 
-          <form onSubmit={onSubmit} className='max-h-[350px] overflow-y-auto space-y-4'>
+          <form
+            onSubmit={onSubmit}
+            className='max-h-[350px] overflow-y-auto space-y-4'
+          >
             <Input
               name='firstName'
               value={formData.firstName}
@@ -106,7 +109,7 @@ export default function EditUserDialog({
               name='level'
               value={formData.level}
               onChange={handleInputChange}
-              className='w-full border rounded p-2'
+              className='w-full border rounded p-2 bg-background text-foreground'
             >
               <option value=''>Select Level</option>
               {LEVELS.map((lvl) => (
@@ -121,7 +124,7 @@ export default function EditUserDialog({
               name='subLevel'
               value={formData.subLevel}
               onChange={handleInputChange}
-              className='w-full border rounded p-2'
+              className='w-full border rounded p-2 bg-background text-foreground'
             >
               <option value=''>Select Sub-Level</option>
               {SUB_LEVELS.map((sub) => (
@@ -136,7 +139,7 @@ export default function EditUserDialog({
               name='status'
               value={formData.status}
               onChange={handleInputChange}
-              className='w-full border rounded p-2'
+              className='w-full border rounded p-2 bg-background text-foreground'
             >
               <option value=''>Select Status</option>
               {STATUSES.map((status) => (
@@ -151,7 +154,7 @@ export default function EditUserDialog({
               name='isAdmin'
               value={formData.isAdmin}
               onChange={handleInputChange}
-              className='w-full border rounded p-2'
+              className='w-full border rounded p-2 bg-background text-foreground'
             >
               <option value=''>Select Option</option>
               <option value='true'>Yes</option>

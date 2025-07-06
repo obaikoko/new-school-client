@@ -17,8 +17,11 @@ import { searchSchema } from '@/validators/studentValidation';
 import { SearchForm } from '@/schemas/studentSchema';
 import { useRouter } from 'next/navigation';
 import { levels } from '@/lib/utils';
+import { useAppSelector } from '@/src/app/hooks';
 
 const StudentsSearch = () => {
+  const { user } = useAppSelector((state) => state.auth);
+
   const router = useRouter();
   const {
     register,
@@ -36,12 +39,18 @@ const StudentsSearch = () => {
   const handleSearch = (data: SearchForm) => {
     const { name, level } = data;
     if ((!name || name.trim() === '') && level === 'All') {
-      router.push(`/admin/students`);
+      router.push(`${user.isAdmin ? '/admin/students' : '/user/students'}`);
     } else {
       const query = `?keyword=${encodeURIComponent(
         name ?? ''
       )}&level=${encodeURIComponent(level)}`;
-      router.push(`/admin/students/search${query}`);
+      router.push(
+        `${
+          user.isAdmin
+            ? `/admin/students/search${query}`
+            : `/user/students/search${query}`
+        }`
+      );
     }
   };
 

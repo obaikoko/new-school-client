@@ -6,7 +6,6 @@ import {
   Home,
   ClipboardList,
   BookOpen,
-  CalendarDays,
   Settings,
   X,
 } from 'lucide-react';
@@ -24,12 +23,6 @@ const teacherNavItems = [
     icon: ClipboardList,
   },
   { id: 'results', label: 'Results', href: '/user/results', icon: BookOpen },
-  {
-    id: 'timetable',
-    label: 'Timetable',
-    href: '/user/timetable',
-    icon: CalendarDays,
-  },
   {
     id: 'settings',
     label: 'Settings',
@@ -56,16 +49,15 @@ const UserSideNav = ({ isOpen, onClose }: SideNavProps) => {
         )}
         onClick={onClose}
       />
-
       <aside
         className={cn(
           'fixed top-0 left-0 z-50 flex flex-col w-64 h-full border-r bg-white dark:bg-gray-900 px-4 py-6 transition-transform transform',
           isOpen ? 'translate-x-0' : '-translate-x-full',
-          'md:translate-x-0 md:static md:flex'
+          'md:translate-x-0 md:flex md:h-screen md:sticky md:top-0'
         )}
       >
         <div className='mb-8 flex justify-between items-center'>
-          <h2 className='text-xl font-bold tracking-tight'>Student Panel</h2>
+          <h2 className='text-xl font-bold tracking-tight'>Navigation Panel</h2>
           <div className='md:hidden'>
             <Button variant='ghost' size='icon' onClick={onClose}>
               <X className='w-5 h-5' />

@@ -11,8 +11,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import DownloadStudentDataButton from '@/components/shared/students/download-student-button';
-import GraduateStudentsButton from '@/components/shared/students/graduate-students-button';
+
 import Pagination from '@/components/shared/pagination';
 import { useState } from 'react';
 
@@ -73,20 +72,7 @@ const StudentsPage = () => {
           onPageChange={(newPage) => setPage(newPage)}
         />
       </div>
-      <Card>
-        <CardHeader>
-          <CardTitle>Important Buttons</CardTitle>
-          <CardDescription className='text-destructive'>
-            Note that this buttons here are marked as important button.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className='flex flex-col md:flex-row gap-3'>
-            <DownloadStudentDataButton />
-            <GraduateStudentsButton />
-          </div>
-        </CardContent>
-      </Card>
+
     </div>
   );
 };
