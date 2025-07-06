@@ -8,6 +8,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import Spinner from '../spinner';
+import { usePathname } from 'next/navigation';
 import { useGetResultQuery } from '@/src/features/results/resultApiSlice';
 import ResultTable from './result-table';
 import { BookOpen } from 'lucide-react';
@@ -23,6 +24,7 @@ import DownloadResult from './download-result-button';
 
 const ResultDetails = ({ resultId }: { resultId: string }) => {
   const { data: result, isLoading, isError } = useGetResultQuery(resultId);
+  const pathName = usePathname();
 
   if (isLoading) {
     return (
@@ -90,19 +92,27 @@ const ResultDetails = ({ resultId }: { resultId: string }) => {
         <CardHeader>
           <CardTitle>Actions</CardTitle>
         </CardHeader>
-        <CardContent className='flex flex-col sm:flex-row items-start sm:items-center gap-4'>
-          <UpdateAffectiveAssessment resultId={resultId} />
-          <UpdatePsychomotor resultId={resultId} />
-        </CardContent>
-        <CardContent className='flex flex-col sm:flex-row items-start sm:items-center gap-4'>
-          <DownloadResult resultId={resultId} />
+        {pathName === `/student/results/${resultId}` ? (
+          <CardContent className='flex flex-col sm:flex-row items-start sm:items-center gap-4'>
+            <DownloadResult resultId={resultId} />
+          </CardContent>
+        ) : (
+          <>
+            <CardContent className='flex flex-col sm:flex-row items-start sm:items-center gap-4'>
+              <UpdateAffectiveAssessment resultId={resultId} />
+              <UpdatePsychomotor resultId={resultId} />
+            </CardContent>
+            <CardContent className='flex flex-col sm:flex-row items-start sm:items-center gap-4'>
+              <DownloadResult resultId={resultId} />
 
-          <UpdateSubjectScore resultId={resultId} />
-          <DeleteResultButton
-            resultId={resultId}
-            studentId={result.studentId}
-          />
-        </CardContent>
+              <UpdateSubjectScore resultId={resultId} />
+              <DeleteResultButton
+                resultId={resultId}
+                studentId={result.studentId}
+              />
+            </CardContent>
+          </>
+        )}
       </Card>
     </div>
   );

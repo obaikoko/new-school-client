@@ -4,7 +4,7 @@ import { Student, Students } from '@/schemas/studentSchema';
 
 export const studentsApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getStudentProfile: builder.query<Student, string>({
+    getStudentProfile: builder.query<Student, void>({
       query: () => ({
         url: `${STUDENTS_URL}/profile`,
         credentials: 'include',

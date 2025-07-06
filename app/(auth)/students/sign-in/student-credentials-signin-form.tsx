@@ -5,14 +5,11 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { toast } from 'sonner';
 import { Eye, EyeOff } from 'lucide-react';
-import { useDispatch } from 'react-redux';
 import { useStudentLoginMutation } from '@/src/features/auth/studentsApiSlice';
 import { setCredentials } from '@/src/features/auth/authSlice';
 import { useRouter } from 'next/navigation';
-import {
-  studentSchema,
-  authStudentSchema,
-} from '@/validators/studentValidation';
+import { authStudentSchema } from '@/validators/studentValidation';
+import { useAppDispatch } from '@/src/app/hooks';
 import { showZodErrors } from '@/lib/utils';
 import { AuthStudentForm } from '@/schemas/studentSchema';
 import { useForm } from 'react-hook-form';
@@ -22,7 +19,7 @@ const StudentCredentialsSignInForm = () => {
   const [login, { isLoading }] = useStudentLoginMutation();
 
   const router = useRouter();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [showPassword, setShowPassword] = useState(false);
 
   const {
@@ -35,17 +32,12 @@ const StudentCredentialsSignInForm = () => {
 
   const onSubmit = async (data: AuthStudentForm) => {
     try {
-      const result = studentSchema.safeParse(await login(data).unwrap());
+      const res = await login({
+        studentId: data.studentId,
+        password: data.password,
+      }).unwrap();
 
-      if (!result.success) {
-        toast.error('Invalid response from server');
-        console.error(result.error);
-        return;
-      }
-
-      const res = result.data;
       dispatch(setCredentials(res));
-
       toast.success(`Welcome ${res.firstName} ${res.lastName}`);
       router.push('/student/dashboard');
     } catch (err) {

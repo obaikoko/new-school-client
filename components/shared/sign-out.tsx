@@ -4,6 +4,7 @@ import { LogOut } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useDispatch } from 'react-redux';
 import { logout } from '@/src/features/auth/authSlice';
+import { showZodErrors } from '@/lib/utils';
 
 const SignOutButton = () => {
   const router = useRouter();
@@ -15,11 +16,11 @@ const SignOutButton = () => {
       await logoutApi(undefined).unwrap();
       dispatch(logout());
       router.push('/sign-in');
+      sessionStorage.removeItem('User');
     } catch (error) {
-      console.log(error);
+      showZodErrors(error);
     }
 
-    localStorage.removeItem('User');
   };
   return (
     <div className='mt-auto'>

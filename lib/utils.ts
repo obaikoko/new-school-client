@@ -37,6 +37,7 @@ export function showZodErrors(error: unknown) {
     }
   } else {
     toast.error('An unknown error occurred');
+    console.log(error)
   }
 }
 

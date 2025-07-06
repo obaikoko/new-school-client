@@ -12,13 +12,7 @@ export const studentsApiSlice = apiSlice.injectEndpoints({
       }),
     }),
 
-    // logout: builder.mutation({
-    //   query: () => ({
-    //     url: `${STUDENTS_URL}/logout`,
-    //     method: 'POST',
-    //     credentials: 'include',
-    //   }),
-    // }),
+ 
   }),
 });
 

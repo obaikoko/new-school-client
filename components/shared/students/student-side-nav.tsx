@@ -7,7 +7,7 @@ import { cn } from '@/lib/utils';
 import ModeToggle from '../header/mode-toggle';
 import SignOutButton from '../sign-out';
 
-import { Home, BookOpen, FileText, User, X } from 'lucide-react';
+import { Home,  FileText, User, X } from 'lucide-react';
 
 const navItems = [
   {
@@ -16,7 +16,6 @@ const navItems = [
     label: 'Dashboard',
     icon: Home,
   },
-  { id: 'courses', href: '/student/courses', label: 'Courses', icon: BookOpen },
   { id: 'results', href: '/student/results', label: 'Results', icon: FileText },
   { id: 'profile', href: '/student/profile', label: 'Profile', icon: User },
 ];
@@ -44,7 +43,7 @@ const StudentSideNav = ({ isOpen, onClose }: SideNavProps) => {
         className={cn(
           'fixed top-0 left-0 z-50 flex flex-col w-64 h-full border-r bg-white dark:bg-gray-900 px-4 py-6 transition-transform transform',
           isOpen ? 'translate-x-0' : '-translate-x-full',
-          'md:translate-x-0 md:static md:flex'
+          'md:translate-x-0 md:flex md:h-screen md:sticky md:top-0'
         )}
       >
         <div className='mb-8 flex justify-between items-center'>
