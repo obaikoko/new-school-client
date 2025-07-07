@@ -21,6 +21,7 @@ import Psychomotor from './psychomotor';
 import UpdatePsychomotor from './update-psychomotor';
 import NextTermDetails from './next-term-details';
 import DownloadResult from './download-result-button';
+import UpdateResultPaymentButton from './update-result-payment-button';
 
 const ResultDetails = ({ resultId }: { resultId: string }) => {
   const { data: result, isLoading, isError } = useGetResultQuery(resultId);
@@ -110,6 +111,7 @@ const ResultDetails = ({ resultId }: { resultId: string }) => {
                 resultId={resultId}
                 studentId={result.studentId}
               />
+              <UpdateResultPaymentButton resultId={resultId} />
             </CardContent>
           </>
         )}
