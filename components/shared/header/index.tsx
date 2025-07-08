@@ -5,22 +5,18 @@ import Menu from './menu';
 
 const Header = () => {
   return (
-    <header className='w-full border-b overflow-x-hidden'>
-      <div className='mx-auto w-full max-w-screen-xl px-4 flex justify-between items-center py-2'>
-        <div className='flex items-center'>
-          <Link href='/' className='flex items-center space-x-2'>
-            <Image
-              src='/images/logo.png'
-              alt={`${APP_NAME} logo`}
-              width={48}
-              height={48}
-              priority
-            />
-          </Link>
-        </div>
-        <div className='flex items-center space-x-2'>
-          <Menu />
-        </div>
+    <header className='fixed top-0 left-0 w-full z-50 backdrop-blur-md bg-black/30'>
+      <div className='mx-auto max-w-screen-xl px-4 flex justify-between items-center py-2'>
+        <Link href='/' className='flex items-center space-x-2'>
+          <Image
+            src='/images/logo.png'
+            alt={`${APP_NAME} logo`}
+            width={48}
+            height={48}
+            priority
+          />
+        </Link>
+        <Menu />
       </div>
     </header>
   );
