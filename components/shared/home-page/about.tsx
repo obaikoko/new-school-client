@@ -3,17 +3,17 @@ import Link from 'next/link';
 
 const About = () => {
   return (
-    <section className='bg-gray-100 py-12 px-4'>
+    <section className=' py-12 px-4'>
       <div className='text-center mb-8'>
-        <h1 className='text-3xl font-bold text-gray-800'>School Life</h1>
-        <p className='text-gray-600 text-lg mt-2'>
+        <h1 className='text-3xl font-bold'>School Life</h1>
+        <p className=' text-lg mt-2'>
           A Rich and Dynamic School Experience
         </p>
       </div>
 
       <div className='max-w-6xl mx-auto'>
-        <div className='bg-white shadow-lg rounded-lg p-6'>
-          <h1 className='text-2xl font-semibold text-gray-800 mb-6'>
+        <div className=' shadow-lg rounded-lg p-6'>
+          <h1 className='text-2xl font-semibold text-gray-500 mb-6'>
             Beryl International School Calabar helps every child reach their
             full potential
           </h1>

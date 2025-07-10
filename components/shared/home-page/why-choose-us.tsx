@@ -3,10 +3,10 @@ import React from 'react';
 
 const WhyChooseUs = () => {
   return (
-    <div className='bg-gray-50 py-16'>
+    <div className=' py-16'>
       {/* Section 1 */}
       <section className='section4 mb-16'>
-        <div className='flex flex-col lg:flex-row items-center justify-between bg-white shadow-lg rounded-lg overflow-hidden'>
+        <div className='flex flex-col lg:flex-row items-center justify-between shadow-lg rounded-lg overflow-hidden'>
           <div className='lg:w-1/2'>
             <Image
               width={500}
@@ -16,7 +16,7 @@ const WhyChooseUs = () => {
               className='w-full h-full object-cover rounded'
             />
           </div>
-          {/* Text */}
+
           <div className='lg:w-1/2 p-8'>
             <h1 className='text-3xl font-semibold mb-4 text-blue-950'>
               What Parents and Students Say About Us
@@ -36,7 +36,7 @@ const WhyChooseUs = () => {
 
       {/* Section 2 */}
       <section className='section4'>
-        <div className='flex flex-col lg:flex-row-reverse items-center justify-between bg-white shadow-lg rounded-lg overflow-hidden mb-16'>
+        <div className='flex flex-col lg:flex-row-reverse items-center justify-between shadow-lg rounded-lg overflow-hidden mb-16'>
           {/* Image */}
           <div className='lg:w-1/2'>
             <Image
