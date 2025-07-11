@@ -11,12 +11,11 @@ const HomePage = () => {
     <>
       <HeroSlider />
       <NewUsers />
-       <Services />
+      <Services />
       <About />
-       <WhyChooseUs />
+      <WhyChooseUs />
       <ServicesCards />
       <Onboarding />
-      {/* <Footer />   */}
     </>
   );
 };

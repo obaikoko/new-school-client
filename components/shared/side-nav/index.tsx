@@ -12,6 +12,7 @@ import {
   BookMarked,
   BarChart,
   Settings,
+  PieChart,
   X,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -26,6 +27,7 @@ const navItems = [
   { label: 'Results', href: '/admin/results', icon: BookOpenCheck },
   { label: 'Staff', href: '/admin/staff', icon: UserCog },
   { label: 'Broadsheet', href: '/admin/broadsheet', icon: Table2 },
+  { label: 'Admission', href: '/admin/admission', icon: PieChart },
   { label: 'Actions', href: '/admin/actions', icon: BookOpenCheck },
   { label: 'Reports', href: '/admin/reports', icon: BarChart },
   { label: 'Settings', href: '/admin/settings', icon: Settings },

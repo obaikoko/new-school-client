@@ -17,20 +17,28 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Label } from '@/components/ui/label';
-import { Loader2 } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'sonner';
 import { useUpdateStaffMutation } from '@/src/features/staff/staffApiSlice';
 import { showZodErrors } from '@/lib/utils';
 import NaijaStates from 'naija-state-local-government';
-import { staffSchema } from '@/validators/staffValidator';
-import {StaffFormData} from '@/schemas/staffSchema'
-import { StaffSchema } from '@/schemas/staffSchema';
+import { staffFormSchema } from '@/validators/staffValidator';
+import { StaffFormData, StaffSchema } from '@/schemas/staffSchema';
 
 const GENDERS = ['Male', 'Female'];
 const MARITAL_STATUSES = ['Single', 'Married', 'Divorced', 'Widowed'];
 const CATEGORIES = ['Academic', 'Non-academic'];
+const QUALIFICATIONS = [
+  'Professor',
+  'Phd',
+  'Masters',
+  'Bachelors Degree',
+  'HND',
+  'OND',
+  'NCE',
+  'SSCE',
+];
 
 export default function EditStaffDialog({
   open,
@@ -50,19 +58,21 @@ export default function EditStaffDialog({
     watch,
     formState: { errors },
   } = useForm<StaffFormData>({
-    resolver: zodResolver(staffSchema),
+    resolver: zodResolver(staffFormSchema),
     defaultValues: {
-      firstName: staff.firstName || '',
-      lastName: staff.lastName || '',
-      phone: staff.phone || '',
-      email: staff.email || '',
-      role: staff.role || '',
-      qualification: staff.qualification || '',
-      gender: staff.gender || '',
-      maritalStatus: staff.maritalStatus || '',
-      category: staff.category || '',
-      stateOfOrigin: staff.stateOfOrigin || '',
-      localGvt: staff.localGvt || '',
+      firstName: staff.firstName,
+      lastName: staff.lastName,
+      phone: staff.phone,
+      email: staff.email,
+      role: staff.role,
+      qualification: staff.qualification,
+      gender: staff.gender,
+      maritalStatus: staff.maritalStatus,
+      category: staff.category,
+      stateOfOrigin: staff.stateOfOrigin,
+      localGvt: staff.localGvt,
+      homeTown: staff.homeTown,
+      residence: staff.residence,
     },
   });
 
@@ -70,9 +80,10 @@ export default function EditStaffDialog({
   const lgas = selectedState ? NaijaStates.lgas(selectedState).lgas : [];
 
   const onSubmit = async (data: StaffFormData) => {
+    console.log('logging', data);
     try {
       await updateStaff({ staffId: staff.id, ...data }).unwrap();
-      toast.success('Staff updated');
+      toast.success('Staff updated successfully');
       onOpenChange(false);
     } catch (err) {
       showZodErrors(err);
@@ -95,13 +106,33 @@ export default function EditStaffDialog({
           <p className='text-red-500 text-sm'>{errors.lastName?.message}</p>
 
           <Input placeholder='Phone' {...register('phone')} />
+          <p className='text-red-500 text-sm'>{errors.phone?.message}</p>
 
           <Input placeholder='Email' {...register('email')} />
           <p className='text-red-500 text-sm'>{errors.email?.message}</p>
 
           <Input placeholder='Role' {...register('role')} />
+          <p className='text-red-500 text-sm'>{errors.role?.message}</p>
 
-          <Input placeholder='Qualification' {...register('qualification')} />
+          <Label>Qualification</Label>
+          <Select
+            value={watch('qualification')}
+            onValueChange={(value) => setValue('qualification', value)}
+          >
+            <SelectTrigger>
+              <SelectValue placeholder='Select qualification' />
+            </SelectTrigger>
+            <SelectContent>
+              {QUALIFICATIONS.map((q) => (
+                <SelectItem key={q} value={q}>
+                  {q}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          <p className='text-red-500 text-sm'>
+            {errors.qualification?.message}
+          </p>
 
           <Label>Gender</Label>
           <Select
@@ -130,9 +161,9 @@ export default function EditStaffDialog({
               <SelectValue placeholder='Select Marital Status' />
             </SelectTrigger>
             <SelectContent>
-              {MARITAL_STATUSES.map((s) => (
-                <SelectItem key={s} value={s}>
-                  {s}
+              {MARITAL_STATUSES.map((m) => (
+                <SelectItem key={m} value={m}>
+                  {m}
                 </SelectItem>
               ))}
             </SelectContent>
@@ -161,10 +192,10 @@ export default function EditStaffDialog({
 
           <Label>State of Origin</Label>
           <Select
-            value={selectedState}
+            value={watch('stateOfOrigin')}
             onValueChange={(value) => {
               setValue('stateOfOrigin', value);
-              setValue('localGvt', ''); // reset LGA when state changes
+              setValue('localGvt', '');
             }}
           >
             <SelectTrigger>
@@ -201,18 +232,14 @@ export default function EditStaffDialog({
           </Select>
           <p className='text-red-500 text-sm'>{errors.localGvt?.message}</p>
 
-          <Input placeholder='homeTown' {...register('homeTown')} />
-          <Input placeholder='residence' {...register('residence')} />
+          <Input placeholder='Home Town' {...register('homeTown')} />
+          <p className='text-red-500 text-sm'>{errors.homeTown?.message}</p>
+
+          <Input placeholder='Residence' {...register('residence')} />
+          <p className='text-red-500 text-sm'>{errors.residence?.message}</p>
 
           <Button type='submit' disabled={isLoading} className='w-full'>
-            {isLoading ? (
-              <>
-                <Loader2 className='h-4 w-4 animate-spin mr-2' />
-                Updating...
-              </>
-            ) : (
-              'Update Staff'
-            )}
+            {isLoading ? 'Processing...' : 'Update'}
           </Button>
         </form>
       </DialogContent>

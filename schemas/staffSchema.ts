@@ -1,8 +1,9 @@
 import { z } from 'zod';
-import { staffSchema } from '@/validators/staffValidator';
+import {  staffFormSchema } from '@/validators/staffValidator';
 
-export type StaffFormData = z.infer<typeof staffSchema>
-export type StaffSchema = z.infer<typeof staffSchema> & {
+export type RegisterStaffSchema = z.infer<typeof staffFormSchema>;
+export type StaffFormData = z.infer<typeof staffFormSchema>;
+export type StaffSchema = z.infer<typeof staffFormSchema> & {
   id: string;
   createdAt: Date;
   updatedAt: Date;

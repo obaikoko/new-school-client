@@ -30,6 +30,7 @@ import ResumptionInfoForm from '@/components/shared/results/resumption-info-form
 import RegisterUsersForm from '@/components/shared/users/register-form';
 import AddSubjectToResult from '@/components/shared/results/add-subject-result';
 import RemoveSubjectFromResult from '@/components/shared/results/remove-subject';
+import RegisterStaffForm from '@/components/shared/staff/register-staff-form';
 
 const actions = [
   {
@@ -43,6 +44,12 @@ const actions = [
     description: 'Add new students to the system.',
     icon: Users,
     content: <RegisterStudentsForm />,
+  },
+  {
+    title: 'Register Staff',
+    description: 'Add new staff to the system.',
+    icon: Users,
+    content: <RegisterStaffForm />,
   },
   {
     title: 'Add Subjects',
