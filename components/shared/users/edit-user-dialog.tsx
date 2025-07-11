@@ -94,7 +94,7 @@ export default function EditUserDialog({
               name='role'
               value={formData.role}
               onChange={handleInputChange}
-              className='w-full border rounded p-2'
+              className='w-full border rounded p-2 bg-background text-foreground'
             >
               <option value=''>Assign Role</option>
               {ROLES.map((role) => (

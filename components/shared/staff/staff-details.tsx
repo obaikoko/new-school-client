@@ -63,7 +63,9 @@ const StaffDetails = ({ staffId }: { staffId: string }) => {
             <h2 className='text-xl font-medium'>
               {staff.lastName} {staff.firstName} {staff.otherName}
             </h2>
-            <p className='text-sm text-muted-foreground'>ID: {staff.id}</p>
+            <p className='text-sm text-muted-foreground'>
+              ID: ...{staff.id.slice(15, 30)}
+            </p>
             <p className='text-sm'>Gender: {staff.gender}</p>
             <p className='text-sm'>Marital Status: {staff.maritalStatus}</p>
             <p className='text-sm'>

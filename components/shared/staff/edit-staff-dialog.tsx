@@ -7,8 +7,8 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
 import {
   Select,
   SelectTrigger,
@@ -17,14 +17,16 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Label } from '@/components/ui/label';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { toast } from 'sonner';
-import { useUpdateStaffMutation } from '@/src/features/staff/staffApiSlice';
-import { showZodErrors } from '@/lib/utils';
+import { Loader2 } from 'lucide-react';
+import { useEffect, useState } from 'react';
 import NaijaStates from 'naija-state-local-government';
-import { staffFormSchema } from '@/validators/staffValidator';
-import { StaffFormData, StaffSchema } from '@/schemas/staffSchema';
+import {
+  useUpdateStaffMutation,
+  useGetAllStaffQuery,
+} from '@/src/features/staff/staffApiSlice';
+import { toast } from 'sonner';
+import { showZodErrors } from '@/lib/utils';
+import { StaffSchema } from '@/schemas/staffSchema';
 
 const GENDERS = ['Male', 'Female'];
 const MARITAL_STATUSES = ['Single', 'Married', 'Divorced', 'Widowed'];
@@ -40,49 +42,67 @@ const QUALIFICATIONS = [
   'SSCE',
 ];
 
+interface EditStaffDialogProps {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  staff: StaffSchema;
+}
+
 export default function EditStaffDialog({
   open,
   onOpenChange,
   staff,
-}: {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-  staff: StaffSchema;
-}) {
+}: EditStaffDialogProps) {
   const [updateStaff, { isLoading }] = useUpdateStaffMutation();
+  const { refetch } = useGetAllStaffQuery({});
 
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    watch,
-    formState: { errors },
-  } = useForm<StaffFormData>({
-    resolver: zodResolver(staffFormSchema),
-    defaultValues: {
-      firstName: staff.firstName,
-      lastName: staff.lastName,
-      phone: staff.phone,
-      email: staff.email,
-      role: staff.role,
-      qualification: staff.qualification,
-      gender: staff.gender,
-      maritalStatus: staff.maritalStatus,
-      category: staff.category,
-      stateOfOrigin: staff.stateOfOrigin,
-      localGvt: staff.localGvt,
-      homeTown: staff.homeTown,
-      residence: staff.residence,
-    },
+  const [formData, setFormData] = useState({
+    firstName: staff.firstName || '',
+    lastName: staff.lastName || '',
+    phone: staff.phone || '',
+    email: staff.email || '',
+    role: staff.role || '',
+    qualification: staff.qualification || '',
+    gender: staff.gender || '',
+    maritalStatus: staff.maritalStatus || '',
+    category: staff.category || '',
+    stateOfOrigin: staff.stateOfOrigin || '',
+    localGvt: staff.localGvt || '',
+    homeTown: staff.homeTown || '',
+    residence: staff.residence || '',
   });
 
-  const selectedState = watch('stateOfOrigin');
-  const lgas = selectedState ? NaijaStates.lgas(selectedState).lgas : [];
+  const [lgas, setLgas] = useState<string[]>([]);
 
-  const onSubmit = async (data: StaffFormData) => {
-    console.log('logging', data);
+  useEffect(() => {
+    if (formData.stateOfOrigin) {
+      const newLgas = NaijaStates.lgas(formData.stateOfOrigin)?.lgas || [];
+      setLgas(newLgas);
+    } else {
+      setLgas([]);
+    }
+  }, [formData.stateOfOrigin]);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSelectChange = (field: keyof typeof formData, value: string) => {
+    setFormData((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+  };
+
+  const onSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
     try {
-      await updateStaff({ staffId: staff.id, ...data }).unwrap();
+      await updateStaff({ staffId: staff.id, ...formData }).unwrap();
+      refetch();
       toast.success('Staff updated successfully');
       onOpenChange(false);
     } catch (err) {
@@ -98,29 +118,47 @@ export default function EditStaffDialog({
           <DialogDescription>Update staff details below.</DialogDescription>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit(onSubmit)} className='space-y-3'>
-          <Input placeholder='First Name' {...register('firstName')} />
-          <p className='text-red-500 text-sm'>{errors.firstName?.message}</p>
-
-          <Input placeholder='Last Name' {...register('lastName')} />
-          <p className='text-red-500 text-sm'>{errors.lastName?.message}</p>
-
-          <Input placeholder='Phone' {...register('phone')} />
-          <p className='text-red-500 text-sm'>{errors.phone?.message}</p>
-
-          <Input placeholder='Email' {...register('email')} />
-          <p className='text-red-500 text-sm'>{errors.email?.message}</p>
-
-          <Input placeholder='Role' {...register('role')} />
-          <p className='text-red-500 text-sm'>{errors.role?.message}</p>
+        <form onSubmit={onSubmit} className='space-y-3'>
+          <Input
+            name='firstName'
+            value={formData.firstName}
+            onChange={handleInputChange}
+            placeholder='First Name'
+          />
+          <Input
+            name='lastName'
+            value={formData.lastName}
+            onChange={handleInputChange}
+            placeholder='Last Name'
+          />
+          <Input
+            name='phone'
+            value={formData.phone}
+            onChange={handleInputChange}
+            placeholder='Phone'
+          />
+          <Input
+            name='email'
+            value={formData.email}
+            onChange={handleInputChange}
+            placeholder='Email'
+          />
+          <Input
+            name='role'
+            value={formData.role}
+            onChange={handleInputChange}
+            placeholder='Role'
+          />
 
           <Label>Qualification</Label>
           <Select
-            value={watch('qualification')}
-            onValueChange={(value) => setValue('qualification', value)}
+            value={formData.qualification}
+            onValueChange={(value) =>
+              handleSelectChange('qualification', value)
+            }
           >
             <SelectTrigger>
-              <SelectValue placeholder='Select qualification' />
+              <SelectValue placeholder='Select Qualification' />
             </SelectTrigger>
             <SelectContent>
               {QUALIFICATIONS.map((q) => (
@@ -130,14 +168,11 @@ export default function EditStaffDialog({
               ))}
             </SelectContent>
           </Select>
-          <p className='text-red-500 text-sm'>
-            {errors.qualification?.message}
-          </p>
 
           <Label>Gender</Label>
           <Select
-            value={watch('gender')}
-            onValueChange={(value) => setValue('gender', value)}
+            value={formData.gender}
+            onValueChange={(value) => handleSelectChange('gender', value)}
           >
             <SelectTrigger>
               <SelectValue placeholder='Select Gender' />
@@ -150,12 +185,13 @@ export default function EditStaffDialog({
               ))}
             </SelectContent>
           </Select>
-          <p className='text-red-500 text-sm'>{errors.gender?.message}</p>
 
           <Label>Marital Status</Label>
           <Select
-            value={watch('maritalStatus')}
-            onValueChange={(value) => setValue('maritalStatus', value)}
+            value={formData.maritalStatus}
+            onValueChange={(value) =>
+              handleSelectChange('maritalStatus', value)
+            }
           >
             <SelectTrigger>
               <SelectValue placeholder='Select Marital Status' />
@@ -168,14 +204,11 @@ export default function EditStaffDialog({
               ))}
             </SelectContent>
           </Select>
-          <p className='text-red-500 text-sm'>
-            {errors.maritalStatus?.message}
-          </p>
 
           <Label>Category</Label>
           <Select
-            value={watch('category')}
-            onValueChange={(value) => setValue('category', value)}
+            value={formData.category}
+            onValueChange={(value) => handleSelectChange('category', value)}
           >
             <SelectTrigger>
               <SelectValue placeholder='Select Category' />
@@ -188,15 +221,13 @@ export default function EditStaffDialog({
               ))}
             </SelectContent>
           </Select>
-          <p className='text-red-500 text-sm'>{errors.category?.message}</p>
 
           <Label>State of Origin</Label>
           <Select
-            value={watch('stateOfOrigin')}
-            onValueChange={(value) => {
-              setValue('stateOfOrigin', value);
-              setValue('localGvt', '');
-            }}
+            value={formData.stateOfOrigin}
+            onValueChange={(value) =>
+              handleSelectChange('stateOfOrigin', value)
+            }
           >
             <SelectTrigger>
               <SelectValue placeholder='Select State' />
@@ -209,15 +240,12 @@ export default function EditStaffDialog({
               ))}
             </SelectContent>
           </Select>
-          <p className='text-red-500 text-sm'>
-            {errors.stateOfOrigin?.message}
-          </p>
 
           <Label>Local Government</Label>
           <Select
-            value={watch('localGvt')}
-            onValueChange={(value) => setValue('localGvt', value)}
-            disabled={!selectedState}
+            value={formData.localGvt}
+            onValueChange={(value) => handleSelectChange('localGvt', value)}
+            disabled={!lgas.length}
           >
             <SelectTrigger>
               <SelectValue placeholder='Select Local Government' />
@@ -230,16 +258,29 @@ export default function EditStaffDialog({
               ))}
             </SelectContent>
           </Select>
-          <p className='text-red-500 text-sm'>{errors.localGvt?.message}</p>
 
-          <Input placeholder='Home Town' {...register('homeTown')} />
-          <p className='text-red-500 text-sm'>{errors.homeTown?.message}</p>
-
-          <Input placeholder='Residence' {...register('residence')} />
-          <p className='text-red-500 text-sm'>{errors.residence?.message}</p>
+          <Input
+            name='homeTown'
+            value={formData.homeTown}
+            onChange={handleInputChange}
+            placeholder='Home Town'
+          />
+          <Input
+            name='residence'
+            value={formData.residence}
+            onChange={handleInputChange}
+            placeholder='Residence'
+          />
 
           <Button type='submit' disabled={isLoading} className='w-full'>
-            {isLoading ? 'Processing...' : 'Update'}
+            {isLoading ? (
+              <>
+                <Loader2 className='h-4 w-4 animate-spin mr-2' />
+                Updating...
+              </>
+            ) : (
+              'Update Staff'
+            )}
           </Button>
         </form>
       </DialogContent>
