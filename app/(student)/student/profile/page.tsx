@@ -5,6 +5,7 @@ import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import Image from 'next/image';
 import { useGetStudentProfileQuery } from '@/src/features/students/studentApiSlice';
 import { formatDateTime } from '@/lib/utils';
+import { ChangeStudentPassword } from '@/components/shared/students/student-change-password-button';
 
 const StudentProfilePage = () => {
   const { data: student, isLoading, isError } = useGetStudentProfileQuery();
@@ -118,6 +119,7 @@ const StudentProfilePage = () => {
           <p className='text-sm text-muted-foreground text-left'>
             Last Modified: {formatDateTime(student.updatedAt)}
           </p>
+          <ChangeStudentPassword studentId={student.studentId} />
         </CardContent>
       </Card>
     </div>

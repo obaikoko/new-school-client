@@ -5,7 +5,7 @@ import { UserIcon } from 'lucide-react';
 const SignInButton = () => {
   return (
     <Button asChild>
-      <Link href='/sign-in'>
+      <Link href='/students/sign-in'>
         <UserIcon /> Sign In
       </Link>
     </Button>

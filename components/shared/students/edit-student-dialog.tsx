@@ -20,7 +20,8 @@ import { Loader2 } from 'lucide-react';
 import { Label } from '@/components/ui/label';
 import { levels, subLevels, relationships, genders } from '@/lib/utils';
 import { useEffect, useState } from 'react';
-import NaijaStates from 'naija-state-local-government';
+import { nigeriaStatesAndLgas } from '@/lib/state-local-gvt';
+
 
 interface EditStudentFormData {
   studentId?: string;
@@ -64,12 +65,13 @@ export default function EditStudentDialog({
 
   useEffect(() => {
     if (formData.stateOfOrigin) {
-      const newLgas = NaijaStates.lgas(formData.stateOfOrigin)?.lgas || [];
+      const newLgas = nigeriaStatesAndLgas[formData.stateOfOrigin] || [];
       setLgas(newLgas);
     } else {
       setLgas([]);
     }
   }, [formData.stateOfOrigin]);
+  
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -193,7 +195,7 @@ export default function EditStudentDialog({
               <SelectValue placeholder='Select State' />
             </SelectTrigger>
             <SelectContent>
-              {NaijaStates.states().map((state) => (
+              {Object.keys(nigeriaStatesAndLgas).map((state) => (
                 <SelectItem key={state} value={state}>
                   {state}
                 </SelectItem>
@@ -211,8 +213,11 @@ export default function EditStudentDialog({
               <SelectValue placeholder='Select LGA' />
             </SelectTrigger>
             <SelectContent>
-              {lgas.map((lga) => (
-                <SelectItem key={lga} value={lga}>
+              {lgas.map((lga, index) => (
+                <SelectItem
+                  key={`${formData.stateOfOrigin}-${lga}-${index}`}
+                  value={lga}
+                >
                   {lga}
                 </SelectItem>
               ))}

@@ -1,5 +1,5 @@
 'use client';
-import NaijaStates from 'naija-state-local-government';
+import { nigeriaStatesAndLgas } from '@/lib/state-local-gvt';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'sonner';
@@ -34,8 +34,10 @@ const RegisterStudentsForm = () => {
 
   const [registerStudent, { isLoading }] = useRegisterStudentMutation();
   const [selectedState, setSelectedState] = useState('');
-  const states: string[] = NaijaStates.states();
-  const getLgas = (state: string): string[] => NaijaStates.lgas(state).lgas;
+  const states: string[] = Object.keys(nigeriaStatesAndLgas);
+  const getLgas = (state: string): string[] =>
+    nigeriaStatesAndLgas[state] || [];
+  
 
   const onSubmit = async (data: RegisterStudentForm) => {
     try {
@@ -177,8 +179,11 @@ const RegisterStudentsForm = () => {
             </SelectTrigger>
             <SelectContent>
               {(selectedState ? getLgas(selectedState) : []).map(
-                (lga: string) => (
-                  <SelectItem key={lga} value={lga}>
+                (lga: string, index) => (
+                  <SelectItem
+                    key={`${selectedState}-${lga}-${index}`}
+                    value={lga}
+                  >
                     {lga}
                   </SelectItem>
                 )
