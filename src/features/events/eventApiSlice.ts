@@ -1,9 +1,10 @@
 import { EVENTS_URL } from '../constants';
 import { apiSlice } from '../apiSlice';
+import { EventSchema } from '@/schemas/eventSchema';
 
 export const eventApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getEvents: builder.query({
+    getEvents: builder.query<EventSchema[], void>({
       query: () => ({
         url: `${EVENTS_URL}`,
       }),
@@ -17,8 +18,7 @@ export const eventApiSlice = apiSlice.injectEndpoints({
         body: data,
         credentials: 'include',
       }),
-      providesTags: ['Events'],
-      keepUnusedDataFor: 5,
+      invalidatesTags: ['Events'],
     }),
     deleteEvent: builder.mutation({
       query: (evebtId) => ({
@@ -26,8 +26,7 @@ export const eventApiSlice = apiSlice.injectEndpoints({
         method: 'DELETE',
         credentials: 'include',
       }),
-      providesTags: ['Events'],
-      keepUnusedDataFor: 5,
+      invalidatesTags: ['Events'],
     }),
   }),
 });

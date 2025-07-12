@@ -25,6 +25,9 @@ const Menu = () => {
           <Link href='/admission'>Admission</Link>
         </Button>
         <Button asChild variant='ghost'>
+          <Link href='/gallery'>Gallery</Link>
+        </Button>
+        <Button asChild variant='ghost'>
           <Link href='/events'>Events</Link>
         </Button>
         <SignInButton />
