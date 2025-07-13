@@ -31,6 +31,7 @@ import RegisterUsersForm from '@/components/shared/users/register-form';
 import AddSubjectToResult from '@/components/shared/results/add-subject-result';
 import RemoveSubjectFromResult from '@/components/shared/results/remove-subject';
 import RegisterStaffForm from '@/components/shared/staff/register-staff-form';
+import AddEventForm from '@/components/shared/events/event-form';
 
 const actions = [
   {
@@ -76,10 +77,10 @@ const actions = [
     content: <ResumptionInfoForm />,
   },
   {
-    title: 'Manage Timetable',
-    description: 'Create or update class schedules.',
+    title: 'Manage Events Information',
+    description: 'Create or delete event schedules.',
     icon: CalendarCheck,
-    content: <div>Timetable Management Form</div>,
+    content: <AddEventForm />,
   },
 
   {

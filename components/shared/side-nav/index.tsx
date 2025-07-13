@@ -5,14 +5,15 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
   LayoutDashboard,
-  Users,
-  BookOpenCheck,
-  UserCog,
-  Table2,
-  BookMarked,
-  BarChart,
+  Users2, // clearer for multiple users
+  GraduationCap, // for Students
+  FileText, // for Results
+  UserCog, // for Staff
+  Table, // for Broadsheet
+  BadgePlus, // for Admission
+  Hammer, // for Actions
+  CalendarDays, // for Events
   Settings,
-  PieChart,
   X,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -22,15 +23,15 @@ import SignOutButton from '../sign-out';
 
 const navItems = [
   { label: 'Dashboard', href: '/admin/dashboard', icon: LayoutDashboard },
-  { label: 'Users', href: '/admin/users', icon: Users },
-  { label: 'Students', href: '/admin/students', icon: BookMarked },
-  { label: 'Results', href: '/admin/results', icon: BookOpenCheck },
+  { label: 'Users', href: '/admin/users', icon: Users2 },
+  { label: 'Students', href: '/admin/students', icon: GraduationCap },
+  { label: 'Results', href: '/admin/results', icon: FileText },
   { label: 'Staff', href: '/admin/staff', icon: UserCog },
-  { label: 'Broadsheet', href: '/admin/broadsheet', icon: Table2 },
-  { label: 'Admission', href: '/admin/admission', icon: PieChart },
-  { label: 'Actions', href: '/admin/actions', icon: BookOpenCheck },
-  { label: 'Reports', href: '/admin/reports', icon: BarChart },
-  { label: 'Settings', href: '/admin/settings', icon: Settings },
+  { label: 'Broadsheet', href: '/admin/broadsheet', icon: Table },
+  { label: 'Admission', href: '/admin/admission', icon: BadgePlus },
+  { label: 'Actions', href: '/admin/actions', icon: Hammer },
+  { label: 'Events', href: '/admin/events', icon: CalendarDays },
+  { label: 'Profile', href: '/admin/profile', icon: Settings },
 ];
 
 interface SideNavProps {

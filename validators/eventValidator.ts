@@ -6,5 +6,5 @@ export const eventForm = z.object({
     .string()
     .min(3, 'description cannot be less than 3 characters'),
   date: z.coerce.date(),
-  imageUrl: z.string().min(3, 'Image cannot be less than 3 characters'),
+  imageUrl: z.string(),
 });
