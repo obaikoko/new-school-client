@@ -41,7 +41,7 @@
 .overlay {
   position: absolute;
   bottom: 10%;
-  left: 35%;
+  left: 30%;
   color: white;
   background-color: rgba(0, 0, 0, 0.5);
   transform: translateY(-50%);
@@ -322,8 +322,9 @@ button.next:hover {
     display: block;
   }
   .overlay {
-    left: 80;
-    transform: translateX(-40%);
+    /* left: 80; */
+    left: 40%;
+    transform: translateX(-50%);
   }
   .overlay h1 {
     font-size: 30px;
@@ -397,9 +398,7 @@ button.next:hover {
   .section3 .card-container {
     flex-direction: column;
   }
-  .section4-body{
-    
-  }
+
 
   .section5-body {
     grid-template-columns: 1fr;

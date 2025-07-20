@@ -137,7 +137,7 @@ const AdmissionForm = () => {
             </div>
           </div>
 
-          <Button type='submit' className='w-full py-3'>
+          <Button type='submit' className='w-full py-3 bg-blue-950 text-white'>
             {isLoading ? 'Processing...' : 'Submit Form'}
           </Button>
         </form>

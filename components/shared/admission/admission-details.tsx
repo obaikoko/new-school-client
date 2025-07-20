@@ -4,7 +4,13 @@ import React from 'react';
 import { useGetSingleAdmissionQuery } from '@/src/features/admission/admissionApiSlice';
 import { formatDateTime } from '@/lib/utils';
 import Spinner from '@/components/shared/spinner';
-import { Card } from '@/components/ui/card';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardTitle,
+} from '@/components/ui/card';
+import MailDialog from '../mail-dailog-box';
 
 const AdmissionDetails = ({ requestId }: { requestId: string }) => {
   const { data, isLoading, isError } = useGetSingleAdmissionQuery(requestId);
@@ -27,14 +33,21 @@ const AdmissionDetails = ({ requestId }: { requestId: string }) => {
 
   return (
     <div className='mt-4 max-w-5xl mx-auto px-4'>
-      <Card className='overflow-hidden shadow-lg border border-muted'>
-        <div className=' p-6'>
-          <h2 className='text-2xl font-bold mb-1'>Admission Summary</h2>
-          <p className='text-sm opacity-90'>
+      <Card className='mb-4'>
+        <CardContent className=' p-6'>
+          <CardTitle className='text-2xl font-bold mb-1'>
+            Admission Summary
+          </CardTitle>
+          <CardDescription className='text-sm opacity-90'>
             Review submitted details for this admission request.
-          </p>
-        </div>
+          </CardDescription>
+        </CardContent>
+        <CardContent>
+          <MailDialog email={data.email} admissionId={data.id} />
+        </CardContent>
+      </Card>
 
+      <Card className='overflow-hidden shadow-lg border border-muted'>
         <div className='p-6 grid grid-cols-1 sm:grid-cols-2 gap-6'>
           <Detail label='First Name' value={data.firstName} />
           <Detail label='Last Name' value={data.lastName} />
