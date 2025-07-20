@@ -1,5 +1,4 @@
 import { Button } from '@/components/ui/button';
-import ModeToggle from './mode-toggle';
 import Link from 'next/link';
 import { EllipsisVertical } from 'lucide-react';
 import {
@@ -14,7 +13,6 @@ const Menu = () => {
     <div className='flex items-center'>
       {/* Desktop nav */}
       <nav className='hidden md:flex items-center gap-2 flex-wrap'>
-        <ModeToggle />
         <Button asChild variant='ghost'>
           <Link href='/'>Home</Link>
         </Button>
@@ -41,7 +39,6 @@ const Menu = () => {
           </SheetTrigger>
           <SheetContent className='flex flex-col items-start space-y-2 pt-6'>
             <SheetTitle>Menu</SheetTitle>
-            <ModeToggle />
             <Button asChild variant='ghost'>
               <Link href='/'>Home</Link>
             </Button>

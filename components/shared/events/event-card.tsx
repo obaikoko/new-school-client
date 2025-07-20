@@ -8,13 +8,16 @@ const EventCard = ({ event }: { event: EventSchema }) => {
   return (
     <div>
       <div className=' shadow-md hover:shadow-xl transition-shadow duration-300 rounded-lg overflow-hidden mx-4 my-6 outline'>
-        <Image
-          width={500}
-          height={500}
-          src={event.imageUrl}
-          alt={event.title}
-          className='w-full h-56 object-cover'
-        />
+        {event.imageUrl && (
+          <Image
+            width={500}
+            height={500}
+            src={event.imageUrl}
+            alt={event.title}
+            className='w-full h-56 object-cover'
+          />
+        )}
+
         <div className='p-6'>
           <h3 className='text-2xl font-semibold  mb-3 line-clamp-1'>
             {event.title}

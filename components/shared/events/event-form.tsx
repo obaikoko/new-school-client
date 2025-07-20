@@ -27,6 +27,7 @@ const [image, setImage] = useState<string | null>(null);
   const [addEvent, { isLoading }] = useAddEventMutation();
 
   const onSubmit = async (data: EventFormSchema) => {
+    console.log('uploading...')
     try {
       await addEvent({
         title: data.title,
@@ -81,7 +82,10 @@ const handleImageChange = async (
 };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className='space-y-6'>
+    <form  onSubmit={(e) => {
+      console.log('📨 Form submitted');
+      handleSubmit(onSubmit)(e);
+    }} className='space-y-6'>
       <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
         <div>
           <Label htmlFor='title'>Title</Label>
@@ -118,7 +122,7 @@ const handleImageChange = async (
         className='w-full cursor-pointer'
         disabled={isLoading}
       >
-        {isLoading ? 'Processing...' : 'Publish Results'}
+        {isLoading ? 'Processing...' : 'Upload'}
       </Button>
     </form>
   );

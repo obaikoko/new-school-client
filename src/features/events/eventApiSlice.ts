@@ -20,9 +20,18 @@ export const eventApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ['Events'],
     }),
+    updateEvent: builder.mutation({
+      query: (data) => ({
+        url: `${EVENTS_URL}/${data.eventId}`,
+        method: 'PUT',
+        body: data,
+        credentials: 'include',
+      }),
+      invalidatesTags: ['Events'],
+    }),
     deleteEvent: builder.mutation({
-      query: (evebtId) => ({
-        url: `${EVENTS_URL}/${evebtId}`,
+      query: (eventId) => ({
+        url: `${EVENTS_URL}/${eventId}`,
         method: 'DELETE',
         credentials: 'include',
       }),
@@ -34,5 +43,6 @@ export const eventApiSlice = apiSlice.injectEndpoints({
 export const {
   useGetEventsQuery,
   useAddEventMutation,
+  useUpdateEventMutation,
   useDeleteEventMutation,
 } = eventApiSlice;
