@@ -16,7 +16,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 
-import { useSendAdmissionMailMutation } from '@/src/features/admission/admissionApiSlice';
+import { useSendMailMutation } from '@/src/features/auth/usersApiSlice';
 import { showZodErrors } from '@/lib/utils';
 import { toast } from 'sonner';
 
@@ -27,15 +27,9 @@ const mailSchema = z.object({
 
 type MailFormValues = z.infer<typeof mailSchema>;
 
-export default function MailDialog({
-  email,
-  admissionId,
-}: {
-  email: string;
-  admissionId: string;
-}) {
+export default function MailDialog({ email }: { email: string }) {
   const [open, setOpen] = useState(false);
-  const [sendMail, { isLoading,  }] = useSendAdmissionMailMutation();
+  const [sendMail, { isLoading }] = useSendMailMutation();
 
   const {
     register,
@@ -48,7 +42,7 @@ export default function MailDialog({
   const onSubmit = async (values: MailFormValues) => {
     try {
       const res = await sendMail({
-        admissionId,
+        email: email,
         subject: values.subject,
         text: values.body, // assuming 'text' refers to the body
       }).unwrap();
@@ -78,7 +72,6 @@ export default function MailDialog({
               type='email'
               readOnly
             />
-          
           </div>
           <div>
             <Input {...register('subject')} placeholder='Subject' />
@@ -97,7 +90,11 @@ export default function MailDialog({
             )}
           </div>
           <DialogFooter>
-            <Button type='submit' disabled={isLoading}>
+            <Button
+              className='cursor-pointer'
+              type='submit'
+              disabled={isLoading}
+            >
               {isLoading ? 'Sending...' : 'Send'}
             </Button>
           </DialogFooter>

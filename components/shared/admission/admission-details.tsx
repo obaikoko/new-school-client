@@ -43,7 +43,7 @@ const AdmissionDetails = ({ requestId }: { requestId: string }) => {
           </CardDescription>
         </CardContent>
         <CardContent>
-          <MailDialog email={data.email} admissionId={data.id} />
+          <MailDialog email={data.email} />
         </CardContent>
       </Card>
 
@@ -60,8 +60,7 @@ const AdmissionDetails = ({ requestId }: { requestId: string }) => {
           />
           <Detail label='Gender' value={data.gender} />
           <Detail label='Class Applying For' value={data.level} />
-          <Detail label='Submitted At' value={formatDateTime(data.createdAt)} />
-          <Detail label='Last Updated' value={formatDateTime(data.updatedAt)} />
+          <Detail label='Submitted On' value={formatDateTime(data.createdAt)} />
         </div>
       </Card>
     </div>

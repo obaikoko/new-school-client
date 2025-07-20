@@ -16,6 +16,7 @@ import { StudentFormData, StudentId } from '@/schemas/studentSchema';
 
 import DeleteStudentButton from './delete-student-button';
 import Image from 'next/image';
+import MailDialog from '../mail-dailog-box';
 
 const StudentDetails = ({ studentId }: StudentId) => {
   const {
@@ -184,6 +185,7 @@ const StudentDetails = ({ studentId }: StudentId) => {
           </div>
         </CardContent>
         <CardContent className='flex justify-end gap-2'>
+          <MailDialog email={student.sponsorEmail} />
           <DeleteStudentButton studentId={studentId} />
           <Button
             variant='outline'
