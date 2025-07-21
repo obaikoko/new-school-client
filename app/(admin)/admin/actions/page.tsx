@@ -8,6 +8,7 @@ import {
   CalendarCheck,
   Upload,
   Users,
+  MailCheck,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
@@ -32,6 +33,7 @@ import AddSubjectToResult from '@/components/shared/results/add-subject-result';
 import RemoveSubjectFromResult from '@/components/shared/results/remove-subject';
 import RegisterStaffForm from '@/components/shared/staff/register-staff-form';
 import AddEventForm from '@/components/shared/events/event-form';
+import BulkMailDialog from '@/components/shared/bulk-mail-dialog';
 
 const actions = [
   {
@@ -81,6 +83,12 @@ const actions = [
     description: 'Create or delete event schedules.',
     icon: CalendarCheck,
     content: <AddEventForm />,
+  },
+  {
+    title: ' Send Mail',
+    description: 'Send mails to all active sponsors.',
+    icon: MailCheck,
+    content: <BulkMailDialog />,
   },
 
   {

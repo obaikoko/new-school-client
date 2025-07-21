@@ -21,6 +21,14 @@ export const usersApiSlice = apiSlice.injectEndpoints({
         credentials: 'include',
       }),
     }),
+    sendBulkMails: builder.mutation({
+      query: (data) => ({
+        url: `${USERS_URL}/mails-bulk`,
+        method: 'POST',
+        body: data,
+        credentials: 'include',
+      }),
+    }),
     sendMail: builder.mutation({
       query: (data) => ({
         url: `${USERS_URL}/mails`,
@@ -113,6 +121,7 @@ export const {
   useDeleteUserMutation,
   useUpdateUserMutation,
   useSendMailMutation,
+  useSendBulkMailsMutation,
   useGetUserDetailsQuery,
   useGetUserProfileQuery,
 } = usersApiSlice;

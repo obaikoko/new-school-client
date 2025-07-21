@@ -1,6 +1,5 @@
 'use client';
 
-import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
@@ -15,17 +14,14 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
-
 import { useSendMailMutation } from '@/src/features/auth/usersApiSlice';
 import { showZodErrors } from '@/lib/utils';
 import { toast } from 'sonner';
+import { mailSchema } from '@/validators/mailValidator';
+import { MailFormSchema } from '@/schemas/mailSchema';
 
-const mailSchema = z.object({
-  subject: z.string().min(1, 'Subject is required'),
-  body: z.string().min(1, 'Body is required'),
-});
 
-type MailFormValues = z.infer<typeof mailSchema>;
+
 
 export default function MailDialog({ email }: { email: string }) {
   const [open, setOpen] = useState(false);
@@ -36,10 +32,10 @@ export default function MailDialog({ email }: { email: string }) {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<MailFormValues>({
+  } = useForm<MailFormSchema>({
     resolver: zodResolver(mailSchema),
   });
-  const onSubmit = async (values: MailFormValues) => {
+  const onSubmit = async (values: MailFormSchema) => {
     try {
       const res = await sendMail({
         email: email,
