@@ -15,6 +15,7 @@ export const apiSlice = createApi({
     'Events',
     'NextTerm',
     'Data',
+    'Announcement',
   ],
   // eslint-disable-next-line
   endpoints: (builder) => ({}),

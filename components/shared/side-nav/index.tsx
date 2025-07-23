@@ -14,6 +14,7 @@ import {
   Hammer, // for Actions
   CalendarDays, // for Events
   Settings,
+  SpeakerIcon,
   X,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -27,8 +28,10 @@ const navItems = [
   { label: 'Students', href: '/admin/students', icon: GraduationCap },
   { label: 'Results', href: '/admin/results', icon: FileText },
   { label: 'Staff', href: '/admin/staff', icon: UserCog },
+  { label: 'Scheme of work', href: '/admin/scheme', icon: BadgePlus },
   { label: 'Broadsheet', href: '/admin/broadsheet', icon: Table },
   { label: 'Admission', href: '/admin/admission', icon: BadgePlus },
+  { label: 'Announcements', href: '/admin/announcement', icon: SpeakerIcon },
   { label: 'Actions', href: '/admin/actions', icon: Hammer },
   { label: 'Events', href: '/admin/events', icon: CalendarDays },
   { label: 'Profile', href: '/admin/profile', icon: Settings },

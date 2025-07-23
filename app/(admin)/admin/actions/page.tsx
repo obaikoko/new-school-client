@@ -34,6 +34,7 @@ import RemoveSubjectFromResult from '@/components/shared/results/remove-subject'
 import RegisterStaffForm from '@/components/shared/staff/register-staff-form';
 import AddEventForm from '@/components/shared/events/event-form';
 import BulkMailDialog from '@/components/shared/bulk-mail-dialog';
+import PostAnnouncement from '@/components/shared/announcement/post-announcement-dialog';
 
 const actions = [
   {
@@ -95,7 +96,7 @@ const actions = [
     title: 'Post Announcements',
     description: 'Share important info with staff/students.',
     icon: FilePlus,
-    content: <div>Announcements Form</div>,
+    content: <PostAnnouncement/>,
   },
 ];
 

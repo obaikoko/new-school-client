@@ -7,7 +7,15 @@ import { cn } from '@/lib/utils';
 import ModeToggle from '../header/mode-toggle';
 import SignOutButton from '../sign-out';
 
-import { Home,  FileText, User, X } from 'lucide-react';
+import {
+  Home,
+  FileText,
+  User,
+  X,
+  SpeakerIcon,
+  CalendarArrowUp,
+  BookUpIcon,
+} from 'lucide-react';
 
 const navItems = [
   {
@@ -17,6 +25,19 @@ const navItems = [
     icon: Home,
   },
   { id: 'results', href: '/student/results', label: 'Results', icon: FileText },
+  {
+    id: 'announcement',
+    href: '/student/announcement',
+    label: 'Announcement',
+    icon: SpeakerIcon,
+  },
+  {
+    id: 'timeTable',
+    href: '/student/time-table',
+    label: 'Time Table',
+    icon: CalendarArrowUp,
+  },
+  { id: 'scheme', href: '/student/scheme', label: 'Scheme of work', icon: BookUpIcon },
   { id: 'profile', href: '/student/profile', label: 'Profile', icon: User },
 ];
 

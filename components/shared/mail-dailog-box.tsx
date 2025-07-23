@@ -40,7 +40,7 @@ export default function MailDialog({ email }: { email: string }) {
       const res = await sendMail({
         email: email,
         subject: values.subject,
-        text: values.body, // assuming 'text' refers to the body
+        text: values.body, 
       }).unwrap();
       toast.success(res);
     } catch (error) {
