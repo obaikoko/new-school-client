@@ -142,3 +142,13 @@ export const relationships: string[] = [
   'Guardian',
 ];
 export const genders: string[] = ['Male', 'Female'];
+export const subjectColors: Record<string, string> = {
+  Mathematics: 'bg-blue-100 text-blue-800',
+  English: 'bg-green-100 text-green-800',
+  'English Language': 'bg-green-100 text-green-800',
+  Biology: 'bg-pink-100 text-pink-800',
+  Chemistry: 'bg-yellow-100 text-yellow-800',
+  Physics: 'bg-purple-100 text-purple-800',
+  'Civic Education': 'bg-orange-100 text-orange-800',
+  'Free Period': 'bg-muted text-muted-foreground',
+};

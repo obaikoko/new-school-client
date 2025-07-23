@@ -8,6 +8,8 @@ import {
   BookOpen,
   Settings,
   X,
+  SpeakerIcon,
+  CalendarArrowDown,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -23,6 +25,24 @@ const teacherNavItems = [
     icon: ClipboardList,
   },
   { id: 'results', label: 'Results', href: '/user/results', icon: BookOpen },
+  {
+    id: 'announcement',
+    label: 'Announcement',
+    href: '/user/announcement',
+    icon: SpeakerIcon,
+  },
+  {
+    id: 'scheme',
+    label: 'Scheme of work',
+    href: '/user/scheme',
+    icon: BookOpen,
+  },
+  {
+    id: 'timeTable',
+    label: 'Time Table ',
+    href: '/user/time-table',
+    icon: CalendarArrowDown,
+  },
   {
     id: 'settings',
     label: 'Settings',

@@ -34,7 +34,7 @@ const AnnouncementDetails = ({ annoucementId }: { annoucementId: string }) => {
       <Card>
         <CardContent>
           <CardDescription className='mt-12 text-center text-destructive'>
-            Failed to load admission data. Please try again.
+            Failed to load announcement data. Please try again.
           </CardDescription>
         </CardContent>
       </Card>

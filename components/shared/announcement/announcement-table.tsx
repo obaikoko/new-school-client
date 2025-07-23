@@ -60,7 +60,7 @@ const AnnouncementTable = ({
                   <TableRow key={announcement.id}>
                     {pathName === '/admin/announcement' && (
                       <TableCell className='underline'>
-                        <Link href={`/admin/announcement${announcement.id}`}>
+                        <Link href={`/admin/announcement/${announcement.id}`}>
                           ...{announcement.id.slice(18, 25)}
                         </Link>
                       </TableCell>
@@ -96,11 +96,11 @@ const AnnouncementTable = ({
                           >
                             Read More
                           </Button>
-                        ) : pathName === '/users/announcement' ? (
+                        ) : pathName === '/user/announcement' ? (
                           <Button
                             onClick={() =>
                               router.push(
-                                `/users/announcement/${announcement.id}`
+                                `/user/announcement/${announcement.id}`
                               )
                             }
                           >
@@ -108,6 +108,7 @@ const AnnouncementTable = ({
                           </Button>
                         ) : (
                           <Button
+                            className='cursor-pointer'
                             onClick={() =>
                               router.push(
                                 `/student/announcement/${announcement.id}`
