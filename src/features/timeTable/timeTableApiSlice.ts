@@ -45,7 +45,7 @@ export const timeTableApiSlice = apiSlice.injectEndpoints({
     }),
     updateTimeTable: builder.mutation({
       query: (data) => ({
-        url: `${TIMETABLE_URL}/${data.timetableId}`,
+        url: `${TIMETABLE_URL}/edit`,
         method: 'PUT',
         body: data,
         credentials: 'include',

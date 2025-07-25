@@ -13,11 +13,7 @@ export const createTimeTableSchema = z.object({
   periods: z.array(periodSchema).min(1),
 });
 
-export const updateTimeTableSchema = z.object({
-  level: z.string().min(1).optional(),
-  day: z.string().min(1).optional(),
-  periods: z.array(periodSchema).optional(),
-});
+
 
 export const timeTableIdSchema = z.object({
   id: z.string().length(24, 'Invalid timetable ID'),

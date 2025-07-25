@@ -3,7 +3,6 @@ import { twMerge } from 'tailwind-merge';
 import { toast } from 'sonner';
 import { ZodError } from 'zod';
 
-
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
@@ -16,8 +15,6 @@ export const formatDateTime = (dateString: string | Date) => {
     day: 'numeric',
   });
 };
-
-
 
 export function showZodErrors(error: unknown) {
   if (error instanceof ZodError) {
@@ -37,7 +34,7 @@ export function showZodErrors(error: unknown) {
     }
   } else {
     toast.error('An unknown error occurred');
-    console.log(error)
+    console.log(error);
   }
 }
 
@@ -141,6 +138,14 @@ export const relationships: string[] = [
   'Aunty',
   'Guardian',
 ];
+export const days: string[] = [
+  'Monday',
+  'Tuesday',
+  'Wednesday',
+  'Thursday',
+  'Friday',
+];
+
 export const genders: string[] = ['Male', 'Female'];
 export const subjectColors: Record<string, string> = {
   Mathematics: 'bg-blue-100 text-blue-800',

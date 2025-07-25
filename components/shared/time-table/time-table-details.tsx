@@ -22,7 +22,8 @@ import clsx from 'clsx';
 import { subjectColors } from '@/lib/utils';
 import { useSearchParams } from 'next/navigation';
 import TimeTableSearchForm from './time-table-search';
-import TimeTableDialog from './titme-table-dialog';
+import TimeTableDialog from './time-table-dialog';
+import UpdateTimeTableDialog from './update-time-table-dialog';
 
 const TimeTableDetails = () => {
   const searchParams = useSearchParams();
@@ -56,8 +57,6 @@ const TimeTableDetails = () => {
     <div className='max-w-5xl mx-auto px-4 py-10 space-y-6'>
       <div className='flex justify-between items-center'>
         <h1 className='text-3xl font-bold'>Weekly Time Table</h1>
-        <Button>Download PDF</Button>
-        <TimeTableDialog />
       </div>
       <Card>
         <CardContent>
@@ -70,7 +69,9 @@ const TimeTableDetails = () => {
         <div className='hidden md:block'>
           <Card className='shadow-lg'>
             <CardHeader>
-              <CardTitle className='text-2xl'>Full Time Table</CardTitle>
+              <CardTitle className='text-2xl'>
+                Full Time Table For {level}-{subLevel}
+              </CardTitle>
             </CardHeader>
             <CardContent className='space-y-6'>
               {timeTable.length === 0 ? (
@@ -79,9 +80,21 @@ const TimeTableDetails = () => {
                 <>
                   {timeTable.map((dayBlock) => (
                     <div key={dayBlock.day}>
-                      <h3 className='text-lg font-semibold text-primary mb-2'>
-                        {dayBlock.day}
-                      </h3>
+                      <div className='flex justify-between'>
+                        {' '}
+                        <h3 className='text-lg font-semibold text-primary mb-2'>
+                          {dayBlock.day}
+                        </h3>
+                        {level && subLevel && (
+                          <UpdateTimeTableDialog
+                            level={level}
+                            subLevel={subLevel}
+                            day={dayBlock.day}
+                            periods={dayBlock.periods}
+                          />
+                        )}
+                      </div>
+
                       <Table>
                         <TableHeader>
                           <TableRow>
@@ -124,7 +137,16 @@ const TimeTableDetails = () => {
             {timeTable.map((dayBlock) => (
               <AccordionItem value={dayBlock.day} key={dayBlock.day}>
                 <AccordionTrigger>{dayBlock.day}</AccordionTrigger>
+
                 <AccordionContent>
+                  {level && subLevel && (
+                    <UpdateTimeTableDialog
+                      level={level}
+                      subLevel={subLevel}
+                      day={dayBlock.day}
+                      periods={dayBlock.periods}
+                    />
+                  )}
                   <Table>
                     <TableBody>
                       {dayBlock.periods.map((period, idx) => (
@@ -152,6 +174,16 @@ const TimeTableDetails = () => {
             ))}
           </Accordion>
         </div>
+        <Card className='w-full my-2 mx-auto'>
+          <CardContent className='pt-6 pb-2'>
+            <CardTitle className='text-lg'>Actions</CardTitle>
+          </CardContent>
+
+          <CardContent className='grid gap-4 sm:grid-cols-2 md:grid-cols-3'>
+            <TimeTableDialog />
+            <Button variant='outline'>Download PDF</Button>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );
