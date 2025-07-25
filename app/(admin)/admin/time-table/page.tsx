@@ -1,5 +1,10 @@
+import TimeTableDetails from '@/components/shared/time-table/time-table-details';
 const AdminTimeTablePage = () => {
-  return <>Admin timetable page</>;
+  return (
+    <div>
+      <TimeTableDetails />
+    </div>
+  );
 };
 
 export default AdminTimeTablePage;

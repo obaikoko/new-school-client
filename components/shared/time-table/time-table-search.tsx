@@ -3,9 +3,7 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
-
-const levels = ['JSS 1', 'JSS 2', 'JSS 3', 'SS 1', 'SS 2', 'SS 3'];
-const subLevels = ['A', 'B', 'C', 'D'];
+import { levels, subLevels } from '@/lib/utils';
 
 const TimeTableSearchForm = () => {
   const router = useRouter();
@@ -16,7 +14,7 @@ const TimeTableSearchForm = () => {
     e.preventDefault();
     if (level && subLevel) {
       router.push(
-        `/admin/time-table/search/?level=${encodeURIComponent(
+        `/admin/time-table/?level=${encodeURIComponent(
           level
         )}&subLevel=${encodeURIComponent(subLevel)}`
       );

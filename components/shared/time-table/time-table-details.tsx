@@ -22,6 +22,7 @@ import clsx from 'clsx';
 import { subjectColors } from '@/lib/utils';
 import { useSearchParams } from 'next/navigation';
 import TimeTableSearchForm from './time-table-search';
+import TimeTableDialog from './titme-table-dialog';
 
 const TimeTableDetails = () => {
   const searchParams = useSearchParams();
@@ -56,6 +57,7 @@ const TimeTableDetails = () => {
       <div className='flex justify-between items-center'>
         <h1 className='text-3xl font-bold'>Weekly Time Table</h1>
         <Button>Download PDF</Button>
+        <TimeTableDialog />
       </div>
       <Card>
         <CardContent>
@@ -72,12 +74,9 @@ const TimeTableDetails = () => {
             </CardHeader>
             <CardContent className='space-y-6'>
               {timeTable.length === 0 ? (
-                <>
-                NO DATA FOUND!
-                </>
+                <>NO DATA FOUND!</>
               ) : (
                 <>
-                  
                   {timeTable.map((dayBlock) => (
                     <div key={dayBlock.day}>
                       <h3 className='text-lg font-semibold text-primary mb-2'>

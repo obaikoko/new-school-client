@@ -16,6 +16,7 @@ import {
   Settings,
   SpeakerIcon,
   X,
+  Timer,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -24,11 +25,12 @@ import SignOutButton from '../sign-out';
 
 const navItems = [
   { label: 'Dashboard', href: '/admin/dashboard', icon: LayoutDashboard },
-  { label: 'Users', href: '/admin/users', icon: Users2 },
+  { label: 'Users', href: '/admin/users', icon: Users2 }, 
   { label: 'Students', href: '/admin/students', icon: GraduationCap },
   { label: 'Results', href: '/admin/results', icon: FileText },
   { label: 'Staff', href: '/admin/staff', icon: UserCog },
   { label: 'Scheme of work', href: '/admin/scheme', icon: BadgePlus },
+  { label: 'Time table', href: '/admin/time-table', icon: Timer },
   { label: 'Broadsheet', href: '/admin/broadsheet', icon: Table },
   { label: 'Admission', href: '/admin/admission', icon: BadgePlus },
   { label: 'Announcements', href: '/admin/announcement', icon: SpeakerIcon },
