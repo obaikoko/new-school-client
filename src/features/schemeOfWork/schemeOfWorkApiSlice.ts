@@ -1,5 +1,6 @@
 import { SCHEMEOFWORK_URL } from '../constants';
 import { apiSlice } from '../apiSlice';
+import { SchemeOfWorkSchema } from '@/schemas/schemeOfWork';
 
 export const schemeofworkApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -24,6 +25,18 @@ export const schemeofworkApiSlice = apiSlice.injectEndpoints({
     getAllSchemeOfWork: builder.query({
       query: () => ({
         url: `${SCHEMEOFWORK_URL}`,
+        method: 'GET',
+        credentials: 'include',
+      }),
+      providesTags: ['SchemeOfWork'],
+      keepUnusedDataFor: 5,
+    }),
+    getClassSchemeOfWork: builder.query<
+      SchemeOfWorkSchema[],
+      { level: string; term: string; subject: string }
+    >({
+      query: ({ level, term, subject }) => ({
+        url: `${SCHEMEOFWORK_URL}/search/?level=${level}&term=${term}&subject=${subject}`,
         method: 'GET',
         credentials: 'include',
       }),
@@ -55,6 +68,7 @@ export const {
   useCreateSchemeOfWorkMutation,
   useGetAllSchemeOfWorkQuery,
   useGetSchemeOfWorkByIdQuery,
+  useGetClassSchemeOfWorkQuery,
   useUpdateSchemeOfWorkMutation,
   useDeleteSchemeOfWorkMutation,
 } = schemeofworkApiSlice;

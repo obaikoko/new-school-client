@@ -16,11 +16,10 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
-import { Loader2 } from 'lucide-react';
+import { Loader2} from 'lucide-react';
 
 import { useGetClassSchemeOfWorkQuery } from '@/src/features/schemeOfWork/schemeOfWorkApiSlice';
 import { useAppSelector } from '@/src/app/hooks';
-import AddTopicDialog from '@/components/shared/scheme/add-topic-dialog';
 import { Input } from '@/components/ui/input';
 
 export default function SchemeOfWorkPage() {
@@ -51,9 +50,7 @@ export default function SchemeOfWorkPage() {
         {/* Search Form */}
         <div className='flex flex-wrap gap-4 items-end'>
           <div className='w-[180px]'>
-            <div className='w-[180px]'>
-              <Input value={level} disabled readOnly />
-            </div>
+            <Input value={level} disabled readOnly />
           </div>
 
           <div className='w-[180px]'>
@@ -78,7 +75,8 @@ export default function SchemeOfWorkPage() {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value='English'>English</SelectItem>
-                <SelectItem value='Math'>Math</SelectItem>
+                <SelectItem value='Mathematics'>Mathematics</SelectItem>
+                <SelectItem value='Basic Science'>Basic Science</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -134,9 +132,7 @@ export default function SchemeOfWorkPage() {
                         </ul>
                       </div>
                     ))}
-                    <div className='text-right'>
-                      <AddTopicDialog subject={scheme.subject} />
-                    </div>
+                 
                   </div>
                 </AccordionContent>
               </AccordionItem>
