@@ -19,14 +19,11 @@ import { Button } from '@/components/ui/button';
 import { Loader2 } from 'lucide-react';
 
 import { useGetClassSchemeOfWorkQuery } from '@/src/features/schemeOfWork/schemeOfWorkApiSlice';
-import { useAppSelector } from '@/src/app/hooks';
 import AddTopicDialog from '@/components/shared/scheme/add-topic-dialog';
-import { Input } from '@/components/ui/input';
-import { subjects, terms } from '@/lib/utils';
+import { levels, subjects, terms } from '@/lib/utils';
 
 export default function SchemeOfWorkPage() {
-  const { user } = useAppSelector((state) => state.auth);
-  const level = user?.level;
+  const [level, setLevel] = useState('');
   const [term, setTerm] = useState('');
   const [subject, setSubject] = useState('');
   const [searchClicked, setSearchClicked] = useState(false);
@@ -47,17 +44,28 @@ export default function SchemeOfWorkPage() {
       <CardHeader>
         <CardTitle>Scheme of Work</CardTitle>
       </CardHeader>
-      <CardContent>
-        <AddTopicDialog />
-      </CardContent>
+
+         <CardContent>
+              <AddTopicDialog />
+            </CardContent>
 
       <CardContent className='space-y-6'>
         {/* Search Form */}
         <div className='flex flex-wrap gap-4 items-end'>
           <div className='w-[180px]'>
-            <div className='w-[180px]'>
-              <Input value={level} disabled readOnly />
-            </div>
+            <label className='text-sm text-muted-foreground'>Class</label>
+            <Select onValueChange={setLevel}>
+              <SelectTrigger>
+                <SelectValue placeholder='Select Class' />
+              </SelectTrigger>
+              <SelectContent>
+                {levels.map((lvl, index) => (
+                  <SelectItem key={index} value={lvl}>
+                    {lvl}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
 
           <div className='w-[180px]'>
@@ -143,6 +151,9 @@ export default function SchemeOfWorkPage() {
                         </ul>
                       </div>
                     ))}
+                    <div className='text-right'>
+                      <AddTopicDialog  />
+                    </div>
                   </div>
                 </AccordionContent>
               </AccordionItem>
