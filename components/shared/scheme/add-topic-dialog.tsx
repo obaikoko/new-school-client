@@ -20,9 +20,10 @@ import {
 import { Plus, Trash2 } from 'lucide-react';
 import { useState } from 'react';
 
-
 // Dummy mutation for demonstration. Replace with your actual mutation.
 import { useCreateSchemeOfWorkMutation } from '@/src/features/schemeOfWork/schemeOfWorkApiSlice';
+import { levels, showZodErrors, subjects, terms } from '@/lib/utils';
+import { toast } from 'sonner';
 
 type TopicFormData = {
   subject: string;
@@ -33,7 +34,6 @@ type TopicFormData = {
     topic: { title: string }[];
   }[];
 };
-
 
 export default function AddTopicDialog() {
   const [open, setOpen] = useState(false);
@@ -55,7 +55,7 @@ export default function AddTopicDialog() {
     name: 'topics',
   });
 
-  const createTopicMutation = useCreateSchemeOfWorkMutation();
+  const [createTopicMutation, { isLoading }] = useCreateSchemeOfWorkMutation();
 
   const onSubmit = async (values: TopicFormData) => {
     const payload = {
@@ -67,11 +67,12 @@ export default function AddTopicDialog() {
     };
 
     try {
-      await createTopicMutation[0](payload).unwrap();
+      const res = await createTopicMutation(payload).unwrap();
       reset();
       setOpen(false);
+      toast.success(res.message);
     } catch (err) {
-      console.error('Error creating scheme of work:', err);
+      showZodErrors(err);
     }
   };
 
@@ -101,13 +102,11 @@ export default function AddTopicDialog() {
                     <SelectValue placeholder='Select Subject' />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value='Mathematics'>Mathematics</SelectItem>
-                    <SelectItem value='English'>English</SelectItem>
-                    <SelectItem value='Basic Science'>Basic Science</SelectItem>
-                    <SelectItem value='Social Studies'>
-                      Social Studies
-                    </SelectItem>
-                    {/* Add more subjects here */}
+                    {subjects.map((sub, index) => (
+                      <SelectItem key={index} value={sub}>
+                        {sub}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               )}
@@ -126,8 +125,11 @@ export default function AddTopicDialog() {
                     <SelectValue placeholder='Select Level' />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value='JSS 1'>JSS 1</SelectItem>
-                    <SelectItem value='JSS 2'>JSS 2</SelectItem>
+                    {levels.map((lvl, index) => (
+                      <SelectItem key={index} value={lvl}>
+                        {lvl}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               )}
@@ -146,9 +148,11 @@ export default function AddTopicDialog() {
                     <SelectValue placeholder='Select Term' />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value='First'>First</SelectItem>
-                    <SelectItem value='Second'>Second</SelectItem>
-                    <SelectItem value='Third'>Third</SelectItem>
+                    {terms.map((trm, index) => (
+                      <SelectItem key={index} value={trm}>
+                        {trm}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               )}
@@ -207,7 +211,9 @@ export default function AddTopicDialog() {
 
           {/* Submit Button */}
           <div className='pt-4 text-right'>
-            <Button type='submit'>Submit</Button>
+            <Button disabled={isLoading} type='submit'>
+              {isLoading ? 'Uploading...' : 'Upload'}
+            </Button>
           </div>
         </form>
       </DialogContent>
@@ -219,7 +225,6 @@ type WeekTopicsControlProps = {
   control: Control<TopicFormData>;
   weekIndex: number;
 };
-
 
 function WeekTopicsControl({ control, weekIndex }: WeekTopicsControlProps) {
   const { fields, append, remove } = useFieldArray({

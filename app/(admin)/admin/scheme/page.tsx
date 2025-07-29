@@ -21,6 +21,7 @@ import { Loader2 } from 'lucide-react';
 import { useGetClassSchemeOfWorkQuery } from '@/src/features/schemeOfWork/schemeOfWorkApiSlice';
 import AddTopicDialog from '@/components/shared/scheme/add-topic-dialog';
 import { levels, subjects, terms } from '@/lib/utils';
+import UpdateSchemeDialog from '@/components/shared/scheme/update-dailog';
 
 export default function SchemeOfWorkPage() {
   const [level, setLevel] = useState('');
@@ -45,9 +46,9 @@ export default function SchemeOfWorkPage() {
         <CardTitle>Scheme of Work</CardTitle>
       </CardHeader>
 
-         <CardContent>
-              <AddTopicDialog />
-            </CardContent>
+      <CardContent>
+        <AddTopicDialog />
+      </CardContent>
 
       <CardContent className='space-y-6'>
         {/* Search Form */}
@@ -151,9 +152,9 @@ export default function SchemeOfWorkPage() {
                         </ul>
                       </div>
                     ))}
-                    <div className='text-right'>
-                      <AddTopicDialog  />
-                    </div>
+                  </div>
+                  <div className='mt-4'>
+                    <UpdateSchemeDialog scheme={scheme} />
                   </div>
                 </AccordionContent>
               </AccordionItem>
