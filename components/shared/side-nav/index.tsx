@@ -1,18 +1,17 @@
-// components/shared/side-nav.tsx
 'use client';
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
   LayoutDashboard,
-  Users2, // clearer for multiple users
-  GraduationCap, // for Students
-  FileText, // for Results
-  UserCog, // for Staff
-  Table, // for Broadsheet
-  BadgePlus, // for Admission
-  Hammer, // for Actions
-  CalendarDays, // for Events
+  Users2,
+  GraduationCap,
+  FileText,
+  UserCog,
+  Table,
+  BadgePlus,
+  Hammer,
+  CalendarDays,
   Settings,
   SpeakerIcon,
   X,
@@ -25,7 +24,7 @@ import SignOutButton from '../sign-out';
 
 const navItems = [
   { label: 'Dashboard', href: '/admin/dashboard', icon: LayoutDashboard },
-  { label: 'Users', href: '/admin/users', icon: Users2 }, 
+  { label: 'Users', href: '/admin/users', icon: Users2 },
   { label: 'Students', href: '/admin/students', icon: GraduationCap },
   { label: 'Results', href: '/admin/results', icon: FileText },
   { label: 'Staff', href: '/admin/staff', icon: UserCog },
@@ -49,7 +48,7 @@ const SideNav = ({ isOpen, onClose }: SideNavProps) => {
 
   return (
     <>
-      {/* Mobile Sidebar Overlay */}
+      {/* Mobile overlay */}
       <div
         className={cn(
           'fixed inset-0 bg-black/30 z-40 transition-opacity md:hidden',
@@ -60,12 +59,13 @@ const SideNav = ({ isOpen, onClose }: SideNavProps) => {
 
       <aside
         className={cn(
-          'fixed top-0 left-0 z-50 flex flex-col w-64 h-full border-r bg-white dark:bg-gray-900 px-4 py-6 transition-transform transform',
+          'fixed top-0 left-0 z-50 flex flex-col w-64 h-screen border-r bg-white dark:bg-gray-900 transition-transform transform',
           isOpen ? 'translate-x-0' : '-translate-x-full',
-          'md:translate-x-0 md:flex md:h-screen md:sticky md:top-0'
+          'md:translate-x-0 md:sticky md:top-0'
         )}
       >
-        <div className='mb-8 flex justify-between items-center'>
+        {/* Header */}
+        <div className='flex items-center justify-between px-4 pt-6 pb-4'>
           <h2 className='text-xl font-bold tracking-tight'>Admin Panel</h2>
           <div className='md:hidden'>
             <Button variant='ghost' size='icon' onClick={onClose}>
@@ -74,26 +74,33 @@ const SideNav = ({ isOpen, onClose }: SideNavProps) => {
           </div>
         </div>
 
-        <ModeToggle />
+        {/* Dark mode toggle */}
+        <div className='px-4 pb-2'>
+          <ModeToggle />
+        </div>
 
-        <nav className='flex flex-col gap-2 flex-1 mt-4'>
-          {navItems.map(({ label, href, icon: Icon }) => (
-            <Link key={label} href={href}>
-              <Button
-                variant='ghost'
-                className={cn(
-                  'w-full justify-start gap-3',
-                  pathname === href && 'bg-muted hover:bg-muted font-semibold'
-                )}
-              >
-                <Icon className='h-5 w-5' />
-                {label}
-              </Button>
-            </Link>
-          ))}
-        </nav>
+        {/* Scrollable nav container */}
+        <div className='flex-1 overflow-y-auto px-4'>
+          <nav className='flex flex-col gap-2 pb-6'>
+            {navItems.map(({ label, href, icon: Icon }) => (
+              <Link key={label} href={href}>
+                <Button
+                  variant='ghost'
+                  className={cn(
+                    'w-full justify-start gap-3',
+                    pathname === href && 'bg-muted hover:bg-muted font-semibold'
+                  )}
+                >
+                  <Icon className='h-5 w-5' />
+                  {label}
+                </Button>
+              </Link>
+            ))}
+          </nav>
+        </div>
 
-        <div className='mt-auto'>
+        {/* Sign out at bottom */}
+        <div className='px-4 py-4 border-t'>
           <SignOutButton />
         </div>
       </aside>

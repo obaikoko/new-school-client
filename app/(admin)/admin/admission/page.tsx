@@ -22,6 +22,8 @@ import { formatDateTime } from '@/lib/utils';
 import { AdmissionSchema } from '@/schemas/admissionSchema';
 import { Badge } from '@/components/ui/badge';
 
+import DeleteAdmissionButton from '@/components/shared/admission/delete-admission-button';
+
 export default function AdmissionRequestPage() {
   const { data, isLoading, isError } = useGetAllAdmissionQuery({});
   const requests: AdmissionSchema[] = data?.admission ?? [];
@@ -58,19 +60,18 @@ export default function AdmissionRequestPage() {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>ID</TableHead>
                     <TableHead>First Name</TableHead>
                     <TableHead>Last Name</TableHead>
                     <TableHead>Gender</TableHead>
                     <TableHead>Level</TableHead>
                     <TableHead>Date</TableHead>
+                    <TableHead>Action</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {requests.length > 0 ? (
                     requests.map((request) => (
                       <TableRow key={request.id}>
-                        <TableCell>{request.id.slice(0, 6)}...</TableCell>
                         <TableCell>
                           <Link
                             href={`/admin/admission/${request.id}`}
@@ -84,6 +85,9 @@ export default function AdmissionRequestPage() {
                         <TableCell>{request.level}</TableCell>
                         <TableCell>
                           {formatDateTime(request.createdAt)}
+                        </TableCell>
+                        <TableCell>
+                          <DeleteAdmissionButton admissionId={request.id} />
                         </TableCell>
                       </TableRow>
                     ))

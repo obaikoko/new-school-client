@@ -53,13 +53,13 @@ const ForgetPasswordForm = () => {
         </div>
 
         <Button disabled={isLoading} className='w-full' variant='default'>
-          {isLoading ? 'Sending link...' : 'Send Reset Link'}
+          {isLoading ? 'Processing...' : 'Submit'}
         </Button>
 
         <div className='text-center text-sm text-muted-foreground'>
           Are you a student?{' '}
-          <Link href='/student/sign-in' className='link'>
-            Sign in to your student account
+          <Link href='/sign-in' className='link text-blue-500'>
+            Sign in to your account
           </Link>
         </div>
         <div className='text-center text-sm text-muted-foreground'>

@@ -41,6 +41,9 @@ const AdmissionDetails = ({ requestId }: { requestId: string }) => {
           <CardDescription className='text-sm opacity-90'>
             Review submitted details for this admission request.
           </CardDescription>
+          <CardDescription className='text-sm opacity-90'>
+            ID: {requestId}
+          </CardDescription>
         </CardContent>
         <CardContent>
           <MailDialog email={data.email} />

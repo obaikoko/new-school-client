@@ -55,17 +55,17 @@ const ForgetStudentPasswordForm = () => {
         </div>
 
         <Button disabled={isLoading} className='w-full' variant='default'>
-          {isLoading ? 'Sending link...' : 'Send Reset Link'}
+          {isLoading ? 'Processing...' : 'Submit'}
         </Button>
 
         <div className='text-center text-sm text-muted-foreground'>
           Are you a student?{' '}
-          <Link href='/student/sign-in' className='link'>
+          <Link href='/students/sign-in' className='link text-blue-500'>
             Sign in to your student account
           </Link>
         </div>
         <div className='text-center text-sm text-muted-foreground'>
-          <Link href='/sign-in' className='link'>
+          <Link href='/students/sign-in' className='link'>
             Back to Sign In
           </Link>
         </div>
