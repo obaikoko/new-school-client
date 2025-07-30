@@ -16,11 +16,12 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
-import { Loader2} from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 
 import { useGetClassSchemeOfWorkQuery } from '@/src/features/schemeOfWork/schemeOfWorkApiSlice';
 import { useAppSelector } from '@/src/app/hooks';
 import { Input } from '@/components/ui/input';
+import { subjects, terms } from '@/lib/utils';
 
 export default function SchemeOfWorkPage() {
   const { user } = useAppSelector((state) => state.auth);
@@ -60,9 +61,11 @@ export default function SchemeOfWorkPage() {
                 <SelectValue placeholder='Select Term' />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value='First'>First</SelectItem>
-                <SelectItem value='Second'>Second</SelectItem>
-                <SelectItem value='Third'>Third</SelectItem>
+                {terms.map((trm, index) => (
+                  <SelectItem key={index} value={trm}>
+                    {trm}
+                  </SelectItem>
+                ))}
               </SelectContent>
             </Select>
           </div>
@@ -74,9 +77,11 @@ export default function SchemeOfWorkPage() {
                 <SelectValue placeholder='Select Subject' />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value='English'>English</SelectItem>
-                <SelectItem value='Mathematics'>Mathematics</SelectItem>
-                <SelectItem value='Basic Science'>Basic Science</SelectItem>
+                {subjects.map((sbj, index) => (
+                  <SelectItem key={index} value={sbj}>
+                    {sbj}
+                  </SelectItem>
+                ))}
               </SelectContent>
             </Select>
           </div>
@@ -132,7 +137,6 @@ export default function SchemeOfWorkPage() {
                         </ul>
                       </div>
                     ))}
-                 
                   </div>
                 </AccordionContent>
               </AccordionItem>
