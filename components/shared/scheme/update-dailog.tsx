@@ -40,7 +40,8 @@ export default function UpdateSchemeDialog({ scheme }: Props) {
     defaultValues: scheme,
   });
 
-  const { register, control, handleSubmit, reset } = form;
+const { register, control, handleSubmit, reset, watch, setValue, getValues } =
+  form;
 
   const { fields, append, remove } = useFieldArray({
     control,
@@ -69,93 +70,106 @@ export default function UpdateSchemeDialog({ scheme }: Props) {
       <DialogTrigger asChild>
         <Button variant='outline'>Update Scheme</Button>
       </DialogTrigger>
-      <DialogContent className='max-w-2xl max-h-[90vh] overflow-y-auto'>
+      <DialogContent className='max-w-3xl max-h-[90vh] overflow-y-auto'>
         <DialogHeader>
           <DialogTitle>Update Scheme of Work</DialogTitle>
         </DialogHeader>
 
         <form onSubmit={handleSubmit(onSubmit)} className='space-y-6'>
-          <div className='h-[60vh] pr-4'>
-            <div className='space-y-4'>
-              {/* Hidden ID field */}
-              <input type='hidden' {...register('id')} />
+          <input type='hidden' {...register('id')} />
 
-              <div>
-                <label className='block text-sm font-medium'>Subject</label>
-                <Input {...register('subject')} readOnly />
-              </div>
+          {/* Static Fields */}
+          <div className='grid grid-cols-1 sm:grid-cols-3 gap-4'>
+            <div>
+              <label className='block text-sm font-medium mb-1'>Subject</label>
+              <Input {...register('subject')} readOnly />
+            </div>
+            <div>
+              <label className='block text-sm font-medium mb-1'>Level</label>
+              <Input {...register('level')} readOnly />
+            </div>
+            <div>
+              <label className='block text-sm font-medium mb-1'>Term</label>
+              <Input {...register('term')} readOnly />
+            </div>
+          </div>
 
-              <div>
-                <label className='block text-sm font-medium'>Level</label>
-                <Input {...register('level')} readOnly />
-              </div>
+          {/* Week Sections */}
+          <div className='space-y-6'>
+            {fields.map((field, index) => {
+              const topics = watch(`topics.${index}.topic`); // 👈 Watch for dynamic topics
 
-              <div>
-                <label className='block text-sm font-medium'>Term</label>
-                <Input {...register('term')} readOnly />
-              </div>
-
-              {fields.map((field, index) => (
-                <div key={field.id} className='border p-3 rounded-md'>
+              return (
+                <div key={field.id} className='border p-4 rounded-md space-y-4'>
                   <div className='flex justify-between items-center'>
-                    <p className='font-medium'>Week {index + 1}</p>
+                    <h4 className='font-semibold text-base'>
+                      Week {index + 1}
+                    </h4>
                     <Button
                       type='button'
                       variant='destructive'
                       size='sm'
                       onClick={() => remove(index)}
                     >
-                      Remove
+                      Remove Week
                     </Button>
                   </div>
 
-                  <Input
-                    type='number'
-                    placeholder='Week number'
-                    {...register(`topics.${index}.week`, {
-                      valueAsNumber: true,
-                    })}
-                    className='mt-2'
-                  />
-
-                  {field.topic.map((_, topicIndex) => (
+                  <div>
+                    <label className='block text-sm font-medium mb-1'>
+                      Week Number
+                    </label>
                     <Input
-                      key={topicIndex}
-                      className='mt-2'
-                      placeholder={`Topic ${topicIndex + 1}`}
-                      {...register(`topics.${index}.topic.${topicIndex}`)}
+                      type='number'
+                      {...register(`topics.${index}.week`, {
+                        valueAsNumber: true,
+                      })}
                     />
-                  ))}
+                  </div>
 
-                  <Button
-                    type='button'
-                    size='sm'
-                    className='mt-2'
-                    onClick={() =>
-                      form.setValue(`topics.${index}.topic`, [
-                        ...form.getValues(`topics.${index}.topic`),
-                        '',
-                      ])
-                    }
-                  >
-                    Add Topic
-                  </Button>
+                  {/* Watch-driven Topic Inputs */}
+                  <div className='space-y-2'>
+                    {topics?.map((_, topicIndex) => (
+                      <Input
+                        key={topicIndex}
+                        placeholder={`Topic ${topicIndex + 1}`}
+                        {...register(`topics.${index}.topic.${topicIndex}`)}
+                      />
+                    ))}
+                  </div>
+
+                  <div className='text-right'>
+                    <Button
+                      type='button'
+                      variant='secondary'
+                      size='sm'
+                      onClick={() => {
+                        const current =
+                          getValues(`topics.${index}.topic`) || [];
+                        setValue(`topics.${index}.topic`, [...current, '']);
+                      }}
+                    >
+                      Add Topic
+                    </Button>
+                  </div>
                 </div>
-              ))}
+              );
+            })}
+          </div>
 
-              <Button
-                type='button'
-                variant='secondary'
-                onClick={() => append({ week: fields.length + 1, topic: [''] })}
-              >
-                Add New Week
-              </Button>
-            </div>
-            <div className='text-right'>
-              <Button type='submit' disabled={isLoading}>
-                {isLoading ? 'Updating...' : 'Submit Updates'}
-              </Button>
-            </div>
+          {/* Add Week + Submit */}
+          <div className='flex justify-between items-center pt-2'>
+            <Button
+              type='button'
+              variant='outline'
+              onClick={() => append({ week: fields.length + 1, topic: [''] })}
+            >
+              Add New Week
+            </Button>
+
+            <Button type='submit' disabled={isLoading}>
+              {isLoading ? 'Updating...' : 'Submit Updates'}
+            </Button>
           </div>
         </form>
       </DialogContent>

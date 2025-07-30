@@ -23,6 +23,7 @@ import { useAppSelector } from '@/src/app/hooks';
 import AddTopicDialog from '@/components/shared/scheme/add-topic-dialog';
 import { Input } from '@/components/ui/input';
 import { subjects, terms } from '@/lib/utils';
+import UpdateSchemeDialog from '@/components/shared/scheme/update-dailog';
 
 export default function SchemeOfWorkPage() {
   const { user } = useAppSelector((state) => state.auth);
@@ -143,6 +144,10 @@ export default function SchemeOfWorkPage() {
                         </ul>
                       </div>
                     ))}
+                  </div>
+
+                  <div className='mt-4'>
+                    <UpdateSchemeDialog scheme={scheme} />
                   </div>
                 </AccordionContent>
               </AccordionItem>
