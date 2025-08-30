@@ -2,43 +2,50 @@
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import Link from 'next/link';
 import { toast } from 'sonner';
-import { Eye, EyeOff } from 'lucide-react';
+import { Eye, EyeOff, Mail, Lock, GraduationCap } from 'lucide-react';
+import { useDispatch } from 'react-redux';
 import { useStudentLoginMutation } from '@/src/features/auth/studentsApiSlice';
 import { setCredentials } from '@/src/features/auth/authSlice';
 import { useRouter } from 'next/navigation';
-import { authStudentSchema } from '@/validators/studentValidation';
-import { useAppDispatch } from '@/src/app/hooks';
+import {
+  authResponseSchema,
+  authUserSchema,
+} from '@/validators/userValidators';
 import { showZodErrors } from '@/lib/utils';
-import { AuthStudentForm } from '@/schemas/studentSchema';
+import { AuthUserForm } from '@/schemas/userSchema';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
+
 const StudentCredentialsSignInForm = () => {
   const [login, { isLoading }] = useStudentLoginMutation();
-
   const router = useRouter();
-  const dispatch = useAppDispatch();
+  const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(false);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<AuthStudentForm>({
-    resolver: zodResolver(authStudentSchema),
+  } = useForm<AuthUserForm>({
+    resolver: zodResolver(authUserSchema),
   });
 
-  const onSubmit = async (data: AuthStudentForm) => {
+  const onSubmit = async (data: AuthUserForm) => {
     try {
-      const res = await login({
-        studentId: data.studentId,
-        password: data.password,
-      }).unwrap();
+      const result = authResponseSchema.safeParse(await login(data).unwrap());
 
+      if (!result.success) {
+        toast.error('Invalid response from server');
+        console.error(result.error);
+        return;
+      }
+
+      const res = result.data;
       dispatch(setCredentials(res));
-      toast.success(`Welcome ${res.firstName} ${res.lastName}`);
+
+      toast.success(`Welcome back, ${res.firstName} ${res.lastName}!`);
       router.push('/student/dashboard');
     } catch (err) {
       showZodErrors(err);
@@ -46,70 +53,79 @@ const StudentCredentialsSignInForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div className='space-y-6'>
-        <div>
-          <Label htmlFor='studentId' className='my-2'>
-            StudentId
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+      <div className="space-y-4">
+        <div className="space-y-2">
+          <Label htmlFor="email" className="text-sm font-medium text-gray-700">
+            Student Email
           </Label>
-          <Input
-            id='studentId'
-            type='studentId'
-            autoComplete='studentId'
-            placeholder='BDIS/2025/J1/001'
-            {...register('studentId')}
-          />
-          {errors.studentId && (
-            <p className='text-red-500 text-sm mt-1'>
-              {errors.studentId.message}
+          <div className="relative">
+            <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+            <Input
+              id="email"
+              type="email"
+              autoComplete="email"
+              placeholder="Enter your student email"
+              className="pl-10 h-11 border-gray-200 focus:border-green-500 focus:ring-green-500"
+              {...register('email')}
+            />
+          </div>
+          {errors.email && (
+            <p className="text-red-500 text-sm mt-1 flex items-center">
+              <span className="w-1 h-1 bg-red-500 rounded-full mr-2" />
+              {errors.email.message}
             </p>
           )}
+        </div>
 
-          <div className='mb-6 w-full relative mt-4'>
-            <Label htmlFor='password' className='my-3'>
-              Password
-            </Label>
+        <div className="space-y-2">
+          <Label htmlFor="password" className="text-sm font-medium text-gray-700">
+            Password
+          </Label>
+          <div className="relative">
+            <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
             <Input
               type={showPassword ? 'text' : 'password'}
-              id='password'
-              autoComplete='current-password'
-              placeholder='*********'
+              id="password"
+              autoComplete="current-password"
+              placeholder="Enter your password"
+              className="pl-10 pr-10 h-11 border-gray-200 focus:border-green-500 focus:ring-green-500"
               {...register('password')}
             />
-            <span
+            <button
+              type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className='absolute right-4 top-10 cursor-pointer text-gray-600'
+              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
             >
-              {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-            </span>
-            {errors.password && (
-              <p className='text-red-500 text-sm mt-1'>
-                {errors.password.message}
-              </p>
-            )}
+              {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+            </button>
           </div>
-        </div>
-
-        <Button
-          disabled={isLoading}
-          className='w-full cursor-pointer'
-          variant='default'
-        >
-          {isLoading ? 'Signing in...' : 'Sign In'}
-        </Button>
-
-        <div className='text-center text-sm text-muted-foreground'>
-          Not a student?{' '}
-          <Link href='/sign-in' className='link text-blue-400'>
-            Signin to your account
-          </Link>
-        </div>
-        <div className='text-center text-sm text-muted-foreground'>
-          <Link href='/students/forget-password' className='link'>
-            Forgot Password?{' '}
-          </Link>
+          {errors.password && (
+            <p className="text-red-500 text-sm mt-1 flex items-center">
+              <span className="w-1 h-1 bg-red-500 rounded-full mr-2" />
+              {errors.password.message}
+            </p>
+          )}
         </div>
       </div>
+
+      <Button
+        disabled={isLoading}
+        className="w-full h-11 bg-gradient-to-r from-blue-950 to-indigo-600 hover:from-blue-700 hover:to-blue-700 text-white font-medium transition-all duration-200 transform hover:scale-[1.02] disabled:transform-none"
+        variant="default"
+      >
+        {isLoading ? (
+          <div className="flex items-center space-x-2">
+            <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+            <span>Signing in...</span>
+          </div>
+        ) : (
+          <div className="flex items-center space-x-2">
+            <GraduationCap className="w-4 h-4" />
+            <span>Student Sign In</span>
+          </div>
+        )}
+      </Button>
     </form>
   );
 };

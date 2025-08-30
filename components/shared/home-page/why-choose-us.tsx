@@ -1,79 +1,74 @@
 import Image from 'next/image';
 import React from 'react';
+import { Quote } from 'lucide-react';
 
 const WhyChooseUs = () => {
+  const testimonials = [
+    {
+      image: '/images/creche1.jpg',
+      quote: "Beryl International School Calabar has been an incredible choice for our children. The teachers are dedicated, and the environment is warm and supportive. We've seen remarkable progress in our kids, both academically and personally.",
+      author: "Ada O."
+    },
+    {
+      image: '/images/class2.jpg',
+      quote: "From the early years to secondary school, Beryl has nurtured our children's love for learning. The community here feels like family.",
+      author: "Chinedu M."
+    }
+  ];
+
   return (
-    <div className=' py-16'>
-      {/* Section 1 */}
-      <section className='section4 mb-16'>
-        <div className='flex flex-col lg:flex-row items-center justify-between shadow-lg rounded-lg overflow-hidden'>
-          <div className='lg:w-1/2'>
-            <Image
-              width={500}
-              height={500}
-              src='/images/creche1.jpg'
-              alt='Students at Beryl International School'
-              className='w-full h-full object-cover rounded'
-            />
-          </div>
+    <div className="py-20 px-4 bg-gradient-to-br from-gray-50 to-blue-50 dark:from-gray-800 dark:to-gray-900">
+      <div className="max-w-6xl mx-auto">
+        {/* Testimonials */}
+        <div className="space-y-16 mb-20">
+          {testimonials.map((testimonial, index) => (
+            <div
+              key={index}
+              className={`flex flex-col lg:flex-row items-center gap-12 ${
+                index % 2 === 1 ? 'lg:flex-row-reverse' : ''
+              }`}
+            >
+              <div className="lg:w-1/2">
+                <div className="relative rounded-2xl overflow-hidden shadow-2xl">
+                  <Image
+                    width={600}
+                    height={400}
+                    src={testimonial.image}
+                    alt="Students at Beryl International School"
+                    className="w-full h-[400px] object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+                </div>
+              </div>
 
-          <div className='lg:w-1/2 p-8'>
-            <h1 className='text-3xl font-semibold mb-4 text-blue-950'>
-              What Parents and Students Say About Us
-            </h1>
-            <p className='text-lg text-gray-700 mb-2'>
-              <span className='italic text-cyan-800'>
-                “Beryl International School Calabar has been an incredible
-                choice for our children. The teachers are dedicated, and the
-                environment is warm and supportive. We’ve seen remarkable
-                progress in our kids, both academically and personally.”
-              </span>
-              <br />– Ada O.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Section 2 */}
-      <section className='section4'>
-        <div className='flex flex-col lg:flex-row-reverse items-center justify-between shadow-lg rounded-lg overflow-hidden mb-16'>
-          {/* Image */}
-          <div className='lg:w-1/2'>
-            <Image
-              width={500}
-              height={500}
-              src='/images/class2.jpg'
-              alt='Students at Beryl International School'
-              className='w-full h-full object-cover'
-            />
-          </div>
-          {/* Text */}
-          <div className='lg:w-1/2 p-8'>
-            <h1 className='text-3xl font-semibold mb-4 text-blue-950'>
-              What Parents and Students Say About Us
-            </h1>
-            <p className='text-lg text-gray-700 mb-2'>
-              <span className='italic text-cyan-800'>
-                “From the early years to secondary school, Beryl has nurtured
-                our children’s love for learning. The community here feels like
-                family.”
-              </span>
-              <br />– Chinedu M.
-            </p>
-          </div>
+              <div className="lg:w-1/2 space-y-6">
+                <div className="flex items-center gap-3 mb-4">
+                  <Quote className="w-8 h-8 text-blue-600 dark:text-blue-400" />
+                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
+                    What Parents and Students Say About Us
+                  </h3>
+                </div>
+                <blockquote className="text-lg text-gray-700 dark:text-gray-300 italic leading-relaxed">
+                  &ldquo;{testimonial.quote}&rdquo;
+                </blockquote>
+                <cite className="block text-blue-600 dark:text-blue-400 font-semibold">
+                  – {testimonial.author}
+                </cite>
+              </div>
+            </div>
+          ))}
         </div>
 
-        {/* Section Header */}
-        <div className='section4-header border-t-2 pt-8'>
-          <h1 className='text-4xl font-bold text-center text-blue-950 mb-4'>
+        {/* Why Choose Us Header */}
+        <div className="text-center">
+          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900 dark:text-white">
             Why Choose Us
-          </h1>
-          <p className='text-lg italic text-cyan-700 text-center max-w-3xl mx-auto'>
-            Why Beryl International School Calabar is the Best Choice for Your
-            Child
+          </h2>
+          <p className="text-xl text-blue-600 dark:text-blue-400 italic max-w-3xl mx-auto">
+            Why Beryl International School Calabar is the Best Choice for Your Child
           </p>
         </div>
-      </section>
+      </div>
     </div>
   );
 };

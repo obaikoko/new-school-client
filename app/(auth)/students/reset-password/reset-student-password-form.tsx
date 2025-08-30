@@ -8,7 +8,7 @@ import { ResetPasswordForm as ResetPasswordFormType } from '@/schemas/userSchema
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
-import { Eye, EyeOff } from 'lucide-react';
+import { Eye, EyeOff, Lock, CheckCircle, GraduationCap } from 'lucide-react';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 import { showZodErrors } from '@/lib/utils';
@@ -36,77 +36,91 @@ const ResetStudentPassword = ({ token }: { token: string }) => {
         token,
       }).unwrap();
       toast.success(res?.message || 'Password reset successful');
-      router.push('/sign-in');
+      router.push('/students/sign-in');
     } catch (err) {
       showZodErrors(err);
     }
   };
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className='space-y-4 max-w-md mx-auto mt-10 p-6 rounded-xl border shadow'
-    >
-      <div>
-        <Label htmlFor='password'>New Password</Label>
-        <div className='relative'>
-          <Input
-            id='password'
-            type={showPassword ? 'text' : 'password'}
-            placeholder='Enter new password'
-            {...register('password')}
-          />
-          <Button
-            type='button'
-            size='icon'
-            variant='ghost'
-            className='absolute right-2 top-1/2 -translate-y-1/2'
-            onClick={() => setShowPassword((prev) => !prev)}
-          >
-            {showPassword ? (
-              <EyeOff className='w-5 h-5' />
-            ) : (
-              <Eye className='w-5 h-5' />
-            )}
-          </Button>
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+      <div className="space-y-4">
+        <div className="space-y-2">
+          <Label htmlFor="password" className="text-sm font-medium text-gray-700">
+            New Password
+          </Label>
+          <div className="relative">
+            <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+            <Input
+              id="password"
+              type={showPassword ? 'text' : 'password'}
+              placeholder="Enter your new password"
+              className="pl-10 pr-10 h-11 border-gray-200 focus:border-blue-500 focus:ring-blue-500"
+              {...register('password')}
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+            >
+              {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+            </button>
+          </div>
+          {errors.password && (
+            <p className="text-red-500 text-sm mt-1 flex items-center">
+              <span className="w-1 h-1 bg-red-500 rounded-full mr-2" />
+              {errors.password.message}
+            </p>
+          )}
         </div>
-        {errors.password && (
-          <p className='text-sm text-red-500 mt-1'>{errors.password.message}</p>
-        )}
+
+        <div className="space-y-2">
+          <Label htmlFor="confirmPassword" className="text-sm font-medium text-gray-700">
+            Confirm New Password
+          </Label>
+          <div className="relative">
+            <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+            <Input
+              id="confirmPassword"
+              type={showConfirm ? 'text' : 'password'}
+              placeholder="Confirm your new password"
+              className="pl-10 pr-10 h-11 border-gray-200 focus:border-blue-500 focus:ring-blue-500"
+              {...register('confirmPassword')}
+            />
+            <button
+              type="button"
+              onClick={() => setShowConfirm(!showConfirm)}
+              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+            >
+              {showConfirm ? <EyeOff size={18} /> : <Eye size={18} />}
+            </button>
+          </div>
+          {errors.confirmPassword && (
+            <p className="text-red-500 text-sm mt-1 flex items-center">
+              <span className="w-1 h-1 bg-red-500 rounded-full mr-2" />
+              {errors.confirmPassword.message}
+            </p>
+          )}
+        </div>
       </div>
 
-      <div>
-        <Label htmlFor='confirmPassword'>Confirm Password</Label>
-        <div className='relative'>
-          <Input
-            id='confirmPassword'
-            type={showConfirm ? 'text' : 'password'}
-            placeholder='Re-enter password'
-            {...register('confirmPassword')}
-          />
-          <Button
-            type='button'
-            size='icon'
-            variant='ghost'
-            className='absolute right-2 top-1/2 -translate-y-1/2'
-            onClick={() => setShowConfirm((prev) => !prev)}
-          >
-            {showConfirm ? (
-              <EyeOff className='w-5 h-5' />
-            ) : (
-              <Eye className='w-5 h-5' />
-            )}
-          </Button>
-        </div>
-        {errors.confirmPassword && (
-          <p className='text-sm text-red-500 mt-1'>
-            {errors.confirmPassword.message}
-          </p>
+      <Button 
+        type="submit" 
+        className="w-full h-11 bg-gradient-to-r from-blue-950 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-medium transition-all duration-200 transform hover:scale-[1.02] disabled:transform-none"
+        disabled={isLoading}
+      >
+        {isLoading ? (
+          <div className="flex items-center space-x-2">
+            <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+            <span>Updating password...</span>
+          </div>
+        ) : (
+          <div className="flex items-center space-x-2">
+            <GraduationCap className="w-4 h-4" />
+            <CheckCircle className="w-4 h-4" />
+            <span>Reset Student Password</span>
+          </div>
         )}
-      </div>
-
-      <Button type='submit' className='w-full' disabled={isLoading}>
-        Reset Password
       </Button>
     </form>
   );
